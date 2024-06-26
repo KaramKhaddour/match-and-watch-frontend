@@ -1,73 +1,19 @@
 <template>
-    <div class="container">
-        <div class="left">
-           <ul>
-                <li>
-                    <img src="../assets/images/1131w-0OZ8QXub3I8.webp">
-                    <p>Gold</p>
-                </li>
-                <li>
-                    <img src="../assets/images/black-panther-web.jpg">
-                    <p>black-panther</p>
-                </li>
-                <li>
-                    <img src="../assets/images/ExarQaxUYAEIQpz-691x1024.webp">
-                    <p>The Sucide Squad</p>
-                </li>
-                <li>
-                    <img src="../assets/images/il_fullxfull.4580913585_3yhu.webp">
-                    <p>Pearl</p>
-                </li>
-                <li>
-                    <img src="../assets/images/IMG_1887-scaled.jpeg">
-                    <p>Avengers</p>
-                </li>
-                <li>
-                    <img src="../assets/images/movie-poster-template-design-21a1c803fe4ff4b858de24f5c91ec57f_screen.jpg">
-                    <p>After</p>
-                </li>
-                <li>
-                    <img src="../assets/images/Oppenheimer.avif">
-                    <p>Oppenheimer</p>
-                </li>
-            </ul>
+    <div class="homeContainer">
+        <div class="leftSide">
+          <h2>Couldn't find a movie you like?</h2>
+          <h3>Is it hard for you to choose?</h3>
+          <h4>Got you,</h4>
+          <h4>We will match,</h4>
+          <h4>And you will watch,</h4>
+          <ul>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/login">Match</a></li>
+          </ul>
         </div>
-        <div class="middel">
-            <h1>
-                <a href="/login">Login</a> and with one question we will recommend the best movies for you
-            </h1>
-        </div>
-        <div class="right">
-            <ul>
-                <li>
-                    <img src="../assets/images/1131w-0OZ8QXub3I8.webp">
-                    <p>Gold</p>
-                </li>
-                <li>
-                    <img src="../assets/images/black-panther-web.jpg">
-                    <p>black-panther</p>
-                </li>
-                <li>
-                    <img src="../assets/images/ExarQaxUYAEIQpz-691x1024.webp">
-                    <p>The Sucide Squad</p>
-                </li>
-                <li>
-                    <img src="../assets/images/il_fullxfull.4580913585_3yhu.webp">
-                    <p>Pearl</p>
-                </li>
-                <li>
-                    <img src="../assets/images/IMG_1887-scaled.jpeg">
-                    <p>Avengers</p>
-                </li>
-                <li>
-                    <img src="../assets/images/movie-poster-template-design-21a1c803fe4ff4b858de24f5c91ec57f_screen.jpg">
-                    <p>After</p>
-                </li>
-                <li>
-                    <img src="../assets/images/Oppenheimer.avif">
-                    <p>Oppenheimer</p>
-                </li>
-            </ul>
+        <div class="rightSide">
+            <img src="../assets/images/matchwatch.png" alt="" class="matchWatchExpanded">
         </div>
     </div>
 </template>
@@ -77,19 +23,51 @@ export default{};
 </script>
 
 <style scoped>
-img{
-    width:300px;
-    height: 300px;
-}
-.container{
+.homeContainer{
+    height: 100rem;
+    width: 100%;
+    padding: 0;
+    margin: 0;
     display: flex;
-    justify-content: center;
 }
-.middel{
-    margin: 300px 20px 20px 20px;
+.leftSide{
+    height: 100%;
+    width: 50%;
+    margin-top: 250px;
+    margin-left: 150px;
+    margin-right: 0px; 
+    display: block;
 }
-ul {
-  list-style: none;
+h2{
+    font-size:50px;
 }
-
+h3{
+    font-size:45px;
+}
+h4{
+   font-size:30px;  
+}
+.rightSide{
+    background: black;
+    height: 100%;
+    width:50%;
+}
+.matchWatchExpanded{
+   width:550px;
+   margin-top: 320px;
+   margin-left:260px;
+}
+li{
+    padding: 10px;
+    margin: 20px;
+    border: solid;
+    width:250px;
+    background: black;
+    color:white;
+    font-size: 20px;
+}
+a{
+    text-decoration: none;
+    color:white;
+}
 </style>

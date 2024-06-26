@@ -1,16 +1,12 @@
 <template>
-  <NavBar/>
-   <div class="container">
-     <div class="row">
-      <div class="col-md-12">
+  <div class="firstContainer"> 
+    <NavBar/>
          <div>
            <router-view>
 
            </router-view>
          </div>
-      </div>
-     </div>
-   </div>
+  </div>
 </template>
 
 <script>

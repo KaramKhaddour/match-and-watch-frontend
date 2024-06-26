@@ -1,7 +1,7 @@
 <template>
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div>
+    <div class="loginContainer">
+      <div class="leftSide">
+        <div>
                 <h3>
                     Login
                 </h3>
@@ -31,6 +31,9 @@
                     </a></p>
                 </form>
             </div>
+      </div>
+      <div class="rightSide">
+            <img src="../assets/images/matchwatch.png" alt="" class="matchWatchExpanded">
         </div>
     </div>
 </template>
@@ -69,3 +72,42 @@ export default{
     },
 };
 </script>
+
+<style scoped>
+.loginContainer{
+    height: 100rem;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+.leftSide{
+    height: 100%;
+    width: 50%;
+    margin-top: 250px;
+    margin-left: 150px;
+    margin-right: 0px; 
+    display: block;
+}
+.rightSide{
+    background: black;
+    height: 100%;
+    width:50%;
+}
+.matchWatchExpanded{
+   width:550px;
+   margin-top: 320px;
+   margin-left:260px;
+}
+input{
+    width:550px;
+}
+button{
+    color:white;
+    background:black;
+    border-color: black;
+}
+button:hover{
+   background:rgb(56, 55, 55)
+}
+</style>
