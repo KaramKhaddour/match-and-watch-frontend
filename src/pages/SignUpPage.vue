@@ -72,7 +72,7 @@ export default{
             return false;
           }
           
-          this.signup({email:this.email, password: this.password, firstName:this.firstName, lastName:this.lastName}).catch(
+          this.signup({email:this.email, password: this.password, name:this.firstName, surname:this.lastName}).catch(
             error =>{
                 this.error=error;
             }

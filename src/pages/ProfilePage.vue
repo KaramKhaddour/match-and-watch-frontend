@@ -135,7 +135,7 @@
                     </label>
                 </div>
             </div>
-            <button>
+            <button class="finish">
                 <a href="/quiz">
                     Finish
                 </a>
@@ -191,5 +191,17 @@ p{
 }
 .question{
     margin-top: 25px;
+}
+.finish{
+    color:white;
+    background-color: black;
+    width: 120px;
+    margin: 20px;
+    height: 50px;
+}
+a{
+    font-size: large;
+    text-decoration: none;
+    color:white;
 }
 </style>

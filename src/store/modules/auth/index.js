@@ -5,7 +5,7 @@ export default {
     namespaced:true,
     state(){
         return {
-           token:'',
+           token:'kkkkkkkkkkkkkk',
            email:'',
            userId:'',
            refreshToken:'',

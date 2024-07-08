@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">+Match</a>
+          <a class="nav-link active" aria-current="page" href="/login">+Match</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="./login">My Matches</a>
+          <a class="nav-link active" aria-current="page" href="/history">My Matches</a>
         </li>
       </ul>
     </div>

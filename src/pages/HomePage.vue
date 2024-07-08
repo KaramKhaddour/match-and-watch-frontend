@@ -19,7 +19,13 @@
 </template>
 
 <script>
-export default{};
+export default{
+    computed:{
+        token(){
+            return this.$store.state.auth.token;
+        }
+    }
+};
 </script>
 
 <style scoped>
