@@ -1,6 +1,44 @@
 <template>
     <div class="loginContainer">
-      <div class="leftSide">
+        <div class="imagesContainer">
+            <img src="../assets/images/newDesginBackground/$_57.jpeg">
+            <img src="../assets/images/newDesginBackground/3ba32041615387.57acc4bf0b15f.jpg">
+            <img src="../assets/images/newDesginBackground/4-4127_avengers_endgame_movie_poster_web.jpg">
+            <img src="../assets/images/newDesginBackground/61ljrN7zmoL._AC_UF894,1000_QL80_.jpg">
+            <img src="../assets/images/newDesginBackground/71M8YFEakfL._AC_UF894,1000_QL80_.jpg">
+            <img src="../assets/images/newDesginBackground/81U0-cRG34S._AC_UF894,1000_QL80_.jpg">
+            <img src="../assets/images/newDesginBackground/DE_1899S1_Main_Vertical_27x40_RGB_PRE.jpg">
+            <img src="../assets/images/newDesginBackground/Eyizh9ZU4AMPelM.avif">
+            <img src="../assets/images/newDesginBackground/Glow-Season-1-One-Sheet-Poster-Print-22-x-34_db8f4b67-da32-4b2b-b46f-b85c80a585c0.2363af5d231b52395b4ac40af3549ada.webp">
+            <img src="../assets/images/newDesginBackground/harry-potter-and-the-deadly-hallows-i133035.jpg">
+            <img src="../assets/images/newDesginBackground/i8szyqqin2o71.webp">
+            <img src="../assets/images/newDesginBackground/large-m0156-thor-love-and-thunder-poster-12-x-18-inch-300-gsm-original-imagfzkdahxdsg3h.webp">
+            <img src="../assets/images/newDesginBackground/Money_Heist_Korea_Denver_Poster_EN.webp">
+            <img src="../assets/images/newDesginBackground/MV5BMDBiZmI1OGItNTNhOS00NTc4LTk4MzItNWFjYjEzODFkYjg3XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_.jpg">
+            <img src="../assets/images/newDesginBackground/MV5BMjAyMDMzNTU5M15BMl5BanBnXkFtZTgwMjg2NjExNjM@._V1_.jpg">
+            <img src="../assets/images/newDesginBackground/MV5BNzVkOTIxZWUtMTNjOC00NWMwLWEyNDQtNTY2NzYxNjhhYTA1XkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg">
+            <img src="../assets/images/newDesginBackground/MV5BOTY0ZjliOGUtMDFiZS00YzcwLWFiZWYtMzg4MWZkMWIwYzYwXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg">
+            <img src="../assets/images/newDesginBackground/s-l1600.jpg">
+            <img src="../assets/images/newDesginBackground/xciwhezc8y9y.jpg">
+            <img src="../assets/images/newDesginBackground/wb0101-8harrypotter-thephilosophersstoneno150x70.jpg">
+            <img src="../assets/images/newDesginBackground/unnamed.jpg">
+            <img src="../assets/images/newDesginBackground/unnamed (1).jpg">
+            <img src="../assets/images/newDesginBackground/s-l1600.jpg">            
+            <img src="../assets/images/newDesginBackground/MV5BOWY4MmFiY2QtMzE1YS00NTg1LWIwOTQtYTI4ZGUzNWIxNTVmXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg">            
+            <img src="../assets/images/newDesginBackground/MV5BOTY0ZjliOGUtMDFiZS00YzcwLWFiZWYtMzg4MWZkMWIwYzYwXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg">            
+            <img src="../assets/images/newDesginBackground/s-l1600.jpg">            
+            <img src="../assets/images/newDesginBackground/i8szyqqin2o71.webp">
+            <img src="../assets/images/newDesginBackground/MV5BNzVkOTIxZWUtMTNjOC00NWMwLWEyNDQtNTY2NzYxNjhhYTA1XkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg">
+            <img src="../assets/images/newDesginBackground/MV5BMjAyMDMzNTU5M15BMl5BanBnXkFtZTgwMjg2NjExNjM@._V1_.jpg">
+            <img src="../assets/images/newDesginBackground/s-l1600.jpg">            
+            <img src="../assets/images/newDesginBackground/Money_Heist_Korea_Denver_Poster_EN.webp">
+            <img src="../assets/images/newDesginBackground/MV5BMDBiZmI1OGItNTNhOS00NTc4LTk4MzItNWFjYjEzODFkYjg3XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_.jpg">
+            <img src="../assets/images/newDesginBackground/MV5BMjAyMDMzNTU5M15BMl5BanBnXkFtZTgwMjg2NjExNjM@._V1_.jpg">
+            <img src="../assets/images/newDesginBackground/MV5BNzVkOTIxZWUtMTNjOC00NWMwLWEyNDQtNTY2NzYxNjhhYTA1XkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg">
+            <img src="../assets/images/newDesginBackground/MV5BOTY0ZjliOGUtMDFiZS00YzcwLWFiZWYtMzg4MWZkMWIwYzYwXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg">
+            <img src="../assets/images/newDesginBackground/s-l1600.jpg">
+        </div>
+      <div class="loginForm">
         <div>
                 <h3>
                     Login
@@ -22,7 +60,7 @@
                         <div class="error" v-if="errors.password">{{ errors.password}}</div>
                     </div>
                     <div class="my-3">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" id="loginButton">
                             Login
                         </button>
                     </div>
@@ -32,9 +70,7 @@
                 </form>
             </div>
       </div>
-      <div class="rightSide">
-            <img src="../assets/images/matchwatch.png" alt="" class="matchWatchExpanded">
-        </div>
+     
     </div>
 </template>
 
@@ -75,39 +111,57 @@ export default{
 
 <style scoped>
 .loginContainer{
-    height: 100rem;
+    height:150vh;
     width: 100%;
     padding: 0;
     margin: 0;
     display: flex;
+    background-image: radial-gradient(
+        #8C45FF,
+      black
+   );
+   
 }
-.leftSide{
-    height: 100%;
-    width: 50%;
-    margin-top: 250px;
-    margin-left: 150px;
-    margin-right: 0px; 
-    display: block;
+.loginForm{
+    position:absolute;
+    z-index: 600;
+    margin-left:35%;
+    width: 500px;
+    margin-top: 200px;
+    border: solid white 1px;
+    border-radius: 20px;
+    color: white;
+    height: 450px;
+    padding:20px;
+    background-image: radial-gradient(#23123f,black);
+    opacity: 0.8;
 }
-.rightSide{
-    background: black;
-    height: 100%;
-    width:50%;
+
+img{
+    height: 200px;
+    width: 150px;
+    margin: 15px;
+    border-radius: 20px;
 }
-.matchWatchExpanded{
-   width:550px;
-   margin-top: 320px;
-   margin-left:260px;
+.imagesContainer{
+    opacity: 0.7;
+    margin-left: 100px;
+    margin-right: 30px;
+   margin-bottom: 100px;
+   margin-top: 70px;
+}
+#loginButton{
+    background-image:linear-gradient(rgb(59, 4, 59), black)
 }
 input{
-    width:550px;
+    background-image:linear-gradient(rgb(49, 30, 54),rgb(10, 5, 10),black);
+    opacity: 1;
 }
-button{
-    color:white;
-    background:black;
-    border-color: black;
+.form-control{
+    color: white;
 }
-button:hover{
-   background:rgb(56, 55, 55)
+a{
+    text-decoration: none;
+    color:rgb(119, 44, 204);
 }
 </style>

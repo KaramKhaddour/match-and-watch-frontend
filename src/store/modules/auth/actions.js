@@ -31,6 +31,7 @@ export default{
         let response='';
         try{
             response=await axios.post('http://localhost:8000/api/register', postData,);
+            print(response)
         }catch(err){
             let errorMessage=SignupValidations.getErrorMessagesFromCode(err.response.data.error.errors[0].message);
             throw(errorMessage);
@@ -41,4 +42,5 @@ export default{
             })
         }
     },
+
 };

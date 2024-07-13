@@ -1,159 +1,134 @@
 <template>
-    <div class="matchesContainer">
-        <div class="leftSide">
-            <h1>Take our quiz and let us recommend the best movies for you</h1>
-            <div class="answers">
-                <h3>What feeling best describes you right now?</h3>
-                <label>
-                    <input type="radio" name="q1" value="Happy" v-model="selectedEmoji" @change="onSelectionChange">
-                    Happy
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Sad" v-model="selectedEmoji" @change="onSelectionChange">
-                    Sad
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Excited" v-model="selectedEmoji" @change="onSelectionChange">
-                    Excited
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Bored" v-model="selectedEmoji" @change="onSelectionChange">
-                    Bored
-                </label>
-            </div>
-
-            <div class="answers">
-                <h3>What feeling best describes you right now?</h3>
-                <label>
-                    <input type="radio" name="q1" value="Happy" v-model="selectedEmoji" @change="onSelectionChange">
-                    Happy
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Sad" v-model="selectedEmoji" @change="onSelectionChange">
-                    Sad
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Excited" v-model="selectedEmoji" @change="onSelectionChange">
-                    Excited
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Bored" v-model="selectedEmoji" @change="onSelectionChange">
-                    Bored
-                </label>
-            </div>
-
-            <div class="answers">
-                <h3>What feeling best describes you right now?</h3>
-                <label>
-                    <input type="radio" name="q1" value="Happy" v-model="selectedEmoji" @change="onSelectionChange">
-                    Happy
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Sad" v-model="selectedEmoji" @change="onSelectionChange">
-                    Sad
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Excited" v-model="selectedEmoji" @change="onSelectionChange">
-                    Excited
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Bored" v-model="selectedEmoji" @change="onSelectionChange">
-                    Bored
-                </label>
-            </div>
-
-            <div class="answers">
-                <h3>What feeling best describes you right now?</h3>
-                <label>
-                    <input type="radio" name="q1" value="Happy" v-model="selectedEmoji" @change="onSelectionChange">
-                    Happy
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Sad" v-model="selectedEmoji" @change="onSelectionChange">
-                    Sad
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Excited" v-model="selectedEmoji" @change="onSelectionChange">
-                    Excited
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="Bored" v-model="selectedEmoji" @change="onSelectionChange">
-                    Bored
-                </label>
-            </div>
-            <button class="finish">
-                <a href="/matches">Finish</a>
-            </button>
+    <div class="quizContainer">
+      <h1>Match +</h1>
+      <div class="display-container">
+        <p class="question">{{ currentQuestion.question }}</p>
+        <div v-if="currentQuestion.options.length">
+          <div v-for="(option, index) in currentQuestion.options" :key="index" class="optionDes">
+            <input type="radio" :id="'option' + index" name="option" :value="option" v-model="selectedOption">
+            <label :for="'option' + index"  class="optionLabel">{{ option }}</label>
+          </div>
         </div>
-        <div class="rightSide">
-            <img src="../assets/images/matchwatch.png" alt="" class="matchWatchExpanded">
+        <div v-else>
+          <input type="text" v-model="userInput" placeholder="Write whatever you want" class="inputText">
         </div>
+        <button @click="nextQuestion" :class="{ 'finish-button': isLastQuestion }">
+          {{ isLastQuestion ? 'Finish' : 'Next' }}
+        </button>
+      </div>
     </div>
-    
+  </template>
   
-</template>
-
-<script>
-export default {
+  <script>
+  export default {
     data() {
-        return {
-            selectedEmoji: ''
-        };
+      return {
+        currentQuestionIndex: 0,
+        selectedOption: '',
+        userInput: '',
+        quizArray: [
+          { id: "0", question: "How do you feel now?", options: ["Sad", "Happy", "Excited", "Relaxed"] },
+          { id: "1", question: "What kind of show do you want to see?", options: ["Movie", "Series", "Anime", "Cartoon"] },
+          { id: "2", question: "What show genre do you want to watch?", options: ["Action", "Reality", "Romantic", "Comedy"] },
+          { id: "3", question: "What is the preferred period of the show?", options: ["Between 1 and 1.5 hours", "Between 1.5 and 2 hours", "Between 2 and 3 hours", "Over 3 hours"] },
+          { id: "4", question: "Write whatever you want", options: [] },
+        ],
+      };
+    },
+    computed: {
+      currentQuestion() {
+        return this.quizArray[this.currentQuestionIndex];
+      },
+      isLastQuestion() {
+        return this.currentQuestionIndex === this.quizArray.length - 1;
+      },
     },
     methods: {
-        onSelectionChange() {
-            console.log('Selected emoji:', this.selectedEmoji);
-            document.getElementById("list").classList.add("selected")
+      nextQuestion() {
+        if (!this.isLastQuestion) {
+          this.currentQuestionIndex++;
+          this.selectedOption = '';
+        } else {
+          window.location.href = '/matches'; 
         }
+      },
+    },
+  };
+  </script>
+  
+  <style scoped>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .quizContainer {
+    height: 150vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-image: linear-gradient(black, #8C45FF);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    text-align: center;
+    padding-top: 60px;
+    font-size: 80px;
+  }
+  
+  .display-container {
+    background-image: linear-gradient(#3c1e6b, black);
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 0.6em;
+    margin-top: 20px;
+  }
+  
+  button{
+    margin-top: 20px;
+    width: 100px;
+    height: 40px;
+    background-image: radial-gradient(rgb(37, 7, 56) 70%, rgb(95, 16, 148));
+    border: solid rgb(51, 44, 3) 1px;
+    color: white;
+    margin-left: 450px;
+  }
+  .optionDes{
+    border: solid 1px white;
+    margin: 20px;
+    height: 50px;
+    align-content: center;
+    border-radius: 5px;
+    background: 3D3D3D;
+    color: white;
+    text-align: center;
+  }
+    input[type="radio"] {
+    display: none;
     }
-};
-</script>
 
-<style scoped>
- html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-   }
-
-   .matchesContainer {
-        height: 100%;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-        display: flex;
-   }
-
-   .leftSide {
-        height: 100%;
-        width: 50%;
-        display: block;
-   }
-
-   .rightSide {
-        background: black;
-        height: 100rem;
-        width: 50%;
-   }
-
-   .matchWatchExpanded {
-        width: 550px;
-        margin-top: 320px;
-        margin-left: 260px;
-   }
-
-    h3 {
-        margin: 50px 20px 30px 10px;
+    .optionLabel {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
     }
 
-    .answers{
-        display: inline-block;
+    input[type="radio"]:checked + .optionLabel {
+    background-color: #33185f;
     }
-    label{
-        margin-left: 20px;
+    .inputText{
+        height: 50px;
+        width: 500px;
+        border: solid rgb(51, 44, 3) 1px;
+        background-color: #33185f;
+        color: white;
+        padding: 10px;
     }
-    .finish{
-        margin: 70px;
-        font-size:20px;
-    }
-</style>
+  </style>
+  

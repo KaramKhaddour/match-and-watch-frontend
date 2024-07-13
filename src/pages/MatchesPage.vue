@@ -1,37 +1,30 @@
 <template>
     <div class="matchesContainer">
-        <div class="leftSide">
-            <div class="film first-film">
-                <div>
-                    <img src="../assets/images/s-l1200.jpg">
-                    <p>Ant man</p>
-                </div>
-                <p class="description">
-                    Armed with a super-suit with the astonishing ability to shrink in scale but increase in strength, cat burglar Scott Lang must embrace his inner hero and help his mentor, Dr. Hank Pym, pull off a plan that will save the world.
-                </p>
-             </div>
-             <div class="film second-film">
-                <p class="description">
-                    The Avengers began as a group of extraordinary individuals who were assembled to defeat Loki and his Chitauri army in New York City. Since then, the team has expanded its roster and faced a host of new threats, while dealing with their own turmoil.                </p>
-                <div>
-                    <img src="../assets/images/IMG_1887-scaled.jpeg">
-                    <p>Avengers</p>
-                </div>
-             </div>
-             <div class="film third-film">
-                <div>
-                    <img src="../assets/images/vd-046-star-wars-official-poster-ep7.jpg">
-                    <p>Star wars</p>
-                </div>
-                <p class="description">
-                    A LONG TIME ago, in a small town far, far away, a young man named George Lucas had an idea for a story:
-
-A simple young farmboy gets a magic sword from an old wizard so he can defeat an evil knight, rescue a princess, and save the world.                </p>
-             </div>
-        </div>
-        <div class="rightSide">
-            <img src="../assets/images/matchwatch.png" alt="" class="matchWatchExpanded">
-        </div>
+       <div></div>
+       <div class="movie">
+          <img src="../assets/images/newDesginBackground/81U0-cRG34S._AC_UF894,1000_QL80_.jpg" alt="">
+          <div class="nameRating">
+               <h3>Stranger Things</h3>
+               <p class="rating">4/5 Rating</p>
+          </div>
+          <p>When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.</p>
+       </div>
+       <div class="movie">
+          <img src="../assets/images/newDesginBackground/3ba32041615387.57acc4bf0b15f.jpg" alt="">
+          <div class="nameRating">
+               <h3>Moonlight</h3>
+               <p class="rating">4/5 Rating</p>
+          </div>
+          <p>A young African-American man grapples with his identity and sexuality while experiencing the everyday struggles of childhood, adolescence, and burgeoning adulthood.</p>
+       </div>
+       <div class="movie">
+          <img src="../assets/images/newDesginBackground/harry-potter-and-the-deadly-hallows-i133035.jpg" alt="">
+          <div class="nameRating">
+               <h3>Harry Potter</h3>
+               <p class="rating">4/5 Rating</p>
+          </div>
+          <p>An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.</p>
+       </div>
     </div>
 </template>
 
@@ -42,59 +35,45 @@ export default {
 </script>
 
 <style scoped>
+   
    html, body {
         height: 100%;
         margin: 0;
         padding: 0;
    }
-
    .matchesContainer {
-        height: 100%;
+        height: 150vh;
         width: 100%;
         padding: 0;
         margin: 0;
         display: flex;
+        justify-content: center;
+        padding: 60px;
+        background-image: radial-gradient(#3e1d72,black);
+        color: white;
+        
    }
-
-   .leftSide {
-        height: 100%;
-        width: 50%;
-        display: block;
+   .movie{
+     width: 500px;
+     border: solid rgb(51, 44, 3);
+     border-radius: 20px;
+     margin: 20px;
+     padding: 20px;
+     height: 700px;
+     background-image: linear-gradient(#5b2da5,black);
    }
-
-   .rightSide {
-        background: black;
-        height: 100rem;
-        width: 50%;
+   img{
+     width: 400px;
+     height: 400px;
+     margin-left: 25px;
+     border-radius: 20px;
    }
-
-   .matchWatchExpanded {
-        width: 550px;
-        margin-top: 320px;
-        margin-left: 260px;
+   .nameRating{
+     margin-top: 20px;
+     display: flex;
    }
-
-   img {
-        width: 350px;
-        height: 350px;
-   }
-
-   p {
-        font-size: 25px;
-        margin-left: 150px;
-   }
-
-   .film {
-        display: flex;
-        padding: 10px
-   }
-
-   .description {
-        margin: 50px;
-   }
-
-   .second-film {
-        margin-right: 40px
+   .rating{
+     margin-left: 130px;
    }
 
 </style>

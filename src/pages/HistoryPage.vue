@@ -1,6 +1,5 @@
 <template>
     <div class="matchesContainer">
-        <div class="leftSide">
             <div class="film">
                 <div>
                     <img src="../assets/images/IMG_1887-scaled.jpeg">
@@ -46,10 +45,51 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="rightSide">
-            <img src="../assets/images/matchwatch.png" alt="" class="matchWatchExpanded">
-        </div>
+            <div class="film">
+                    <div>
+                        <img src="../assets/images/newDesginBackground/MV5BOWY4MmFiY2QtMzE1YS00NTg1LWIwOTQtYTI4ZGUzNWIxNTVmXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg">                    
+                        <p>The Gray Man</p>
+                    </div>
+                    <div class="ratings-wrapper">
+                        <div class="ratings">
+                            <span data-rating="5">&#9733;</span>
+                            <span data-rating="4">&#9733;</span>
+                            <span data-rating="3">&#9733;</span>
+                            <span data-rating="2">&#9733;</span>
+                            <span data-rating="1">&#9733;</span>
+                        </div>
+                    </div>
+            </div>
+            <div class="film">
+                    <div>
+                        <img src="../assets/images/newDesginBackground/Glow-Season-1-One-Sheet-Poster-Print-22-x-34_db8f4b67-da32-4b2b-b46f-b85c80a585c0.2363af5d231b52395b4ac40af3549ada.webp">
+                        <p>Glow</p>
+                    </div>
+                    <div class="ratings-wrapper">
+                        <div class="ratings">
+                            <span data-rating="5">&#9733;</span>
+                            <span data-rating="4">&#9733;</span>
+                            <span data-rating="3">&#9733;</span>
+                            <span data-rating="2">&#9733;</span>
+                            <span data-rating="1">&#9733;</span>
+                        </div>
+                    </div>
+            </div> 
+            <div class="film">
+                    <div>
+                        <img src="../assets/images/newDesginBackground/61ljrN7zmoL._AC_UF894,1000_QL80_.jpg">
+                        <p>13 Reasons why</p>
+                    </div>
+                    <div class="ratings-wrapper">
+                        <div class="ratings">
+                            <span data-rating="5">&#9733;</span>
+                            <span data-rating="4">&#9733;</span>
+                            <span data-rating="3">&#9733;</span>
+                            <span data-rating="2">&#9733;</span>
+                            <span data-rating="1">&#9733;</span>
+                        </div>
+                    </div>
+            </div>
     </div>
 </template>
 
@@ -74,36 +114,26 @@ export default {
    }
 
    .matchesContainer {
-        height: 100%;
+        height: 150vh;
         width: 100%;
-        padding: 0;
+        padding-left: 60px;
+        padding-right: 60px;
         margin: 0;
         display: flex;
+        background-image: radial-gradient(
+            rgb(119, 27, 180),
+            rgb(59, 10, 92),
+            rgb(26, 10, 36),
+            black
+        );
+        color: white;
+        gap: 30px;
+        flex-wrap: wrap;
    }
 
-   .leftSide {
-        height: 100%;
-        width: 50%;
-        display: block;
-   }
-
-   .rightSide {
-        background: black;
-        height: 100rem;
-        width: 50%;
-   }
-
-   .matchWatchExpanded {
-        width: 550px;
-        margin-top: 320px;
-        margin-left: 260px;
-   }
    .ratings-wrapper{
         display: inline-block;
-        margin-bottom: 20px;
         padding:0 10px;
-        margin-left: 50px;
-        padding-top:150px
    }
    .ratings{
         display: flex;
@@ -112,7 +142,7 @@ export default {
    .ratings span{
     cursor: pointer;
     transition: color .2s transform .2s;
-    font-size: 50px;
+    font-size: 45px;
    }
    .ratings span:hover{
       color:orange;
@@ -128,15 +158,20 @@ export default {
     color: orange;
    }
    img {
-        width: 400px;
-        height: 400px;
+        width: 220px;
+        height: 270px;
+        border: solid rgb(51, 44, 3);
+        padding: 1px;
    }
    p {
         font-size: 25px;
-        margin-left: 150px;
-   }
+        text-align: center;
+        margin: 0;   
+    }
    .film{
-       display: flex;
-       padding : 20px;
+       margin-top: 30px;
+       padding : 5px;
+       height: 400px;
+       margin: 0;
    }
 </style>
