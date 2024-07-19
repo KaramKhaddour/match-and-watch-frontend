@@ -30,7 +30,7 @@ const routes =  [
         },
     },
     {
-        path:'/login',
+        path:'/login_new',
         name:'Login', 
         component:Login,
         meta:{
@@ -38,7 +38,7 @@ const routes =  [
         },
     },
     {
-        path:'/signup',
+        path:'/signup_new',
         name:'SignUp', 
         component:Signup,
         meta:{
@@ -107,7 +107,7 @@ router.beforeEach((to, from, next) => {
         to.meta.auth &&
         !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
     ) {
-        next('/login');
+        next('/login_new');
     } else if (
         'auth' in to.meta &&
         !to.meta.auth &&
