@@ -1,20 +1,20 @@
 <template>
     <div class="profileContainer">
-        
+       {{ token }}   
     </div>
 </template>
 
 <script>
-   export default{};    
+   export default{
+    computed:{
+        token(){
+            console.log(this)
+            return this.$store.state.auth.authenticated;
+        }
+    }
+   };    
 </script>
 
 <style>
-.profileContainer{
-    height: 100rem;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    background-image: linear-gradient(black, #8C45FF);
-}
+
 </style>

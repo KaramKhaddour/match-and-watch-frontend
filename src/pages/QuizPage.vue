@@ -1,4 +1,5 @@
 <template>
+
     <div class="quizContainer" >
       <div class="content-container" :style="{opacity: showForm ? '1' : '0', transform: showForm ? 'translateY(0)' : 'translateY(100px)' }">
           <h1 class="quiz-title Raleway">Match +</h1>
@@ -28,6 +29,7 @@
             </div>
 
           </div>
+
       </div>
 
 
@@ -36,6 +38,7 @@
       <div class="films-container"></div>
 
     </div>
+
     <!-- <div class="black-box"></div> -->
   </template>
   
@@ -47,13 +50,17 @@
         currentQuestionIndex: 0,
         selectedOption: '',
         userInput: '',
-        quizArray: [
-          { id: "0", question: "How do you feel now?", options: ["Sad", "Happy", "Excited", "Relaxed"] },
-          { id: "1", question: "What kind of show do you want to see?", options: ["Movie", "Series", "Anime", "Cartoon"] },
-          { id: "2", question: "What show genre do you want to watch?", options: ["Action", "Reality", "Romantic", "Comedy"] },
-          { id: "3", question: "What is the preferred period of the show?", options: ["Between 1 and 1.5 hours", "Between 1.5 and 2 hours", "Between 2 and 3 hours", "Over 3 hours"] },
-          { id: "4", question: "Feel free to express your emotions, or describe your ideal movie", options: [] },
-        ],
+      quizArray: [
+        { id: "0", question: "Do you want to start new session or join current one?", options: ["new", "join"] },
+        { id: "1", question: "How do you feel now?", options: ["Scared", "Sad", "Happy", "Excited", "Frustrated", "Angry", "Tense", "Nostalgic"] },
+        { id: "2", question: "What kind of show do you want to see?", options: ["Movie", "Series", "Anime", "Cartoon"] },
+        { id: "3", question: "What show genre do you want to watch?", options: ['crime', 'history', 'reality', 'family', 'documentation', 'romance', 'comedy', 'european', 'sport', 'drama', 'thriller'] },
+        { id: "4", question: "What are the avilable platforms for you?", options: ["HBO Max", "Netflix", "Amazon Prime", "Disney+", "Paramount"] },
+        { id: "5", question: "What is the pregeeref release year for you?", options: ["After 2010", "After 1990", "After 1970", "Before 1970"] },
+        { id: "6", question: "You can choose the age resriction for our recommendation", options: ["Okay for all", "PG-13", "R", "Adults only"] },
+        { id: "5", question: "What is the preferred period of the show?", options: ["Between 1 and 1.5 hours", "Between 1.5 and 2 hours", "Between 2 and 3 hours", "Over 3 hours"] },
+        { id: "6", question: "Write whatever you want", options: [] },
+      ],
       };
     },
     computed: {
@@ -406,3 +413,4 @@
 
   </style>
   
+

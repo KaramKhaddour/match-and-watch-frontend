@@ -59,12 +59,12 @@
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="text" class="form-control" v-model="email">
+                        <input type="text" class="form-control" v-model.trim="email">
                         <div class="error" v-if="errors.email">{{ errors.email}}</div>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" v-model="password">
+                        <input type="password" class="form-control" v-model.trim="password">
                         <div class="error" v-if="errors.password">{{ errors.password}}</div>
                     </div>
                     <div class="my-3">
@@ -101,19 +101,21 @@ export default{
         ...mapActions('auth',{
             signup:SIGNUP_ACTION,
         }),
-        onSignUp(){
+        async onSignUp(){
           let validations=new SignupValidations(this.email,this.password);
           this.errors=validations.checkValidations();
           if('email' in this.errors || 'password' in this.errors){
             return false;
           }
           
-          this.signup({email:this.email, password: this.password, name:this.firstName, surname:this.lastName}).catch(
-            error =>{
-                this.error=error;
-            }
-          );
-          this.$router.push('/profile')
+        await this.signup({ email: this.email, password: this.password, name: this.firstName, surname: this.lastName }).then(() => {
+             if (this.error === '') {
+                 this.$router.push('/quiz');
+             }
+          }).catch(error => {
+             console.log("Error caught:", error);
+             this.error = error;
+          });
         },
     },
 };
@@ -121,15 +123,13 @@ export default{
 
 <style scoped>
 .signupContainer{
-    height: 150vh;
+    height: 110vh;
     width: 100%;
     padding: 0;
     margin: 0;
     display: flex;
     background-image: radial-gradient(
-      rgb(119, 27, 180),
-      rgb(59, 10, 92),
-      rgb(26, 10, 36),
+        #8C45FF,
       black
    );
 }
@@ -143,7 +143,7 @@ img{
     opacity: 0.7;
     margin-left: 100px;
     margin-right: 30px;
-   margin-bottom: 100px;
+   margin-bottom: 100em;
    margin-top: 70px;
 }
 .signupForm{

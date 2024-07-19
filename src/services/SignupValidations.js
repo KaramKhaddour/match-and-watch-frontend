@@ -16,12 +16,11 @@ export default class SignupValidations{
         return errors;
     }
     static getErrorMessagesFromCode(errorCode){
-        console.log(errorCode)
-        if(errorCode==="EMAIL_EXISTS"){
+        if(errorCode==="The email is already registered"){
             return "Email already exists";
         }
-        else if(errorCode==="EMAIL_NOT_FOUND"){
-            return "Email not found"
+        else if(errorCode==="Incorrect email or password"){
+            return "Incorrect email or password";
         }
         else if(errorCode==="INVALID_PASSWORD"){
             return "Invalid password"

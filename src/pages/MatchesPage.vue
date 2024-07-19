@@ -1,36 +1,42 @@
 <template>
     <div class="matchesContainer">
-       <div></div>
-       <div class="movie">
-          <img src="../assets/images/newDesginBackground/81U0-cRG34S._AC_UF894,1000_QL80_.jpg" alt="">
+       <div v-for="movie in movies" :key="movie.title" class="movie">
+          <img :src="movie.image" :alt="movie.title">
           <div class="nameRating">
-               <h3>Stranger Things</h3>
-               <p class="rating">4/5 Rating</p>
+               <h3>{{ movie.title }}</h3>
+               <p class="rating">{{ movie.rating }}</p>
           </div>
-          <p>When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.</p>
-       </div>
-       <div class="movie">
-          <img src="../assets/images/newDesginBackground/3ba32041615387.57acc4bf0b15f.jpg" alt="">
-          <div class="nameRating">
-               <h3>Moonlight</h3>
-               <p class="rating">4/5 Rating</p>
-          </div>
-          <p>A young African-American man grapples with his identity and sexuality while experiencing the everyday struggles of childhood, adolescence, and burgeoning adulthood.</p>
-       </div>
-       <div class="movie">
-          <img src="../assets/images/newDesginBackground/harry-potter-and-the-deadly-hallows-i133035.jpg" alt="">
-          <div class="nameRating">
-               <h3>Harry Potter</h3>
-               <p class="rating">4/5 Rating</p>
-          </div>
-          <p>An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.</p>
+          <p>{{ movie.description }}</p>
        </div>
     </div>
 </template>
 
 <script>
 export default {
-    
+    data() {
+        return {
+            movies: [
+                {
+                    title: 'Stranger Things',
+                    rating: '4/5 Rating',
+                    description: 'When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.',
+                    image: require('../assets/images/newDesginBackground/81U0-cRG34S._AC_UF894,1000_QL80_.jpg')
+                },
+                {
+                    title: 'Moonlight',
+                    rating: '4/5 Rating',
+                    description: 'A young African-American man grapples with his identity and sexuality while experiencing the everyday struggles of childhood, adolescence, and burgeoning adulthood.',
+                    image: require('../assets/images/newDesginBackground/3ba32041615387.57acc4bf0b15f.jpg')
+                },
+                {
+                    title: 'Harry Potter',
+                    rating: '4/5 Rating',
+                    description: 'An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.',
+                    image: require('../assets/images/newDesginBackground/harry-potter-and-the-deadly-hallows-i133035.jpg')
+                }
+            ]
+        };
+    }
 }
 </script>
 

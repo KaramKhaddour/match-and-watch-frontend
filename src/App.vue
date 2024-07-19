@@ -6,16 +6,23 @@
 
            </router-view>
          </div>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import NavBar from './components/NavBarComponent.vue';
+import Footer from './components/FooterComponent.vue';
+import { AUTO_LOGIN_ACTION } from './store/storeconstants';
 export default {
   name: 'App',
   components: {
     NavBar,
+    Footer,
   },
+  created(){
+    this.$store.dispatch(`auth/${AUTO_LOGIN_ACTION}`)
+  }
 }
 </script>
 
