@@ -102,21 +102,23 @@ router.beforeEach((to, from, next) => {
     //console.log(to) 
     //console.log(store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`])
 
-    if (
-        'auth' in to.meta &&
-        to.meta.auth &&
-        !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
-    ) {
-        next('/login_new');
-    } else if (
-        'auth' in to.meta &&
-        !to.meta.auth &&
-        store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
-    ) {
-        next('/');
-    } else {
-        next();
-    }
+    // if (
+    //     'auth' in to.meta &&
+    //     to.meta.auth &&
+    //     !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+    // ) {
+    //     next('/login_new');
+    // } else if (
+    //     'auth' in to.meta &&
+    //     !to.meta.auth &&
+    //     store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+    // ) {
+    //     next('/');
+    // } else {
+    //     next();
+    // }
+
+    next();
 });
 
 export default router;
