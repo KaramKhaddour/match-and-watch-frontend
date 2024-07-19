@@ -10,7 +10,7 @@
         <h1 class="match-title zcool mb-3">Match & Watch</h1>
         <h2 class="login-title Raleway">Login</h2>
         <div class="login-form-container Raleway">
-            <form action="\login" class="login-form center-div" id="login-form" @submit.prevent="submitForm">
+            <form action="\login" class="login-form center-div" id="login-form" @submit.prevent="onLogin()">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" v-model.lazy="email">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="submit-container">
                     <input type="submit" value="Login" class="login-btn button Raleway">
-                    <RouterLink to="/recover_password" style="color: #F1F1F1"><h5 class="forgot-password Raleway">Forgot Password?</h5></RouterLink>
+                    <RouterLink to="/signup_new" style="color: #F1F1F1"><h5 class="forgot-password Raleway">Forgot Password?</h5></RouterLink>
                 </div>
             </form>
         </div>
@@ -40,16 +40,12 @@
         <h3 class="login-separator"></h3>
         <div class="login-register center-div">
             <h5 class="login-create-account Raleway">Don't Have an Account?</h5>
-            <RouterLink to="/request" class="register-btn button Raleway">Sign Up</RouterLink>
+            <RouterLink to="/singup_new" class="register-btn button Raleway">Sign Up</RouterLink>
         </div>
-    </div>
-    <div v-if="isLoggedIn" class="logged-in-container Raleway">
-        <h3>You are already logged in</h3>
-        <button class="logout-btn" @click="logout">Logout</button>
     </div>
 </template>
 
-<script>
+<!-- <script>
 import successMsg from '../Popups/successMsg.vue';
 import errorMsg from '../Popups/errorMsg.vue';
 
@@ -147,7 +143,44 @@ export default {
         }
     }
 };
+</script> -->
+
+
+<script>
+import SignupValidations from '../../services/SignupValidations'
+import { mapActions } from 'vuex';
+import { LOGIN_ACTION } from '@/store/storeconstants';
+
+export default{
+    data(){
+        return{
+            email:'',
+            password:'',
+            errors:[],
+            error:'',
+        }
+    },
+    methods:{
+        ...mapActions('auth',{
+            login:LOGIN_ACTION,
+        }),
+        onLogin(){
+          let validations=new SignupValidations(this.email,this.password);
+          this.errors=validations.checkValidations();
+          if('email' in this.errors || 'password' in this.errors){
+            return false;
+          }
+          this.login({email:this.email, password: this.password,}).catch(
+            error =>{
+                this.error=error;
+            }
+          );
+          this.$router.push('/quiz')
+        },
+    },
+};
 </script>
+
 
 <style scoped>
 

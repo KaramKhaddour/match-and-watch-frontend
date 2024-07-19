@@ -1,20 +1,17 @@
-<template>
-    <div class="container">
-        <div class="login-form" :style="{opacity: showForm ? '1' : '0', transform: showForm ? 'translateY(0)' : 'translateY(100px)' }">
-            <Login/>
-        </div>
-    </div>
-</template>
-
 <script>
-    import Login from '../components/LoginComponents/Login.vue';
+    import Request from '../components/SignupComponents/Signup.vue';
     export default{
         components:{
-            Login,
+            Request,
         },
         data(){
             return{
                 showForm: false,
+            }
+        },
+        methods:{
+            showPrivacyPolicy(){
+                this.$emit('showPrivacyPolicy');
             }
         },
         created(){
@@ -23,21 +20,97 @@
             }, 300)
         },
         mounted(){
-            document.title = "Demo Panel AI4SE | Login";
-        },
+            document.title = "Demo Panel AI4SE | Request Access"
+        }
     }
 </script>
 
+<template>
+    <div class="container">
+        <div class="request-form" :style="{opacity: showForm ? '1' : '0', transform: showForm ? 'translateY(0)' : 'translateY(100px)' }">
+            <Request @showPrivacyPolicy="showPrivacyPolicy"/>
+        </div>
+        <div class="blur-circle"></div>
+        <div class="blur-circle"></div>
+        <div class="films-container"></div>
+    </div>
+    <div class="black-box"></div>
+</template>
+
 <style scoped>
-.container{
+/* .container{
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-image: url('../assets/images/main-page/pattern-bg.svg');
+    padding-bottom: 50px;
 }
 
-.login-form{
+
+.request-form{
+    transition: all 0.3s ease-in-out;
+} */
+
+
+
+.container{
+    width: 100%;
+    height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* background-image: radial-gradient(
+        #8C45FF,
+      black
+   ); */
+   background: black;
+}
+
+.blur-circle{
+    display: inline-block;
+    position: absolute;
+    overflow:auto;
+    height: 900px;
+    width: 900px;
+    transform: scale(0.9);
+    opacity: 0.7;
+    background-position-x: center;
+    background-position-y: center;
+    top: -15vh;
+    left: 15vw;
+    background: url(../assets/images/blur.png);
+    z-index: 0;
+}
+
+.films-container{
+    display: inline-block;
+    position: absolute;
+    overflow:auto;
+    height: 729px;
+    width: 1200px;
+    transform: scale(0.9);
+    opacity: 0.3;
+    background-position-x: center;
+    background-position-y: center;
+    top: 10vh;
+    background: url(../assets/images/films_container.png);
+    z-index: 0;
+}
+
+.black-box{
+    display: inline-block;
+    position:relative;
+    height: 50vh;
+    width: 100%;
+    background-color: black;
+    z-index: -1;
+}
+
+
+.request-form{
+    z-index: 1;
     transition: all 0.3s ease-in-out;
 }
 </style>
