@@ -13,7 +13,6 @@
           </a>
        </div>
        <div class="navPart">
-
           <a href="/history" class="nav-btn">
                 <span>
                   <img src="@/assets/images/navbar/check.svg" alt="match-plus">
@@ -35,29 +34,24 @@
                 <img src="@/assets/images/navbar/play.svg" alt="match-plus">
               </span>
               <span class="nav-btn-txt">Series</span>
-
         </a>
       </div>
     </nav>
-    
+ 
     <div class="logedIn" v-if="isAuthenticated">
-      <a href="#" @click.prevent="onLogout()"><button class="authButton">Logout</button></a>
+      <RouterLink to="/" @click.prevent="onLogout()" class="register-btn button">Logout</RouterLink>
     </div>
-
-
-    <div class="logedOut">
-
+    <div v-else class="logedOut">
       <RouterLink to="/login_new" class="register-btn button Raleway">Login</RouterLink>
       <RouterLink to="/signup_new" class="register-btn button Raleway">SignUp</RouterLink>
-
     </div>
   </header>
 </template>
-
+ 
 <script>
-import { IS_USER_AUTHENTICATE_GETTER, LOGOUT_ACTION } from '@/store/storeconstants';
-import { mapActions, mapGetters } from 'vuex';
-
+    import { IS_USER_AUTHENTICATE_GETTER, LOGOUT_ACTION } from '@/store/storeconstants';
+    import { RouterLink } from 'vue-router';
+    import { mapActions, mapGetters } from 'vuex';
    export default{
       computed:{
         ...mapGetters('auth', {
@@ -74,25 +68,25 @@ import { mapActions, mapGetters } from 'vuex';
       }
    };
 </script>
-
+ 
 <style scoped>
   .header{
-    position: relative;
-    top:0;
-    left: 0;
-    background: rgb(0, 0, 0);
-    color: white;
+    position: sticky;
+    top: 0;
+    left:0;
+    width: 100%;
+    padding: 20px 100px;
+    background:rgb(0, 0, 0);
+    color:white;
     display: flex;
     justify-content: space-between;
-    align-content: center;
-    padding: 0.2rem;
-    opacity: 1;
-    z-index: 100;
+    align-items: center;
+    z-index:100;
+    height: 100px;
   }
   .navbar{
     display: flex;
     justify-content: space-between;
-
     gap: 40px;
     border: solid rgb(51, 44, 3);
     padding: 15px 40px;
@@ -100,7 +94,6 @@ import { mapActions, mapGetters } from 'vuex';
     border-width: thin;
     font-weight:100;
     margin-left: 150px;
-
   }
   .nav-btn{
     display: flex;
@@ -109,15 +102,14 @@ import { mapActions, mapGetters } from 'vuex';
     align-items: center;
     gap: 5px;
   }
-
+ 
  .logo > img {
   margin-left: 3rem;
  }
 /*   
   img{
-    width:180px;
+    width:170px;
     height:90px;
-
     margin-left: 120px;
   } */
   .logedOut{
@@ -126,45 +118,22 @@ import { mapActions, mapGetters } from 'vuex';
     margin-right: 100px;
   }
   .authButton{
-    color:#572b9e;
-    font-size: 1.1rem;
-    overflow: hidden;
-    cursor: pointer;
-    display: inline-block;
-    padding: 0.25em 1em;
-    border: currentColor 0.2em solid;
-    border-radius: 0.25em;
-    background: rgb(27, 6, 39);
-    text-shadow: 0 0 0.10025em hsl(0 0% 100%/0.3),0 0 2em currentColor ;
-    font-weight: 900;
-    box-shadow: inset 0 0 0.5em currentColor, 0 0 0.5em currentColor;
-    position: relative;
-  }
-  .authButton::before{
-    content:"";
-    position:absolute;
-    background: #8e45f5;
-    top: 120%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
-    filter: blur(1em)
-  }
-  .authButton:hover{
-    background:#8e45f5;
-    color:#180c2c ;
-    text-shadow: none;
+    padding:3px 30px;
+    border: none;
+    border-radius: 20px;
+    color:white;
+    background-image: radial-gradient(
+      rgb(37, 7, 56) 70%,  
+      rgb(95, 16, 148)
+   );
   }
   a{
     text-decoration: none;
-    color:rgb(133, 76, 207);
+    color: white;
   }
   .navPart{
     display: flex;
     margin: 0;
-    color: #8e45f5;
-    font-size: 1.2rem;
   }
   .navPart > a {
     font-family: "Inter", sans-serif;
@@ -174,7 +143,7 @@ import { mapActions, mapGetters } from 'vuex';
     font-style: normal;
     opacity: 60%;
   }
-
+ 
   /* .gg-play-button-o {
     box-sizing: border-box;
     position: relative;
@@ -226,25 +195,25 @@ import { mapActions, mapGetters } from 'vuex';
     transform-origin: bottom left;
     transform: rotate(45deg)
 } */
-
-
+ 
+ 
 .button{
     cursor: poRaleway;
     margin-bottom: 15px;
     padding: 10px 30px;
     border: none;
     border-radius: 60px;
-
+ 
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
-
+ 
     line-height: 20px;
     letter-spacing: 0.5px;
 }
-
-
-
+ 
+ 
+ 
 .login-btn, .register-btn{
     background: rgba(140, 69, 255, 0.4);
     color: white;
@@ -257,12 +226,12 @@ import { mapActions, mapGetters } from 'vuex';
     transition: all 0.3s ease-in-out;
     /* box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 25%); */
 }
-
+ 
 .login-btn:hover, .register-btn:hover{
     background-color: transparent;
     color: #FFFFFF;
     border: 2px #FFFFFF solid;
 }
-
-
+ 
+ 
 </style>

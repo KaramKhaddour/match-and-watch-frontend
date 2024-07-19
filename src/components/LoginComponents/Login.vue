@@ -164,18 +164,20 @@ export default{
         ...mapActions('auth',{
             login:LOGIN_ACTION,
         }),
-        onLogin(){
+        async onLogin(){
           let validations=new SignupValidations(this.email,this.password);
           this.errors=validations.checkValidations();
           if('email' in this.errors || 'password' in this.errors){
             return false;
           }
-          this.login({email:this.email, password: this.password,}).catch(
-            error =>{
-                this.error=error;
-            }
-          );
-          this.$router.push('/quiz')
+          await this.login({ email: this.email, password: this.password}).then(() => {
+             if (this.error === '') {
+                 this.$router.push('/quiz');
+             }
+          }).catch(error => {
+             console.log("Error caught:", error);
+             this.error = error;
+          });
         },
     },
 };

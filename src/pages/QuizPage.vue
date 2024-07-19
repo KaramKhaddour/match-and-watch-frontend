@@ -82,7 +82,7 @@
           this.currentQuestionIndex++;
           this.selectedOption = '';
         } else {
-          window.location.href = '/matches'; 
+          window.location.href = '/matche'; 
         }
       },
       previousQuestion() {
