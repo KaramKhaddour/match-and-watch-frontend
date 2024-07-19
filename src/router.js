@@ -6,14 +6,59 @@ import HomePage from './pages/HomePage.vue'
 import ProfilePage from './pages/ProfilePage.vue'
 import MatchesPage from './pages/MatchesPage.vue'
 import HistoryPage from './pages/HistoryPage'
+import store from './store/store';
+import { IS_USER_AUTHENTICATE_GETTER } from './store/storeconstants';
 const routes =  [
-    {path:'/login', component:LoginPage},
-    {path:'/signup', component:SignUpPage},
-    {path:'/quiz', component:QuizPage},
-    {path:'/profile', component:ProfilePage},
-    {path:'/matches', component:MatchesPage},
-    {path:'/history', component:HistoryPage},
-    {path:'/',component:HomePage},
+    {
+        path:'/login',
+        name:'Login', 
+        component:LoginPage,
+        meta:{
+            auth:false
+        },
+    },
+    {
+        path:'/signup',
+        name:'SignUp', 
+        component:SignUpPage,
+        meta:{
+            auth:false
+        },
+    },
+    {
+        path:'/quiz',
+        name:'Quiz',
+        component:QuizPage,
+        meta:{
+            auth:true
+        },
+    },
+    {
+        path:'/profile',
+        name:'Profile', 
+        component:ProfilePage
+    },
+    {
+        path:'/matches',
+        name:'Matches',
+        component:MatchesPage,
+        meta:{
+            auth:true
+        },
+    },
+    {
+        path:'/history', 
+        name:'History',
+        component:HistoryPage,
+        meta:{
+            auth:true
+        },
+    },
+    {
+        path:'/',
+        name:'Home',
+        component:HomePage
+    },
 ];
 
 const router=createRouter(
@@ -22,5 +67,27 @@ const router=createRouter(
         routes,
     }
 );
+
+router.beforeEach((to, from, next) => {
+    //console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+    //console.log(to) 
+    //console.log(store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`])
+
+    if (
+        'auth' in to.meta &&
+        to.meta.auth &&
+        !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+    ) {
+        next('/login');
+    } else if (
+        'auth' in to.meta &&
+        !to.meta.auth &&
+        store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+    ) {
+        next('/');
+    } else {
+        next();
+    }
+});
 
 export default router;

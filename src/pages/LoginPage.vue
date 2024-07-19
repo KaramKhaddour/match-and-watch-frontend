@@ -66,7 +66,7 @@
                     </div>
                     <p>If you don't have an account you can <a href="/signup">
                         Sign up
-                    </a></p>
+                    </a ></p>
                 </form>
             </div>
       </div>
@@ -92,18 +92,20 @@ export default{
         ...mapActions('auth',{
             login:LOGIN_ACTION,
         }),
-        onLogin(){
+        async onLogin(){
           let validations=new SignupValidations(this.email,this.password);
           this.errors=validations.checkValidations();
           if('email' in this.errors || 'password' in this.errors){
             return false;
           }
-          this.login({email:this.email, password: this.password,}).catch(
-            error =>{
-                this.error=error;
-            }
-          );
-          this.$router.push('/quiz')
+          await this.login({ email: this.email, password: this.password}).then(() => {
+             if (this.error === '') {
+                 this.$router.push('/quiz');
+             }
+          }).catch(error => {
+             console.log("Error caught:", error);
+             this.error = error;
+          });
         },
     },
 };
@@ -111,16 +113,16 @@ export default{
 
 <style scoped>
 .loginContainer{
-    height:150vh;
+    height:110vh;
     width: 100%;
     padding: 0;
     margin: 0;
     display: flex;
+
     background-image: radial-gradient(
         #8C45FF,
       black
    );
-   
 }
 .loginForm{
     position:absolute;

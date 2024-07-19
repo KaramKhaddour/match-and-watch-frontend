@@ -10,28 +10,25 @@
           </a>
        </div>
        <div class="navPart">
-          <i class="gg-check-o"></i>
           <a href="/history" class="history">
             History
         </a>
        </div>
        <div class="navPart">
-           <i class="gg-play-button-o"></i>
-           <a>Movies</a>
+           <a>About</a>
       </div>
       <div class="navPart">
-          <i class="gg-play-button-o"></i>
           <a class="series">
-            Series
+            Contact
         </a>
       </div>
     </nav>
-
-    <div class="logedIn">
-
+    
+    <div class="logedIn" v-if="isAuthenticated">
+      <a href="#" @click.prevent="onLogout()"><button class="authButton">Logout</button></a>
     </div>
-
-    <div class="logedOut">
+    
+    <div class="logedOut" v-if="!isAuthenticated">
        <a href="/login"><button class="authButton">Login</button></a>
        <a href="/signUp"><button class="authButton">Sign Up</button></a>
     </div>
@@ -39,113 +36,104 @@
 </template>
 
 <script>
-   export default{};
+import { IS_USER_AUTHENTICATE_GETTER, LOGOUT_ACTION } from '@/store/storeconstants';
+import { mapActions, mapGetters } from 'vuex';
+
+   export default{
+      computed:{
+        ...mapGetters('auth', {
+          isAuthenticated:IS_USER_AUTHENTICATE_GETTER
+        })
+      },
+      methods:{
+        ...mapActions('auth',{
+            logout:LOGOUT_ACTION   
+        }),
+        onLogout(){
+          this.logout()
+        }
+      }
+   };
 </script>
 
 <style scoped>
   .header{
-    position: sticky;
-    top: 0;
-    left:0;
-    width: 100%;
-    padding: 20px 100px;
-    background:rgb(0, 0, 0);
-    color:white;
+    position: relative;
+    top:0;
+    left: 0;
+    background: rgb(0, 0, 0);
+    color: white;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    z-index:100;
-    height: 100px;
+    align-content: center;
+    padding: 0.2rem;
+    opacity: 1;
+    z-index: 100;
   }
   .navbar{
     display: flex;
     justify-content: space-between;
-    gap: 40px;
-    border: solid rgb(51, 44, 3);
-    padding: 10px 100px;
-    border-radius: 50px;
-    border-width: thin;
-    font-weight:100;
-    margin-left: 150px;
+    gap: 3rem;
+    padding: 0rem 5rem;
+    font-weight:500;
+    height: 4rem;
+    margin-top: 0.75rem;
   }
   img{
-    width:170px;
+    width:180px;
     height:90px;
-    margin-left: 120px;
+    margin-left: 5rem;
   }
   .logedOut{
     display: flex;
     gap: 30px;
-    margin-right: 130px;
+    margin-right: 5rem;
+    margin-top:1.2%;
+  }
+  .logedIn{
+     margin-right: 5rem;
+    margin-top:1.2%;
   }
   .authButton{
-    padding:3px 30px;
-    border: none;
-    border-radius: 20px;
-    color:white;
-    background-image: radial-gradient(
-      rgb(37, 7, 56) 70%,  
-      rgb(95, 16, 148)
-   );
+    color:#572b9e;
+    font-size: 1.1rem;
+    overflow: hidden;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.25em 1em;
+    border: currentColor 0.2em solid;
+    border-radius: 0.25em;
+    background: rgb(27, 6, 39);
+    text-shadow: 0 0 0.10025em hsl(0 0% 100%/0.3),0 0 2em currentColor ;
+    font-weight: 900;
+    box-shadow: inset 0 0 0.5em currentColor, 0 0 0.5em currentColor;
+    position: relative;
+  }
+  .authButton::before{
+    content:"";
+    position:absolute;
+    background: #8e45f5;
+    top: 120%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+    filter: blur(1em)
+  }
+  .authButton:hover{
+    background:#8e45f5;
+    color:#180c2c ;
+    text-shadow: none;
   }
   a{
     text-decoration: none;
-    color: white;
+    color:rgb(133, 76, 207);
   }
   .navPart{
     display: flex;
     margin: 0;
+    color: #8e45f5;
+    font-size: 1.2rem;
   }
-  .gg-play-button-o {
-    box-sizing: border-box;
-    position: relative;
-    display: block;
-    transform: scale(var(--ggs,1));
-    width: 20px;
-    height: 20px;
-    border: 1px solid;
-    border-radius: 20px;
-    margin-right: 5px;
-    margin-top: 1px;
-}
-.gg-play-button-o::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    width: 0;
-    height: 10px;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 6px solid;
-    top: 4px;
-    left: 7px
-}.gg-check-o {
-    box-sizing: border-box;
-    position: relative;
-    display: block;
-    transform: scale(var(--ggs,1));
-    width: 20px;
-    height: 20px;
-    border: 1px solid;
-    margin-right: 5px;
-    margin-top: 1px;
-    border-radius: 100px
-}
-.gg-check-o::after {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    left: 3px;
-    top: -1px;
-    width: 6px;
-    height: 10px;
-    border-color: currentColor;
-    border-width: 0 2px 2px 0;
-    border-style: solid;
-    transform-origin: bottom left;
-    transform: rotate(45deg)
-}
-
+  
 </style>

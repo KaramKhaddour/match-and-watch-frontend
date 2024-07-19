@@ -5,11 +5,11 @@ export default {
     namespaced:true,
     state(){
         return {
-           token:'',
-           email:'',
-           userId:'',
-           refreshToken:'',
-           expiresIn:'',
+           authenticated:0,
+           access_token:'',
+           expires_in:0,
+           refresh_token:'',
+           refresh_token_expires_in:0,
         };
     },
     mutations,
