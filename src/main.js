@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store/store'
 import axios from 'axios';
+import './assets/style.css'
+import "primeflex/primeflex.css";
 
 const app= createApp(App);
 
