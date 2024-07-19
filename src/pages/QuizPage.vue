@@ -1,104 +1,161 @@
 <template>
-
-    <div class="quizContainer" >
-      <div class="content-container" :style="{opacity: showForm ? '1' : '0', transform: showForm ? 'translateY(0)' : 'translateY(100px)' }">
-          <h1 class="quiz-title Raleway">Match +</h1>
-          <div class="display-container flex flex-column justify-content-center align-items-center">
-            <div class="flex flex-column justify-content-center question-header">
-              <p class="question-number Inter mb-3">Question {{ (currentQuestionIndex + 1) }} of {{ quizArray.length }} </p>
-              <p class="question Raleway mb-3">{{ currentQuestion.question }}</p>
-
-            </div>
-            <div v-if="currentQuestion.options.length" class="questions-container">
-              <div v-for="(option, index) in currentQuestion.options" :key="index" :class="['Raleway','optionDes',{ 'selected-option': isSelected(option)}]">
-                <input type="radio" :id="'option' + index" name="option" :value="option" v-model="selectedOption" class="Raleway optionDes">
-                <label :for="'option' + index"  class="optionLabel">{{ option }}</label>
-              </div>
-            </div>
-            <div v-else>
-              <textarea type="text" v-model="userInput" rows="6" placeholder="Write whatever you want" class="inputText write-container">
-                </textarea>
-            </div>
-            <div class="buttons">
-              <button v-if="currentQuestionIndex > 0"  @click="previousQuestion" class="button Raleway previous-btn" >
-              Previous
-              </button>
-              <button @click="nextQuestion" class="button Raleway next-btn" :class="{ 'finish-button': isLastQuestion }">
-              {{ isLastQuestion ? 'Finish' : 'Next' }}
-              </button>
-            </div>
-
+  <div class="quizContainer">
+    <div v-if="!modeSelected" class="content-container">
+      <h1 class="quiz-title Raleway">Choose Quiz Mode</h1>
+      <div class="display-container flex flex-column justify-content-center align-items-center">
+        <div v-if="currentQuestion.options.length" :class="['questions-container', optionContainerClass]">
+          <div v-for="(option, index) in currentQuestion.options" :key="index" :class="['Inter','optionDes',{ 'selected-option': isSelected(option)}]">
+            <input type="radio" :id="'option' + index" name="option" :value="option" v-model="selectedOption" class="Inter optionDes">
+            <label :for="'option' + index"  class="optionLabel">{{ option }}</label>
           </div>
-
+        </div>
       </div>
-
-
-      <div class="blur-circle"></div>
-      <div class="blur-circle"></div>
-      <div class="films-container"></div>
-
     </div>
+    <div v-else-if="modeSelected === 'multiple' && !sessionActionSelected" class="content-container">
+      <h1 class="quiz-title Raleway">Match +</h1>
+      <div class="display-container flex flex-column justify-content-center align-items-center">
+        <div class="flex flex-column justify-content-center question-header">
+          <p class="question Raleway mb-3">Do you want to start a new session or join a current one?</p>
+        </div>
+        <div class="buttons">
+          <button @click="handleSessionAction('create')" class="button optionDes Raleway">Create New Session</button>
+          <button @click="handleSessionAction('join')" class="button Raleway">Join Session</button>
+        </div>
+      </div>
+    </div>
+    <div v-else-if="modeSelected === 'multiple' && sessionActionSelected === 'create'" class="content-container">
+      <h1 class="quiz-title Raleway">Session Created</h1>
+      <div class="display-container flex flex-column justify-content-center align-items-center">
+        <p class="session-code">Your Session Code: {{ sessionCode }}</p>
+        <button @click="startQuiz" class="button Raleway">Start Quiz</button>
+      </div>
+    </div>
+    <div v-else-if="modeSelected === 'multiple' && sessionActionSelected === 'join'" class="content-container">
+      <h1 class="quiz-title Raleway">Join Session</h1>
+      <div class="display-container flex flex-column justify-content-center align-items-center">
+        <input type="text" v-model="joinCode" placeholder="Enter Session Code" class="inputText">
+        <button @click="joinSession" class="button Raleway">Join</button>
+      </div>
+    </div>
+    <div v-else :style="{opacity: showForm ? '1' : '0', transform: showForm ? 'translateY(0)' : 'translateY(100px)' }"  class="content-container">
+      <h1 class="quiz-title Raleway">Match +</h1>
+      <div class="display-container flex flex-column justify-content-center align-items-center">
+        <div class="flex flex-column justify-content-center question-header">
+          <p class="question-number Inter mb-3">Question {{ (currentQuestionIndex + 1) }} of {{ quizArray.length }} </p>
+          <p class="question Raleway mb-3">{{ currentQuestion.question }}</p>
+        </div>
+        <div v-if="currentQuestion.options.length" :class="['questions-container', optionContainerClass]">
+          <div v-for="(option, index) in currentQuestion.options" :key="index" :class="['Inter','optionDes',{ 'selected-option': isSelected(option)}]">
+            <input type="radio" :id="'option' + index" name="option" :value="option" v-model="selectedOption" class="Inter optionDes">
+            <label :for="'option' + index"  class="optionLabel">{{ option }}</label>
+          </div>
+        </div>
+        <div v-else>
+          <textarea type="text" v-model="userInput" rows="6" placeholder="Write whatever you want" class="inputText write-container"></textarea>
+        </div>
+        <div class="buttons">
+          <button v-if="currentQuestionIndex > 0" @click="previousQuestion" class="button Raleway previous-btn">Previous</button>
+          <button @click="nextQuestion" class="button Raleway next-btn" :class="{ 'finish-button': isLastQuestion }">{{ isLastQuestion ? 'Finish' : 'Next' }}</button>
+        </div>
+      </div>
+    </div>
+    <div class="blur-circle"></div>
+    <div class="blur-circle"></div>
+    <div class="films-container"></div>
+  </div>
+</template>
 
-    <!-- <div class="black-box"></div> -->
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        showForm: false,
-        currentQuestionIndex: 0,
-        selectedOption: '',
-        userInput: '',
+<script>
+export default {
+  data() {
+    return {
+      showForm: false,
+      modeSelected: null,
+      sessionActionSelected: null,
+      currentQuestionIndex: 0,
+      selectedOption: '',
+      userInput: '',
+      sessionCode: '',
+      joinCode: '',
       quizArray: [
         { id: "0", question: "Do you want to start new session or join current one?", options: ["new", "join"] },
-        { id: "1", question: "How do you feel now?", options: ["Scared", "Sad", "Happy", "Excited", "Frustrated", "Angry", "Tense", "Nostalgic"] },
+        { id: "1", question: "How do you feel now?", options: ["Happy", "Surprised", "Angry", "Scared", "Sad", "Excited", "Frustrated", "Tense", "Nostalgic"] },
         { id: "2", question: "What kind of show do you want to see?", options: ["Movie", "Series", "Anime", "Cartoon"] },
-        { id: "3", question: "What show genre do you want to watch?", options: ['crime', 'history', 'reality', 'family', 'documentation', 'romance', 'comedy', 'european', 'sport', 'drama', 'thriller'] },
-        { id: "4", question: "What are the avilable platforms for you?", options: ["HBO Max", "Netflix", "Amazon Prime", "Disney+", "Paramount"] },
-        { id: "5", question: "What is the pregeeref release year for you?", options: ["After 2010", "After 1990", "After 1970", "Before 1970"] },
-        { id: "6", question: "You can choose the age resriction for our recommendation", options: ["Okay for all", "PG-13", "R", "Adults only"] },
-        { id: "5", question: "What is the preferred period of the show?", options: ["Between 1 and 1.5 hours", "Between 1.5 and 2 hours", "Between 2 and 3 hours", "Over 3 hours"] },
-        { id: "6", question: "Write whatever you want", options: [] },
-      ],
-      };
+        { id: "3", question: "What show genre do you want to watch?", options: ['Music','Animation','Scifi','Horror','Fantasy','Action','Western','War','Crime','History','Reality','Family','Documentation','Romance','Comedy','European','Sport','Drama','Thriller'] },
+        { id: "4", question: "What are the available platforms for you?", options: ["HBO Max", "Netflix", "Amazon Prime", "Disney+", "Paramount"] },
+        { id: "5", question: "What is the preferred release year for you?", options: ["After 2010", "After 1990", "After 1970", "Before 1970"] },
+        { id: "6", question: "You can choose the age restriction for our recommendation", options: ["Okay for all", "PG-13", "R", "Adults only"] },
+        { id: "7", question: "What is the preferred period of the show?", options: ["Between 1 and 1.5 hours", "Between 1.5 and 2 hours", "Between 2 and 3 hours", "Over 3 hours"] }
+      ]
+    };
+  },
+  computed: {
+    currentQuestion() {
+      return this.quizArray[this.currentQuestionIndex];
     },
-    computed: {
-      currentQuestion() {
-        return this.quizArray[this.currentQuestionIndex];
-      },
-      isLastQuestion() {
-        return this.currentQuestionIndex === this.quizArray.length - 1;
+    isLastQuestion() {
+      return this.currentQuestionIndex === this.quizArray.length - 1;
+    },
+    optionContainerClass() {
+      const optionCount = this.currentQuestion.options.length;
+      if (optionCount <= 2) {
+        return 'two-options';
+      } else if (optionCount <= 5) {
+        return 'four-options';
+      } else if (optionCount <= 10) {
+        return 'ten-options';
+      } else {
+        return 'many-options';
+      }
+    }
+  },
+  created() {
+    setTimeout(() => {
+      this.showForm = true;
+    }, 300);
+  },
+  methods: {
+    handleModeSelection(mode) {
+      this.modeSelected = mode;
+    },
+    handleSessionAction(action) {
+      this.sessionActionSelected = action;
+      if (action === 'create') {
+        this.sessionCode = Math.random().toString(36).substring(2, 8).toUpperCase(); // Generate random session code
       }
     },
-    created(){
-            setTimeout(() => {
-                this.showForm = true;
-            }, 300)
+    startQuiz() {
+      this.currentQuestionIndex = 1; // Skip the first question
     },
-    methods: {
-      nextQuestion() {
-        if (!this.isLastQuestion) {
-          this.currentQuestionIndex++;
-          this.selectedOption = '';
-        } else {
-          window.location.href = '/matche'; 
-        }
-      },
-      previousQuestion() {
-        if (this.currentQuestionIndex > 0) {
-          this.currentQuestionIndex--;
-        }
-      },
-      isSelected(option) {
-        if (this.selectedOption === option){
-          console.log("hello");
-        }
-        return this.selectedOption === option;
+    joinSession() {
+      if (this.joinCode === this.sessionCode) {
+        this.startQuiz();
+      } else {
+        alert('Invalid session code!');
+      }
+    },
+    nextQuestion() {
+      if (!++++this.isLastQuestion) {
+        this.currentQuestionIndex++;
+        this.selectedOption = '';
+      } else {
+        window.location.href = '/matches'; 
+      }
+    },
+    previousQuestion() {
+      if (this.currentQuestionIndex > 0) {
+        this.currentQuestionIndex--;
+      }
+    },
+    isSelected(option) {
+      return this.selectedOption === option;
     }
-    },
-  };
-  </script>
+  }
+}
+</script>
+
+
+
   
   <style scoped>
   html, body {
@@ -159,11 +216,68 @@
 }
 
 .questions-container{
-  width: 80%;
+  /* width: 100%; */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+.two-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  row-gap: 15px;
+  column-gap: 15px; 
+}
+
+.two-options > div {
+  width: 200px;
+  margin: 0;
+}
+
+.four-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 15px;
+  column-gap: 15px;
+}
+
+.four-options > div {
+  width: 300px;
+  margin: 0;
+}
+
+/* .four-options > div {
+  width: 150px;
+  margin: 0;
+} */
+
+.ten-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 15px;
+  column-gap: 15px;
+  margin-top: 20px;
+}
+
+.ten-options > div {
+  width: 150px;
+  margin: 0;
+}
+
+.many-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 15px;
+  column-gap: 15px;
+  margin-top: 20px;
+}
+
+.many-options > div {
+  width: 150px;
+  margin: 0;
+}
+
   
   /* .quizContainer {
     height: 150vh;
@@ -230,9 +344,10 @@
     box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
 
     padding: 30px;
-    width: 36vw;
-    height: 500px;
-    max-width: 600px;
+    /* width: 36vw; */
+    height: 600px;
+    width: 700px;
+    /* max-width: 600px; */
     border-radius: 30px;
     z-index: 1;
     /* margin-top: 20px; */
