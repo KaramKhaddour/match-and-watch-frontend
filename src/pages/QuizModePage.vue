@@ -1,75 +1,45 @@
 <template>
   <div class="quizContainer">
-    <div v-if="!modeSelected" class="content-container">
-      <h1 class="quiz-title Raleway">Choose Quiz Mode</h1>
+    <!-- Question 0 -->
+    <div v-show="showForm === 0" class="content-container">
       <div class="display-container flex flex-column justify-content-center align-items-center">
+        <h1 class="quiz-title Raleway">Choose the Quiz Mode</h1>
         <div v-if="currentQuestion.options.length" :class="['questions-container', optionContainerClass]">
-          <div v-for="(option, index) in currentQuestion.options" :key="index" :class="['Inter','optionDes',{ 'selected-option': isSelected(option)}]">
-            <input type="radio" :id="'option' + index" name="option" :value="option" v-model="selectedOption" class="Inter optionDes">
-            <label :for="'option' + index"  class="optionLabel">{{ option }}</label>
-          </div>
+          <input type="radio" id="option0" name="option" value="oneUser" v-model="selectedOption" class="Inter optionDes">
+          <label for="option0" class="Inter optionDes optionLabel" @click="redirectToOneUserQuiz">One User</label>
+          <input type="radio" id="option1" name="option" value="multipleUsers" v-model="selectedOption" class="Inter optionDes">
+          <label for="option1" class="Inter optionDes optionLabel" @click="handleModeSelection">Multiple Users</label>
         </div>
       </div>
     </div>
-    <div v-else-if="modeSelected === 'multiple' && !sessionActionSelected" class="content-container">
-      <h1 class="quiz-title Raleway">Match +</h1>
+
+    <!-- Question 1 -->
+    <div v-show="showForm === 1" class="content-container">
       <div class="display-container flex flex-column justify-content-center align-items-center">
-        <div class="flex flex-column justify-content-center question-header">
-          <p class="question Raleway mb-3">Do you want to start a new session or join a current one?</p>
-        </div>
-        <div class="buttons">
-          <button @click="handleSessionAction('create')" class="button optionDes Raleway">Create New Session</button>
-          <button @click="handleSessionAction('join')" class="button Raleway">Join Session</button>
-        </div>
-      </div>
-    </div>
-    <div v-else-if="modeSelected === 'multiple' && sessionActionSelected === 'create'" class="content-container">
-      <h1 class="quiz-title Raleway">Session Created</h1>
-      <div class="display-container flex flex-column justify-content-center align-items-center">
-        <p class="session-code">Your Session Code: {{ sessionCode }}</p>
-        <button @click="startQuiz" class="button Raleway">Start Quiz</button>
-      </div>
-    </div>
-    <div v-else-if="modeSelected === 'multiple' && sessionActionSelected === 'join'" class="content-container">
-      <h1 class="quiz-title Raleway">Join Session</h1>
-      <div class="display-container flex flex-column justify-content-center align-items-center">
-        <input type="text" v-model="joinCode" placeholder="Enter Session Code" class="inputText">
-        <button @click="joinSession" class="button Raleway">Join</button>
-      </div>
-    </div>
-    <div v-else :style="{opacity: showForm ? '1' : '0', transform: showForm ? 'translateY(0)' : 'translateY(100px)' }"  class="content-container">
-      <h1 class="quiz-title Raleway">Match +</h1>
-      <div class="display-container flex flex-column justify-content-center align-items-center">
-        <div class="flex flex-column justify-content-center question-header">
-          <p class="question-number Inter mb-3">Question {{ (currentQuestionIndex + 1) }} of {{ quizArray.length }} </p>
-          <p class="question Raleway mb-3">{{ currentQuestion.question }}</p>
-        </div>
+        <h1 class="quiz-title Raleway">Choose the Session Action</h1>
         <div v-if="currentQuestion.options.length" :class="['questions-container', optionContainerClass]">
-          <div v-for="(option, index) in currentQuestion.options" :key="index" :class="['Inter','optionDes',{ 'selected-option': isSelected(option)}]">
-            <input type="radio" :id="'option' + index" name="option" :value="option" v-model="selectedOption" class="Inter optionDes">
-            <label :for="'option' + index"  class="optionLabel">{{ option }}</label>
-          </div>
-        </div>
-        <div v-else>
-          <textarea type="text" v-model="userInput" rows="6" placeholder="Write whatever you want" class="inputText write-container"></textarea>
-        </div>
-        <div class="buttons">
-          <button v-if="currentQuestionIndex > 0" @click="previousQuestion" class="button Raleway previous-btn">Previous</button>
-          <button @click="nextQuestion" class="button Raleway next-btn" :class="{ 'finish-button': isLastQuestion }">{{ isLastQuestion ? 'Finish' : 'Next' }}</button>
+          <input type="radio" id="createSession" name="sessionAction" value="create" v-model="sessionActionSelected" class="Inter optionDes">
+          <label for="createSession" class="Inter optionDes optionLabel" @click="handleSessionAction('create')">Create a session</label>
+          <input type="radio" id="joinSession" name="sessionAction" value="join" v-model="sessionActionSelected" class="Inter optionDes">
+          <label for="joinSession" class="Inter optionDes optionLabel" @click="handleSessionAction('join')">Join a session</label>
         </div>
       </div>
     </div>
+
+    <!-- Background and other elements -->
     <div class="blur-circle"></div>
     <div class="blur-circle"></div>
     <div class="films-container"></div>
   </div>
 </template>
 
+
+
 <script>
 export default {
   data() {
     return {
-      showForm: false,
+      showForm: 0, // Start with the initial question
       modeSelected: null,
       sessionActionSelected: null,
       currentQuestionIndex: 0,
@@ -78,7 +48,7 @@ export default {
       sessionCode: '',
       joinCode: '',
       quizArray: [
-        { id: "0", question: "Do you want to start new session or join current one?", options: ["new", "join"] },
+        { id: "0", question: "Do you want to start a new session or join a current one?", options: ["new", "join"] },
         { id: "1", question: "How do you feel now?", options: ["Happy", "Surprised", "Angry", "Scared", "Sad", "Excited", "Frustrated", "Tense", "Nostalgic"] },
         { id: "2", question: "What kind of show do you want to see?", options: ["Movie", "Series", "Anime", "Cartoon"] },
         { id: "3", question: "What show genre do you want to watch?", options: ['Music','Animation','Scifi','Horror','Fantasy','Action','Western','War','Crime','History','Reality','Family','Documentation','Romance','Comedy','European','Sport','Drama','Thriller'] },
@@ -109,53 +79,25 @@ export default {
       }
     }
   },
-  created() {
-    setTimeout(() => {
-      this.showForm = true;
-    }, 300);
-  },
   methods: {
     handleModeSelection(mode) {
-      this.modeSelected = mode;
+      this.showForm = 1;  
     },
     handleSessionAction(action) {
       this.sessionActionSelected = action;
       if (action === 'create') {
-        this.sessionCode = Math.random().toString(36).substring(2, 8).toUpperCase(); // Generate random session code
+         window.location.href ='/create'
+      }
+      else{
+        window.location.href ='/join'
       }
     },
-    startQuiz() {
-      this.currentQuestionIndex = 1; // Skip the first question
-    },
-    joinSession() {
-      if (this.joinCode === this.sessionCode) {
-        this.startQuiz();
-      } else {
-        alert('Invalid session code!');
-      }
-    },
-    nextQuestion() {
-      if (!this.isLastQuestion) {
-        this.currentQuestionIndex++;
-        this.selectedOption = '';
-      } else {
-        window.location.href = '/matches'; 
-      }
-    },
-    previousQuestion() {
-      if (this.currentQuestionIndex > 0) {
-        this.currentQuestionIndex--;
-      }
-    },
-    isSelected(option) {
-      return this.selectedOption === option;
+    redirectToOneUserQuiz() {
+      window.location.href = '/oneUserQuiz';
     }
   }
 }
 </script>
-
-
-
   
   <style scoped>
   html, body {
@@ -190,6 +132,8 @@ export default {
   color: white;
   text-align: center;
   margin: 20px;
+  margin-top:-180px;
+  margin-bottom:60px;
 }
 
 /* .quiz-title > h1 {
@@ -216,7 +160,7 @@ export default {
 }
 
 .questions-container{
-  /* width: 100%; */
+  width: 80%; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -384,6 +328,7 @@ export default {
     display: block;
     padding: 10px;
     cursor: pointer;
+    width:300px;
     }
 
     /* input[type="radio"]:checked + .optionLabel {
@@ -461,10 +406,6 @@ export default {
     width: fit-content;
     height: 40px;
     margin-left: 5px;
-    /* background-image: radial-gradient(rgb(37, 7, 56) 70%, rgb(95, 16, 148));
-    border: solid rgb(51, 44, 3) 1px;
-    color: white;
-    margin-left: 450px; */
   }
 
 
@@ -523,9 +464,9 @@ export default {
     color: #FFFFFF;
     border: 2px #FFFFFF solid;
 }
-
-
-
+.question1{
+  display:none;
+}
   </style>
   
 

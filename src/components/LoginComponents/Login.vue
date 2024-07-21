@@ -172,7 +172,7 @@ export default{
           }
           await this.login({ email: this.email, password: this.password}).then(() => {
              if (this.error === '') {
-                 this.$router.push('/quiz');
+                 this.$router.push('/quizMode');
              }
           }).catch(error => {
              console.log("Error caught:", error);

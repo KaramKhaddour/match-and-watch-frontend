@@ -5,7 +5,7 @@
     </a>
     <nav class="navbar">
        <div class="navPart">
-          <a href="/quiz" class="nav-btn">
+          <a href="/quizMode" class="nav-btn">
               <span>
                 <img src="@/assets/images/navbar/plus.svg" alt="match-plus">
               </span>
@@ -38,7 +38,7 @@
       </div>
     </nav>
  
-    <div class="logedIn" v-if="isAuthenticated">
+    <div class="logedOut" v-if="isAuthenticated">
       <RouterLink to="/" @click.prevent="onLogout()" class="register-btn button">Logout</RouterLink>
     </div>
     <div v-else class="logedOut">

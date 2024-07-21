@@ -16,3 +16,5 @@ export default {
     getters,
     actions,
 };
+
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJLYXJhbTEzNTQ5QGdtYWlsLmNvbSIsImlkIjoiZGNmMjdlZTYtYjIzYy00NzQxLWJhYzktODA1MGIwMGYzZTBlIiwibmFtZSI6IkthcmFtIiwic3VybmFtZSI6IktoYWRkb3VyIiwiZXhwIjoxNzIxNjMyMjA2LjkyNjI2Nn0.9IgjXq4mmtz8Dw3wd3jcFVWWdTEWMjA3T-f71oW31Fc

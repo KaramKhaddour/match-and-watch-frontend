@@ -85,7 +85,7 @@ export default{
           
         await this.signup({ email: this.email, password: this.password, name: this.firstName, surname: this.lastName }).then(() => {
              if (this.error === '') {
-                 this.$router.push('/quiz');
+                 this.$router.push('/quizMode');
              }
           }).catch(error => {
              console.log("Error caught:", error);

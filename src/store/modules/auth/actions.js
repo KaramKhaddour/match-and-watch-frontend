@@ -49,6 +49,7 @@ export default{
                 refresh_token:response.data.refresh_token,
                 refresh_token_expires_in:response.data.refresh_token_expires_in,
             };
+            console.log(response.data.access_token)
            localStorage.setItem('userData',JSON.stringify(tokenData))
            context.commit(SET_USER_TOKEN_DATA_MUTATION,tokenData)
         }

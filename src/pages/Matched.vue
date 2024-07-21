@@ -15,26 +15,87 @@
 
 <script>
 import axios from 'axios';
+import store from '@/store/store';
+import { GET_USER_TOKEN_GETTER } from '@/store/storeconstants';
 
 export default {
   name: 'App',
+  props: ['noSpace', 'sessionCode'],
   data() {
     return {
       movies: [],
     };
   },
-  mounted() {
-    let moviesFromBackend = null;
-    moviesFromBackend = [
-      { id: 'tt0241527', title: "Harry Potter and the Sorcerer's Stone", description: 'An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.', rating: '7.6' },
-      { id: 'tt0241527', title: "Harry Potter and the Sorcerer's Stone", description: 'An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.', rating: '7.6' },
-      { id: 'tt0241527', title: "Harry Potter and the Sorcerer's Stone", description: 'An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.', rating: '7.6' },
-    ];
-    for (let i = 0; i < moviesFromBackend.length; i++) {
-      let s = 'https://img.omdbapi.com/?apikey=ee3c8d4a&i=' + moviesFromBackend[i].id;
-      moviesFromBackend[i]['image'] = s;
+  async mounted() {
+    let moviesFromBackend = [];
+    if (this.noSpace) {
+      try {
+        let url="http://0.0.0.0:8000/api/movies?query_string="
+        url+=this.noSpace
+        console.log(this.noSpace)
+        let response = await axios.post(url);
+      //  console.log(response)
+        //moviesFromBackend=response.data
+        //console.log(moviesFromBackend)
+      }
+      catch (err) {
+        console.log(err)
+      }
     }
-    this.movies = moviesFromBackend;
+    else{
+       try{
+        let url="http://0.0.0.0:8000/close?session_code="
+        let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
+        url+=this.sessionCode;
+        url+="&token=";
+        url+=thistoken;
+        console.log(url)
+        let response = await axios.post(url);
+       }
+       catch(err){
+         console.log(err)
+       }
+    }
+    moviesFromBackend = [
+      {
+        id: 'tt0111161',
+        title: 'The Shawshank Redemption',
+        description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
+      },
+      {
+        id: 'tt0068646',
+        title: 'The Godfather',
+        description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.',
+      },
+      {
+        id: 'tt0071562',
+        title: 'The Godfather: Part II',
+        description: 'The early life and career of Vito Corleone in 1920s New York is portrayed while his son, Michael, expands and tightens his grip on his crime syndicate.',
+      }
+    ];
+    let promises = moviesFromBackend.map(movie => {
+            let url = 'https://img.omdbapi.com/?apikey=ee3c8d4a&i=' + movie.id;
+            return fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.url; 
+                })
+                .then(imageUrl => {
+                    movie.image = imageUrl; 
+                    return movie;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                    movie.image = require('@/assets/images/placeholder.jpg'); 
+                    return movie;
+                });
+        });
+
+        Promise.all(promises).then(updatedMovies => {
+            this.movies = updatedMovies;
+        });
   }
 };
 </script>
@@ -111,7 +172,7 @@ export default {
   background-position-y: center;
   top: -15vh;
   left: 15vw;
-  background: url(../assets/images/blur.png);
+  background: url('../assets/images/blur.png');
   z-index: 0;
 }
 
@@ -126,7 +187,7 @@ export default {
   background-position-x: center;
   background-position-y: center;
   top: 10vh;
-  background: url(../assets/images/films_container.png);
+  background: url('../assets/images/films_container.png');
   z-index: 0;
 }
 </style>

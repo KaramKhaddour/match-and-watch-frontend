@@ -1,61 +1,54 @@
 <template>
   <div class="quizContainer">
-    <div v-if="!modeSelected" class="content-container">
-      <h1 class="quiz-title Raleway">Choose Quiz Mode</h1>
-      <div class="display-container flex flex-column justify-content-center align-items-center">
-        <div v-if="currentQuestion.options.length" :class="['questions-container', optionContainerClass]">
-          <div v-for="(option, index) in currentQuestion.options" :key="index" :class="['Inter','optionDes',{ 'selected-option': isSelected(option)}]">
-            <input type="radio" :id="'option' + index" name="option" :value="option" v-model="selectedOption" class="Inter optionDes">
-            <label :for="'option' + index"  class="optionLabel">{{ option }}</label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-else-if="modeSelected === 'multiple' && !sessionActionSelected" class="content-container">
+    <div :style="{ opacity: showForm ? '1' : '0', transform: showForm ? 'translateY(0)' : 'translateY(100px)' }" class="content-container">
       <h1 class="quiz-title Raleway">Match +</h1>
       <div class="display-container flex flex-column justify-content-center align-items-center">
         <div class="flex flex-column justify-content-center question-header">
-          <p class="question Raleway mb-3">Do you want to start a new session or join a current one?</p>
-        </div>
-        <div class="buttons">
-          <button @click="handleSessionAction('create')" class="button optionDes Raleway">Create New Session</button>
-          <button @click="handleSessionAction('join')" class="button Raleway">Join Session</button>
-        </div>
-      </div>
-    </div>
-    <div v-else-if="modeSelected === 'multiple' && sessionActionSelected === 'create'" class="content-container">
-      <h1 class="quiz-title Raleway">Session Created</h1>
-      <div class="display-container flex flex-column justify-content-center align-items-center">
-        <p class="session-code">Your Session Code: {{ sessionCode }}</p>
-        <button @click="startQuiz" class="button Raleway">Start Quiz</button>
-      </div>
-    </div>
-    <div v-else-if="modeSelected === 'multiple' && sessionActionSelected === 'join'" class="content-container">
-      <h1 class="quiz-title Raleway">Join Session</h1>
-      <div class="display-container flex flex-column justify-content-center align-items-center">
-        <input type="text" v-model="joinCode" placeholder="Enter Session Code" class="inputText">
-        <button @click="joinSession" class="button Raleway">Join</button>
-      </div>
-    </div>
-    <div v-else :style="{opacity: showForm ? '1' : '0', transform: showForm ? 'translateY(0)' : 'translateY(100px)' }"  class="content-container">
-      <h1 class="quiz-title Raleway">Match +</h1>
-      <div class="display-container flex flex-column justify-content-center align-items-center">
-        <div class="flex flex-column justify-content-center question-header">
-          <p class="question-number Inter mb-3">Question {{ (currentQuestionIndex + 1) }} of {{ quizArray.length }} </p>
+          <p class="question-number Inter mb-3">Question {{ currentQuestionIndex + 1 }} of {{ quizArray.length }}</p>
           <p class="question Raleway mb-3">{{ currentQuestion.question }}</p>
         </div>
         <div v-if="currentQuestion.options.length" :class="['questions-container', optionContainerClass]">
-          <div v-for="(option, index) in currentQuestion.options" :key="index" :class="['Inter','optionDes',{ 'selected-option': isSelected(option)}]">
-            <input type="radio" :id="'option' + index" name="option" :value="option" v-model="selectedOption" class="Inter optionDes">
-            <label :for="'option' + index"  class="optionLabel">{{ option }}</label>
+          <div v-for="(option, index) in currentQuestion.options" :key="index" class="option-wrapper">
+            <input
+              v-if="isMultiSelect(currentQuestion)"
+              type="checkbox"
+              :id="'option' + index"
+              :value="option"
+              v-model="selectedOptions"
+              class="Inter optionDes"
+              style="display: none;"
+            />
+            <input
+              v-else
+              type="radio"
+              :id="'option' + index"
+              name="option"
+              :value="option"
+              v-model="selectedOption"
+              class="Inter optionDes"
+              style="display: none;"
+            />
+            <label :for="'option' + index" :class="['optionLabel', { 'selected-option': isSelected(option) }]">
+              {{ option }}
+            </label>
           </div>
         </div>
         <div v-else>
-          <textarea type="text" v-model="userInput" rows="6" placeholder="Write whatever you want" class="inputText write-container"></textarea>
+          <textarea
+            type="text"
+            v-model="userInput"
+            rows="6"
+            placeholder="Write whatever you want"
+            class="inputText write-container"
+          ></textarea>
         </div>
         <div class="buttons">
-          <button v-if="currentQuestionIndex > 0" @click="previousQuestion" class="button Raleway previous-btn">Previous</button>
-          <button @click="nextQuestion" class="button Raleway next-btn" :class="{ 'finish-button': isLastQuestion }">{{ isLastQuestion ? 'Finish' : 'Next' }}</button>
+          <button v-if="currentQuestionIndex > 0" @click="previousQuestion" class="button Raleway previous-btn">
+            Previous
+          </button>
+          <button @click="nextQuestion" class="button Raleway next-btn" :class="{ 'finish-button': isLastQuestion }">
+            {{ isLastQuestion ? 'Finish' : 'Next' }}
+          </button>
         </div>
       </div>
     </div>
@@ -74,15 +67,16 @@ export default {
       sessionActionSelected: null,
       currentQuestionIndex: 0,
       selectedOption: '',
+      selectedOptions: [],
       userInput: '',
       sessionCode: '',
       joinCode: '',
+      responses: [],
       quizArray: [
-        { id: "0", question: "Do you want to start new session or join current one?", options: ["new", "join"] },
-        { id: "1", question: "How do you feel now?", options: ["Happy", "Surprised", "Angry", "Scared", "Sad", "Excited", "Frustrated", "Tense", "Nostalgic"] },
-        { id: "2", question: "What kind of show do you want to see?", options: ["Movie", "Series", "Anime", "Cartoon"] },
-        { id: "3", question: "What show genre do you want to watch?", options: ['Music','Animation','Scifi','Horror','Fantasy','Action','Western','War','Crime','History','Reality','Family','Documentation','Romance','Comedy','European','Sport','Drama','Thriller'] },
-        { id: "4", question: "What are the available platforms for you?", options: ["HBO Max", "Netflix", "Amazon Prime", "Disney+", "Paramount"] },
+        { id: "1", question: "What kind of show do you want to see?", options: ["Movie", "Series", "Anime", "Cartoon"] },
+        { id: "2", question: "What show genre do you want to watch?", options: ['Music','Animation','Scifi','Horror','Fantasy','Action','Western','War','Crime','History','Reality','Family','Documentation','Romance','Comedy','European','Sport','Drama','Thriller'],multi: true},
+        { id: "3", question: "How do you feel now?", options: ["Happy", "Surprised", "Angry", "Scared", "Sad", "Excited", "Frustrated", "Tense", "Nostalgic"], multi: true },
+        { id: "4", question: "What are the available platforms for you?", options: ["HBO Max", "Netflix", "Amazon Prime", "Disney+", "Paramount"], multi: true },
         { id: "5", question: "What is the preferred release year for you?", options: ["After 2010", "After 1990", "After 1970", "Before 1970"] },
         { id: "6", question: "You can choose the age restriction for our recommendation", options: ["Okay for all", "PG-13", "R", "Adults only"] },
         { id: "7", question: "What is the preferred period of the show?", options: ["Between 1 and 1.5 hours", "Between 1.5 and 2 hours", "Between 2 and 3 hours", "Over 3 hours"] }
@@ -115,32 +109,42 @@ export default {
     }, 300);
   },
   methods: {
-    handleModeSelection(mode) {
-      this.modeSelected = mode;
-    },
-    handleSessionAction(action) {
-      this.sessionActionSelected = action;
-      if (action === 'create') {
-        this.sessionCode = Math.random().toString(36).substring(2, 8).toUpperCase(); // Generate random session code
-      }
-    },
-    startQuiz() {
-      this.currentQuestionIndex = 1; // Skip the first question
-    },
-    joinSession() {
-      if (this.joinCode === this.sessionCode) {
-        this.startQuiz();
-      } else {
-        alert('Invalid session code!');
-      }
-    },
     nextQuestion() {
+      if (this.currentQuestion.options.length) {
+        if (this.isMultiSelect(this.currentQuestion)) {
+          this.responses[this.currentQuestionIndex] = this.selectedOptions;
+        } else {
+          this.responses[this.currentQuestionIndex] = this.selectedOption;
+        }
+      } else {
+        this.responses[this.currentQuestionIndex] = this.userInput;
+      }
       if (!this.isLastQuestion) {
         this.currentQuestionIndex++;
         this.selectedOption = '';
+        this.selectedOptions = [];
+        this.userInput = '';
       } else {
-        window.location.href = '/matches'; 
-      }
+        let concatenatedResponses = '';
+          for (let i = 0; i < this.responses.length; i++) {
+            const response = this.responses[i];
+            if (Array.isArray(response)) {
+              concatenatedResponses += response.join(' '); 
+              concatenatedResponses+=' ';
+
+            } else {
+              concatenatedResponses += response;
+              concatenatedResponses+=' ';
+            }
+          }
+          let s = '';
+          for (let i = 0; i < concatenatedResponses.length; i++) {
+            if (concatenatedResponses[i] === ',') s+=' ';
+            else s += concatenatedResponses[i];
+          }
+          let noSpaces = s
+        this.$router.push({ name: 'Result', params: { noSpace: noSpaces } });
+        }
     },
     previousQuestion() {
       if (this.currentQuestionIndex > 0) {
@@ -148,13 +152,29 @@ export default {
       }
     },
     isSelected(option) {
+      if (this.isMultiSelect(this.currentQuestion)) {
+        return this.selectedOptions.includes(option);
+      }
       return this.selectedOption === option;
+    },
+    isMultiSelect(question) {
+      return question.multi === true;
+    },
+    toggleOption(option) {
+      if (this.isMultiSelect(this.currentQuestion)) {
+        const index = this.selectedOptions.indexOf(option);
+        if (index > -1) {
+          this.selectedOptions.splice(index, 1);
+        } else {
+          this.selectedOptions.push(option);
+        }
+      } else {
+        this.selectedOption = option;
+      }
     }
   }
-}
+};
 </script>
-
-
 
   
   <style scoped>
@@ -355,7 +375,7 @@ export default {
   
 
    
-  .optionDes{
+  .optionWrapper{
     width: 80%;
     height: 50px;
     margin: 10px;
@@ -370,7 +390,7 @@ export default {
     transition: all 0.3s ease-in-out;
   }
 
-  .optionDes:hover{
+  .optionWraper:hover{
     box-shadow: inset 0px 0px 6px 1px rgb(255, 255, 255);
     outline: 1px solid rgba(255, 255, 255, 0.5);
   }
@@ -523,9 +543,163 @@ export default {
     color: #FFFFFF;
     border: 2px #FFFFFF solid;
 }
+.selected-option {
+  background: rgb(140, 69, 255, 0.4);
+  color: #8C45FF;
+  box-shadow: inset 0px 0px 6px 5px #8C45FF;
+  outline: 1px solid #8C45FF;
+  transition: all 0.3s ease-in-out;
+}
 
+.inputText {
+  width: 500px;
+  border: solid rgb(51, 44, 3) 1px;
+  background-color: #33185f;
+  text-align: left;
+  color: white;
+  padding: 20px;
+  max-width: 100%;
+  resize: none;
+  box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 40%);
+  transition: all 0.3s ease-in-out;
+  outline: 1px solid rgba(255, 255, 255, 0.25);
+  outline-offset: -1px;
+  border-radius: 30px;
+}
 
+.inputText::placeholder {
+  font-family: Raleway;
+  color: rgba(255, 255, 255, 0.47);
+}
 
-  </style>
-  
+.inputText:hover {
+  box-shadow: inset 0px 0px 6px 5px #8C45FF;
+  outline: 1px solid #8C45FF;
+  transition: all 0.3s ease-in-out;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 10px 0;
+}
+
+.buttons > button {
+  margin-top: 20px;
+  width: fit-content;
+  height: 40px;
+  margin-left: 5px;
+}
+
+.button {
+  cursor: pointer;
+  margin-bottom: 15px;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+}
+
+.next-btn {
+  background: rgba(140, 69, 255, 0.4);
+  color: white;
+  border: 2px transparent solid;
+  font-weight: 500;
+  font-size: 12px;
+  text-decoration: none;
+  padding: 4
+}
+.option-wrapper {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.optionLabel {
+  display: block;
+  cursor: pointer;
+  padding: 10px;
+  margin: 0;
+  color:white;
+  border:white solid 1px;
+  border-radius: 20px;
+  outline: 1px solid rgba(255, 255, 255, 0.25);
+  outline-offset: -1px;
+  transition: all 0.3s ease;
+  width:100%;
+  text-align:center;
+  box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 40%);
+}
+.optionLabel:hover{
+    box-shadow: inset 0px 0px 6px 1px rgb(255, 255, 255);
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+}
+.selected-option {
+  background: rgba(140, 69, 255, 0.4);
+  color: #8C45FF;
+  box-shadow: inset 0px 0px 6px 5px #8C45FF;
+  outline: 1px solid #8C45FF;
+}
+
+.inputText {
+  width: 500px;
+  border: solid rgb(51, 44, 3) 1px;
+  background-color: #33185f;
+  text-align: left;
+  color: white;
+  padding: 20px;
+  max-width: 100%;
+  resize: none;
+  box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 40%);
+  transition: all 0.3s ease-in-out;
+  outline: 1px solid rgba(255, 255, 255, 0.25);
+  outline-offset: -1px;
+  border-radius: 30px;
+}
+
+.inputText::placeholder {
+  font-family: Raleway;
+  color: rgba(255, 255, 255, 0.47);
+}
+
+.inputText:hover {
+  box-shadow: inset 0px 0px 6px 5px #8C45FF;
+  outline: 1px solid #8C45FF;
+  transition: all 0.3s ease-in-out;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 10px 0;
+}
+
+.buttons > button {
+  margin-top: 20px;
+  width: fit-content;
+  height: 40px;
+  margin-left: 5px;
+}
+
+.button {
+  cursor: pointer;
+  margin-bottom: 15px;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.5
+}
+</style>
 
