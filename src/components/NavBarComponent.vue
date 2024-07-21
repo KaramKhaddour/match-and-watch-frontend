@@ -75,7 +75,7 @@
     top: 0;
     left:0;
     width: 100%;
-    padding: 20px 100px;
+    padding: 20px 200px;
     background:rgb(0, 0, 0);
     color:white;
     display: flex;
@@ -93,7 +93,7 @@
     border-radius: 50px;
     border-width: thin;
     font-weight:100;
-    margin-left: 150px;
+    /* margin-left: 150px; */
   }
   .nav-btn{
     display: flex;
@@ -104,7 +104,7 @@
   }
  
  .logo > img {
-  margin-left: 3rem;
+  /* margin-left: 3rem; */
  }
 /*   
   img{
@@ -115,7 +115,7 @@
   .logedOut{
     display: flex;
     gap: 10px;
-    margin-right: 100px;
+    /* margin-right: 100px; */
   }
   .authButton{
     padding:3px 30px;

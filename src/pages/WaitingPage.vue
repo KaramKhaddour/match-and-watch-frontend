@@ -131,14 +131,14 @@
 
 .blur-circle-black {
   position: absolute;
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   /* background-color: rgba(0, 0, 0, 0.5); */
   /* background-image: linear-gradient(180deg,rgb(0, 0, 0, 0.5), rgb(122, 82, 187, 0.8) ); */
   background: linear-gradient(180deg, rgb(1, 0, 2, 0.5) 0%, rgb(1, 0, 2, 0.5) 34%, rgba(95, 35, 184, 0.8) 100%);
   border-radius: 50%;
   filter: blur(50px);
-  animation: rotateCircle 10s linear infinite;
+  animation: rotateCircle 5s linear infinite;
   z-index: 1;
 }
 
