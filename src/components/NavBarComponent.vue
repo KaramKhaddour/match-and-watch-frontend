@@ -5,7 +5,7 @@
     </a>
     <nav class="navbar">
        <div class="navPart">
-          <a href="/quiz" class="nav-btn">
+          <a href="/quizMode" class="nav-btn">
               <span>
                 <img src="@/assets/images/navbar/plus.svg" alt="match-plus">
               </span>
@@ -37,9 +37,9 @@
         </a>
       </div>
     </nav>
-
-    <div class="logedIn" v-if="isAuthenticated">
-      <a href="#" @click.prevent="onLogout()"><button class="register-btn button">Logout</button></a>
+ 
+    <div class="logedOut" v-if="isAuthenticated">
+      <RouterLink to="/" @click.prevent="onLogout()" class="register-btn button">Logout</RouterLink>
     </div>
     <div v-else class="logedOut">
       <RouterLink to="/login_new" class="register-btn button Raleway">Login</RouterLink>
@@ -47,11 +47,28 @@
     </div>
   </header>
 </template>
-
+ 
 <script>
-   export default{};
+    import { IS_USER_AUTHENTICATE_GETTER, LOGOUT_ACTION } from '@/store/storeconstants';
+    import { RouterLink } from 'vue-router';
+    import { mapActions, mapGetters } from 'vuex';
+   export default{
+      computed:{
+        ...mapGetters('auth', {
+          isAuthenticated:IS_USER_AUTHENTICATE_GETTER
+        })
+      },
+      methods:{
+        ...mapActions('auth',{
+            logout:LOGOUT_ACTION   
+        }),
+        onLogout(){
+          this.logout()
+        }
+      }
+   };
 </script>
-
+ 
 <style scoped>
   .header{
     position: sticky;
@@ -85,7 +102,7 @@
     align-items: center;
     gap: 5px;
   }
-
+ 
  .logo > img {
   margin-left: 3rem;
  }
@@ -126,7 +143,7 @@
     font-style: normal;
     opacity: 60%;
   }
-
+ 
   /* .gg-play-button-o {
     box-sizing: border-box;
     position: relative;
@@ -178,25 +195,25 @@
     transform-origin: bottom left;
     transform: rotate(45deg)
 } */
-
-
+ 
+ 
 .button{
     cursor: poRaleway;
     margin-bottom: 15px;
     padding: 10px 30px;
     border: none;
     border-radius: 60px;
-
+ 
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
-
+ 
     line-height: 20px;
     letter-spacing: 0.5px;
 }
-
-
-
+ 
+ 
+ 
 .login-btn, .register-btn{
     background: rgba(140, 69, 255, 0.4);
     color: white;
@@ -209,12 +226,12 @@
     transition: all 0.3s ease-in-out;
     /* box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 25%); */
 }
-
+ 
 .login-btn:hover, .register-btn:hover{
     background-color: transparent;
     color: #FFFFFF;
     border: 2px #FFFFFF solid;
 }
-
-
+ 
+ 
 </style>

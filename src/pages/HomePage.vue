@@ -105,7 +105,7 @@ export default {
     },
     methods: {
     goToQuiz() {
-        this.$router.push('/quiz')
+        this.$router.push('/quizMode')
     }
 }
 

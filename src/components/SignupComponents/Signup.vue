@@ -76,132 +76,28 @@ export default{
         ...mapActions('auth',{
             signup:SIGNUP_ACTION,
         }),
-        onSignUp(){
+        async onSignUp(){
           let validations=new SignupValidations(this.email,this.password);
           this.errors=validations.checkValidations();
           if('email' in this.errors || 'password' in this.errors){
             return false;
           }
           
-          this.signup({email:this.email, password: this.password, name:this.firstName, surname:this.lastName}).catch(
-            error =>{
-                this.error=error;
-            }
-          );
-          this.$router.push('/profile')
+        await this.signup({ email: this.email, password: this.password, name: this.firstName, surname: this.lastName }).then(() => {
+             if (this.error === '') {
+                 this.$router.push('/quizMode');
+             }
+          }).catch(error => {
+             console.log("Error caught:", error);
+             this.error = error;
+          });
         },
     },
 };
 </script>
 
 
-<!-- <script>
-import successMsg from '../Popups/successMsg.vue';
-import errorMsg from '../Popups/errorMsg.vue';
-import { SIGNUP_ACTION } from '../../store/storeconstants';
-import { mapActions } from 'vuex';
-import SignupValidations from '../../services/SignupValidations'
 
-export default {
-    ...mapActions('auth',{
-            signup:SIGNUP_ACTION,
-    }),
-    components:{
-        errorMsg,
-        successMsg,
-    },
-    data() {
-        return {
-        name: '',
-        surname: '',
-        email: '',
-        password: '',
-        showError: false,
-        success: false,
-        apiError: false,
-        loading: false,
-        successMessage: "Login successfull\nWelcome Back",
-        errorMessage: "Login failed!\nPlease try again later",
-        };
-    },
-    computed: {   
-        isValidEmail() {
-            const emailRegex = /^[a-zA-Z0-9._]{1,30}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-            const match = emailRegex.exec(this.email);
-            return match !== null && match[0] === this.email;
-        },
-        canSubmit(){
-            return (this.isValidEmail && this.password);
-        },
-        isLoggedIn(){
-            return !!localStorage.getItem('token');
-        }
-    },
-    methods: {
-        async submitForm() {
-            if(!this.canSubmit) {
-                this.showError = true;
-                return;
-            }
-            if(this.loading == true) return;
-            this.loading = true;
-
-            try {
-                const url = "https://localhost:8000/api/register";
-
-                await fetch(url, {
-                    method: 'POST',
-                    headers:{
-                        'accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({'name': this.name, 'surname': this.surname, 'email': this.email, 'password': this.password})
-                })
-                .then((response) => {
-                    if(response.ok){
-                        const data = response.json();
-                        return data;
-                    }
-                    else{
-                        throw new Error(response.status);
-                    }
-                })
-                .then((data) => {
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('access', data.access);
-                    this.success = true;
-                    setTimeout(() => {
-                        window.location.href = '/';
-                    }, 600);
-                    this.loading = false;
-                }).catch((error) => {
-                    console.log(error);
-                    this.apiError = true;
-                    setTimeout(()=>{
-                        this.apiError = false;
-                    }, 2500);
-                    this.loading = false;
-                });
-            } catch (error) {
-                this.apiError = true;
-                setTimeout(()=>{
-                    this.apiError = false;
-                }, 2500);
-                this.loading = false;
-            }
-        },
-        logout(){
-            localStorage.setItem('token', '');
-            localStorage.setItem('access', 0);
-            this.$router.push('/login').catch(err => {
-            });
-            setTimeout(() => {
-                window.location.reload();
-            }, 100);
-        }
-    }
-};
-</script> -->
 
 <style scoped>
 
@@ -210,7 +106,6 @@ export default {
     z-index: 2;
 }
 
-/* Three dots loading */
 .loader {
     display: flex;
     justify-content: center;

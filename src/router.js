@@ -1,34 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LoginPage from './pages/LoginPage.vue';
 import Login from './pages/Login.vue';
-import SignUpPage from './pages/SignUpPage.vue';
 import Signup from "./pages/Signup.vue";
 import QuizPage from './pages/QuizPage.vue'
 import HomePage from './pages/HomePage.vue'
+import FinishJoin from './pages/finishJoinPage.vue'
 import ProfilePage from './pages/ProfilePage.vue'
-import MatchesPage from './pages/MatchesPage.vue'
 import HistoryPage from './pages/HistoryPage'
 import Matched from './pages/Matched.vue'
-
+import QuizMode from './pages/QuizModePage.vue'
+import CreatePage from './pages/CreatePage.vue'
+import JoinPage from './pages/JoinPage.vue' 
+import Waiting from './pages/WaitingPage.vue'
 import store from './store/store';
 import { IS_USER_AUTHENTICATE_GETTER } from './store/storeconstants';
+import OneUserQuiz from "./pages/OneUserQuiz.vue";
 const routes =  [
-    {
-        path:'/login',
-        name:'Login', 
-        component:LoginPage,
-        meta:{
-            auth:false
-        },
-    },
-    {
-        path:'/signup',
-        name:'SignUp', 
-        component:SignUpPage,
-        meta:{
-            auth:false
-        },
-    },
     {
         path:'/login_new',
         name:'Login', 
@@ -53,26 +39,23 @@ const routes =  [
             auth:true
         },
     },
-    {
-        path:'/profile',
-        name:'Profile', 
-        component:ProfilePage
-    },
-    {
-        path:'/matches',
-        name:'Matches',
-        component:MatchesPage,
-        meta:{
-            auth:true
-        },
-    },
      {
-        path:'/matches',
+        path:'/matche',
         name:'Result',
         component:Matched,
         meta:{
             auth:true
         },
+        props: true
+    },
+    {
+       path:'/waiting',
+       name:'Waiting',
+       component:Waiting,
+       meta:{
+        auth:true
+       },
+       props:true
     },
     {
         path:'/history', 
@@ -83,11 +66,50 @@ const routes =  [
         },
     },
     {
+       path:'/quizMode',
+       name:'QuizMode',
+       component:QuizMode,
+       meta:{
+        auth:true
+       },
+    },
+    {
+        path:'/oneUserQuiz',
+        name:'OneUserQuiz',
+        component:OneUserQuiz,
+        meta:{
+           auth:true
+        }
+    },
+    {
         path:'/',
         name:'Home',
         component:HomePage
     },
-
+    {
+        path:'/create',
+        name:'Create',
+        component:CreatePage,
+        meta:{
+            auth:true
+         }
+    },
+    {
+        path:'/join',
+        name:'Join',
+        component:JoinPage,
+        meta:{
+            auth:true
+         }
+    },
+    {
+        path:'/finishPage',
+        name:'FinsihHoin',
+        component:FinishJoin,
+        meta:{
+            auth:true
+         }
+    }
 ];
 
 const router=createRouter(
@@ -98,27 +120,22 @@ const router=createRouter(
 );
 
 router.beforeEach((to, from, next) => {
-    //console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-    //console.log(to) 
-    //console.log(store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`])
-
-    // if (
-    //     'auth' in to.meta &&
-    //     to.meta.auth &&
-    //     !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
-    // ) {
-    //     next('/login_new');
-    // } else if (
-    //     'auth' in to.meta &&
-    //     !to.meta.auth &&
-    //     store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
-    // ) {
-    //     next('/');
-    // } else {
-    //     next();
-    // }
-
-    next();
+    
+    if (
+        'auth' in to.meta &&
+        to.meta.auth &&
+        !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+    ) {
+        next('/login_new');
+    } else if (
+        'auth' in to.meta &&
+        !to.meta.auth &&
+        store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+    ) {
+        next('/');
+    } else {
+        next();
+    }
 });
 
 export default router;
