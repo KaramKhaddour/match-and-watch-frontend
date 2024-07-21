@@ -339,7 +339,7 @@ export default {
   
   .display-container {
     /* background-image: linear-gradient(#3c1e6b, black); */
-    background: linear-gradient(180deg, #010002 0%, #361764 35%, #361764 50%, #361764 75%, #010002 100%);
+    background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%);
     box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
     box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
 
