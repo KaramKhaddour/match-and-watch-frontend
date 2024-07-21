@@ -20,7 +20,7 @@ import { GET_USER_TOKEN_GETTER } from '@/store/storeconstants';
 
 export default {
   name: 'App',
-  props: ['noSpace', 'sessionCode'],
+  props: ['req', 'sessionCode'],
   data() {
     return {
       movies: [],
@@ -28,13 +28,13 @@ export default {
   },
   async mounted() {
     let moviesFromBackend = [];
-    if (this.noSpace) {
+    if (this.req!==null) {
       try {
         let url="http://0.0.0.0:8000/api/movies?query_string="
         url+=this.noSpace
-        console.log(this.noSpace)
+        //console.log(this.noSpace)
         let response = await axios.post(url);
-      //  console.log(response)
+         //console.log(response)
         //moviesFromBackend=response.data
         //console.log(moviesFromBackend)
       }

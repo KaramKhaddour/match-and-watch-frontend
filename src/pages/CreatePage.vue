@@ -120,53 +120,112 @@
     },
     methods: {
       nextQuestion() {
-        if (this.currentQuestion.options.length) {
-          if (this.isMultiSelect(this.currentQuestion)) {
-            this.responses[this.currentQuestionIndex] = this.selectedOptions;
-          } else {
-            this.responses[this.currentQuestionIndex] = this.selectedOption;
-          }
-        } else {
-          this.responses[this.currentQuestionIndex] = this.userInput;
-        }
-        if (!this.isLastQuestion) {
-          this.currentQuestionIndex++;
-          this.selectedOption = '';
-          this.selectedOptions = [];
-          this.userInput = '';
-        } else {
-          let concatenatedResponses = '';
-          for (let i = 0; i < this.responses.length; i++) {
-            const response = this.responses[i];
-            if (Array.isArray(response)) {
-              concatenatedResponses += response.join(' '); 
-              concatenatedResponses+=' ';
-
+        if(this.selectedOption.length>0 || this.selectedOptions.length>0){
+          if (this.currentQuestion.options.length) {
+            if (this.isMultiSelect(this.currentQuestion)) {
+              this.responses[this.currentQuestionIndex] = this.selectedOptions;
             } else {
-              concatenatedResponses += response;
-              concatenatedResponses+=' ';
+              this.responses[this.currentQuestionIndex] = this.selectedOption;
+            }
+          } else {
+            this.responses[this.currentQuestionIndex] = this.userInput;
+          }
+          if (!this.isLastQuestion) {
+            this.currentQuestionIndex++;
+            this.selectedOption = '';
+            this.selectedOptions = [];
+            this.userInput = '';
+          } else {
+            let req={}
+          for(let i=0;i<this.responses.length;i++){
+            if(i===0){
+                if(this.responses[i]==="Series"){
+                  req['type']="Show"
+                }
+                else req['type']=this.responses[i];
+            }
+            else if(i===1){
+               let s="";
+               for(let j=0;j<this.responses[i].length;j++){
+                  s+=this.responses[i][j];
+                  s+=" ";
+               }
+               req['genres']=s;
+            }
+            else if(i===2){
+              let s="";
+               for(let j=0;j<this.responses[i].length;j++){
+                  if(this.responses[i][j]==="Happy"){
+                    s+="Happiness"
+                  }
+                  else if(this.responses[i][j]==="Surprised"){
+                    s+="Surprise"
+                  }
+                  else if(this.responses[i][j]==="Angry"){
+                    s+="Anger"
+                  }
+                  else if(this.responses[i][j]==="Scared"){
+                    s+="Fear"
+                  }
+                  else if(this.responses[i][j]==="Sad"){
+                    s+="Sadness"
+                  }
+                  else if(this.responses[i][j]==="Excited"){
+                    s+="Excitement"
+                  }
+                  else if(this.responses[i][j]==="Frustrated"){
+                    s+="Frustration"
+                  }
+                  else if(this.responses[i][j]==="Tense"){
+                    s+="Tension"
+                  }
+                  else if(this.responses[i][j]==="Nostalgic"){
+                    s+="Nostalgia"
+                  }
+                  s+=" ";
+               }
+               req['emotions']=s;
+            }
+            else if(i===3){
+              let s="";
+               for(let j=0;j<this.responses[i].length;j++){
+                  s+=this.responses[i][j];
+                  s+=" ";
+               }
+               req['platforms']=s;
+            }
+            else if(i===4){
+               req['release_year']=this.responses[i];
+            }
+            else if(i===5){
+              req['age_certification']=this.responses[i];
+            }
+            else if(i===6){
+              if(this.responses[i]==="less than 1 hour"){
+                req['length']="short"
+              }
+              else if(this.responses[i]==="Over 2 hours")
+              req['length']="long";
+            }
+            else {
+              req['length']="medium"
             }
           }
-          let s = '';
-          for (let i = 0; i < concatenatedResponses.length; i++) {
-            if (concatenatedResponses[i] === ',') s+=' ';
-            else s += concatenatedResponses[i];
+          try{
+              let url="http://0.0.0.0:8000/submit/answer?session_code="
+              url+=this.sessionCode;
+              url+="&answers="
+              url+=noSpaces;
+              url+="&token="
+              let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
+              url+=thistoken;
+              let response = axios.post(url);
           }
-          let noSpaces = s
-         try{
-            let url="http://0.0.0.0:8000/submit/answer?session_code="
-            url+=this.sessionCode;
-            url+="&answers="
-            url+=noSpaces;
-            url+="&token="
-            let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-            url+=thistoken;
-            let response = axios.post(url);
-         }
-         catch(err){
-            console.log(err)
+          catch(err){
+              console.log(err)
+            }
+            this.$router.push({ name: 'Waiting', params: { sessionCode:this.sessionCode } });
           }
-          this.$router.push({ name: 'Waiting', params: { sessionCode:this.sessionCode } });
         }
       },
       previousQuestion() {

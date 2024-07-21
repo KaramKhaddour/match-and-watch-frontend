@@ -14,7 +14,10 @@
               placeholder="Enter the session code"
               class="inputText"
             />
-          </div>
+            <div class="alert alert-danger error-desgin" v-if="error">
+                        {{ error }}
+           </div>
+          </div>          
           <div v-else-if="currentQuestion.options.length" :class="['questions-container', optionContainerClass]">
             <div v-for="(option, index) in currentQuestion.options" :key="index" class="option-wrapper">
               <input
@@ -88,6 +91,7 @@ import axios from 'axios';
         sessionCode: '',
         joinCode: '',
         responses: [],
+        error:'',
         quizArray: [
           { id: "1", question: "Enter the session code", options: [] },
           { id: "2", question: "What kind of show do you want to see?", options: ["Movie", "Series", "Anime", "Cartoon"] },
@@ -127,7 +131,7 @@ import axios from 'axios';
       }, 300);
     },
     methods: {
-      submitSessionCode() {
+      async submitSessionCode() {
         try{
           let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
           let url="http://0.0.0.0:8000/join/"
@@ -135,15 +139,16 @@ import axios from 'axios';
           url+='?'
           url+="token="
           url+=thistoken
-          let response = axios.post(url);
-          console.log(response)
+          let response = await axios.post(url);
+          this.error=''
+          this.nextQuestion();
         }
         catch(err){
-          console.log(err)
+          this.error=err.response.data.detail
         }
-        this.nextQuestion();
       },
       nextQuestion() {
+        this.error=''
         if (this.currentQuestion.options.length) {
           if (this.isMultiSelect(this.currentQuestion)) {
             this.responses[this.currentQuestionIndex] = this.selectedOptions;
@@ -177,7 +182,20 @@ import axios from 'axios';
             else s += concatenatedResponses[i];
           }
           let noSpaces = s
-          this.$router.push({ name: 'FinishJoin',});
+          try{
+              let url="http://0.0.0.0:8000/submit/answer?session_code="
+              url+=this.sessionCode;
+              url+="&answers="
+              url+=noSpaces;
+              url+="&token="
+              let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
+              url+=thistoken;
+              let response = axios.post(url);
+          }
+          catch(err){
+              console.log(err)
+          }
+          this.$router.push('/finishPage');
         }
       },
       previousQuestion() {
@@ -734,6 +752,12 @@ import axios from 'axios';
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.5
+  }
+  .error-desgin{
+    margin-top: 10px;
+    margin-left:1%;
+    font-size: 20px;
+    color: white;
   }
   </style>
   

@@ -1,24 +1,25 @@
 <template>
     <div class="homeContainer">
-        <h1>Let's find the best shows for you</h1>
-        <h3>Click this Button, Answer our Questions, and Watch your Show</h3>
-         <button  class="matchandwatchbutton" v-on:click="goToQuiz">Match & Watch</button>
-        <div class="imagesContainer">
-            <img v-for="image in images" :src="image" :key="image">
-        </div>
-        <h3>
-            You can find movies and series from a big variety of platfrmos
-        </h3>
+        <div class="blur-circle"></div>
+        <div class="blur-circle"></div>
+        <div class="films-container"></div>
+       <div class="firstDivision">
+            <h1 class="Inter">Let's find the best shows for you</h1>
+            <h3 class="Inter">Click this Button, Answer our Questions, and Watch your Show</h3>
+            <h3>You can find movies and series from a big variety of platfrmos</h3>
+            <button  class="matchandwatchbutton" v-on:click="goToQuiz">Match & Watch</button>
+       </div>
+       <div class="thirdDivision">
+        <p>You can find movies from the following platforms</p>
         <div class="logosConainter">
-           <img src="../assets/images/logos/20th_Century_Studios_(2020).svg" alt="" class="logo">
-           <img src="../assets/images/logos/7669d875c8abed5b52b32a4b4369fa04.jpg" alt="" class="logo">
-           <img src="../assets/images/logos/A24_logo.svg" alt="" class="logo">
-           <img src="../assets/images/logos/maxresdefault.jpg" alt="" class="logo">
-           <img src="../assets/images/logos/Paramount_Pictures_2022_(Blue).svg" alt="" class="logo">
-           <img src="../assets/images/logos/Sony_pictures_logo.png" alt="" class="logo">
-           <img src="../assets/images/logos/Universal_Pictures_logo.svg" alt="" class="logo">
-           <img src="../assets/images/logos/Warner_Bros._logo_2023.svg" alt="" class="logo">
+           <img src="../assets/images/logos/disney.svg" alt="Disney" class="logo">
+           <img src="../assets/images/logos/Amazon_Prime_Logo.svg" alt="Amozon Prime" class="logo">
+           <img src="../assets/images/logos/HBO_Max_Logo.svg" alt="HBO MAX" class="logo">
+           <img src="../assets/images/logos/Netflix_2015_logo.svg" alt="Netflix" class="logo">
+           <img src="../assets/images/logos/Paramount_Pictures_Corporation_logo.svg" alt="Disney" class="logo">
         </div>
+       </div>
+      <!-- 
         <div class="discover">
             <h1 class="explore">
                 Explore our wide variety of categories
@@ -56,7 +57,7 @@
                 <img src="../assets/images/newDesginBackground/large-m0156-thor-love-and-thunder-poster-12-x-18-inch-300-gsm-original-imagfzkdahxdsg3h.webp" class="cataegoryImage">
                 <p class="categoryName">Horror</p>
             </div>
-        </div>
+        </div>-->
     </div>
 </template>
 
@@ -116,34 +117,59 @@ export default {
 
 <style scoped>
 .homeContainer{
-   width: 100%;
-   height: 100%;
-   background-image: radial-gradient(#3f1f72,#4f298b, black);
-
+    width: 100%;
+    height: 200vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background: black;
+}
+.firstDivision{
+    width: 100%;
+    height: calc(100vh - 100px);
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    flex-direction: column;
+    /* background: black; */
+    margin-bottom: 500px;
+    z-index: 3;
+}
+.thirdDivision{
+    width: 100%;
+    height: calc(100vh - 100px);
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    flex-direction: column;
+    /* background: black; */
+    z-index: 3;
 }
 h1{
-    font-family: "Indie Flower", cursive;
     font-weight: 900;
     font-style: normal;
     color: white;
     font-size: 3em;
     text-align: center;
     padding-top: 1em;
+    z-index: 20;
+    margin-top: 0.5em;
+    margin-bottom: 0.25em;
 }
 h3{
-    font-family: "Indie Flower", cursive;;
     font-weight: 900;
     font-style: normal;
     color: white;
     text-align: center;
+    z-index: 20;
+    margin-bottom: 0.5em;
 }
 .matchandwatchbutton{
     text-align: center;
     margin: auto;
     display: grid;
-    top: 29%;
-    left: 45%;
-    width: 200px;
+    width: 210px;
     height: 60px;
     text-decoration: none;
     font-size: 20px;
@@ -154,6 +180,7 @@ h3{
     color: #2b0268;
     font-weight: 600;
     background-size: 400%;
+    margin: 0;
     background-image: linear-gradient(90deg,#b185f8, #7a52bb,#b185f8);
 }
 .matchandwatchbutton:before{
@@ -164,7 +191,7 @@ h3{
     right: -5px;
     left: -5px;
     width: 200px;
-    height: 60px;
+    height: 80px;
     bottom: -5px;
     background: #8e45f5;
     border-radius: 50px;
@@ -211,24 +238,26 @@ img{
    margin-bottom: 100px;
 }
 .logosConainter{
-    padding: 50px;
     display: flex;
     flex-wrap: wrap;
-    margin-left: 200px;
+    gap:5px;
+    margin: 0;
 }
 .logo{
     border: solid;
     border-color: white;
-    width: 330px;
-    height: 200px;
-    padding: 20px;
-   
+    width:220px;
+    height: 120px;
+    padding: 25px;
+    border: solid 0.5px #a0a0a0;
 }
 p{
     color: white;
     width: 800px;
-    margin-left: 280px;
     font-weight: 100;
+    margin-bottom: 40px;
+    font-size: 20px;
+    text-align: center;
 }
 .explore{
     margin-left: -330px;
@@ -260,4 +289,37 @@ a{
     text-decoration: none;
     width: 100px;
 }
+.blur-circle{
+    display: inline-block;
+    position: absolute;
+    overflow:auto;
+    height: 900px;
+    width: 900px;
+    margin-top: 70px;
+    transform: scale(1.5);
+    opacity: 0.4;
+    background-position-x: center;
+    background-position-y: center;
+    top: -15vh;
+    left: 15vw;
+    background: url(../assets/images/blur.png);
+    z-index: 2;
+}
+
+.films-container{
+    /* display: inline-block; */
+    position: absolute;
+    margin-top: 200px;
+    overflow:auto;
+    height: 660px;
+    width: 1200px;
+    transform: scale(1.1);
+    opacity: 1;
+    background-position-x: center;
+    background-position-y: center;
+    top: 15vh;
+    background: url(../assets/images/background.jpg);
+    z-index: 1;
+}
+
 </style>
