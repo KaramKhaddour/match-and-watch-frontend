@@ -9,7 +9,7 @@
       </div> -->
       <div class="waiting-text Raleway">{{ currentText }}</div>
       <button class="close button close-btn Raleway" @click="closeSession()">
-            Close Session
+            Check Results
       </button>
     </div>
      <div class="blur-circle-black"> </div>
@@ -26,7 +26,7 @@
       return {
         currentMessage: 0,
         currentTextIndex: 0,
-        texts: ["Waiting for other users", "Please hold on...", "Almost there..."],
+        texts: ["Waiting for other users", "Check results if everyone finished", "Now, it's time to watch."],
 
       };
     },

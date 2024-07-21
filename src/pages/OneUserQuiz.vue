@@ -8,7 +8,7 @@
           <p class="question Raleway mb-3">{{ currentQuestion.question }}</p>
         </div>
         <div v-if="currentQuestion.options.length" :class="['questions-container', optionContainerClass]">
-          <div v-for="(option, index) in currentQuestion.options" :key="index" class="option-wrapper">
+          <div v-for="(option, index) in currentQuestion.options" :key="index" class="option-wrapper Inter">
             <input
               v-if="isMultiSelect(currentQuestion)"
               type="checkbox"
@@ -359,7 +359,7 @@ export default {
   
   .display-container {
     /* background-image: linear-gradient(#3c1e6b, black); */
-    background: linear-gradient(180deg, #010002 0%, #361764 35%, #361764 50%, #361764 75%, #010002 100%);
+    background: linear-gradient(180deg, rgb(1, 0, 2, 0.5) 0%, rgb(1, 0, 2, 0.5) 34%, rgba(95, 35, 184, 0.8) 100%);
     box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
     box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
 
@@ -619,6 +619,7 @@ export default {
   display: flex;
   align-items: center;
   margin: 5px 0;
+  transition: all 0.5s ease;
 }
 
 .optionLabel {
