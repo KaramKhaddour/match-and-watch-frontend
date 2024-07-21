@@ -7,7 +7,7 @@
        <div class="navPart">
           <a href="/quizMode" class="nav-btn">
               <span>
-                <img src="@/assets/images/navbar/plus.svg" alt="match-plus">
+                <img src="@/assets/images/navbar/movie.svg" alt="match-plus">
               </span>
               <span class="nav-btn-txt">Match</span>
           </a>
@@ -23,9 +23,9 @@
        <div class="navPart">
         <a href="/movies" class="nav-btn">
               <span>
-                <img src="@/assets/images/navbar/movie.svg" alt="match-plus">
+                <img src="@/assets/images/navbar/plus.svg" alt="match-plus">
               </span>
-              <span class="nav-btn-txt">Movies</span>
+              <span class="nav-btn-txt">Join Session</span>
           </a>
       </div>
       <div class="navPart">
@@ -33,7 +33,7 @@
               <span>
                 <img src="@/assets/images/navbar/play.svg" alt="match-plus">
               </span>
-              <span class="nav-btn-txt">Series</span>
+              <span class="nav-btn-txt">About Us</span>
         </a>
       </div>
     </nav>

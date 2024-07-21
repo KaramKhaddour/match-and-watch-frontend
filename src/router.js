@@ -40,7 +40,7 @@ const routes =  [
         },
     },
      {
-        path:'/matche',
+        path:'/matched',
         name:'Result',
         component:Matched,
         meta:{

@@ -21,6 +21,7 @@
   
   <script>
   export default {
+    props: ['sessionCode'],
     data() {
       return {
         currentMessage: 0,
@@ -44,6 +45,9 @@
     //       this.currentMessage = (this.currentMessage + 1) % 3;
     //     }, 3000); // Change message every 3 seconds
     //   }
+    closeSession(){
+            this.$router.push({ name: 'Result', params: {sessionCode:this.sessionCode } });
+    },
     startTextAnimation() {
       setInterval(() => {
         setTimeout(() => {
@@ -214,7 +218,6 @@
     box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 45%);
     /* background: rgba(140, 69, 255, 0.6); */
     color: white;
-    border: 2px transparent solid;
     border: 2px transparent solid;
     font-weight: 500;
     font-size: 16px;
