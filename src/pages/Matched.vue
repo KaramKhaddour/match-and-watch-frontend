@@ -23,7 +23,7 @@
     </div>
   </template>
 
-
+<script>
 export default {
   name: 'App',
   props: ['req', 'sessionCode'],
@@ -44,6 +44,10 @@ export default {
         //moviesFromBackend=response.data
         //console.log(moviesFromBackend)
       }
+      catch(err){
+        console.log(err)
+      }
+     }
       else{
          try{
           let url="http://0.0.0.0:8000/close?session_code="
@@ -104,6 +108,7 @@ export default {
     }
   };
   </script>
+  
   
 
   <style scoped>
