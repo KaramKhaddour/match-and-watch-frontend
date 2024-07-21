@@ -23,6 +23,9 @@
                     <input type="password" id="password" v-model="password">
                     <div v-if="showError && !password" class="input_error">Please enter your password</div>
                 </div>
+                <div class="alert alert-danger" v-if="error">
+                        {{ error }}
+               </div>
                 <div v-if="loading" class="loader">
                     <span></span>
                     <span></span>
@@ -150,14 +153,26 @@ export default {
 import SignupValidations from '../../services/SignupValidations'
 import { mapActions } from 'vuex';
 import { LOGIN_ACTION } from '@/store/storeconstants';
+import successMsg from '../Popups/successMsg.vue';
+import errorMsg from '../Popups/errorMsg.vue';
 
 export default{
+    components:{
+        errorMsg,
+        successMsg,
+    },
     data(){
         return{
             email:'',
             password:'',
             errors:[],
             error:'',
+            showError: false,
+            success: false,
+            apiError: false,
+            loading: false,
+            successMessage: "Login successfull\nWelcome Back",
+            errorMessage: "Login failed!\nPlease try again later",
         }
     },
     methods:{
@@ -174,7 +189,7 @@ export default{
              if (this.error === '') {
                  this.$router.push('/quizMode');
              }
-          }).catch(error => {
+          }).catch(error => {             
              console.log("Error caught:", error);
              this.error = error;
           });

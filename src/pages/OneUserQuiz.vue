@@ -73,13 +73,13 @@ export default {
       joinCode: '',
       responses: [],
       quizArray: [
-        { id: "1", question: "What kind of show do you want to see?", options: ["Movie", "Series", "Anime", "Cartoon"] },
-        { id: "2", question: "What show genre do you want to watch?", options: ['Music','Animation','Scifi','Horror','Fantasy','Action','Western','War','Crime','History','Reality','Family','Documentation','Romance','Comedy','European','Sport','Drama','Thriller'],multi: true},
-        { id: "3", question: "How do you feel now?", options: ["Happy", "Surprised", "Angry", "Scared", "Sad", "Excited", "Frustrated", "Tense", "Nostalgic"], multi: true },
+        { id: "1", question: "What kind of show do you want to see?", options: ["Movie", "Series"] },
+        { id: "2", question: "What genres do you prefer?", options: ['Music','Animation','Scifi','Horror','Fantasy','Action','Western','War','Crime','History','Reality','Family','Documentation','Romance','Comedy','European','Sport','Drama','Thriller'],multi: true},
+          { id: "3", question: "How do you feel now?", options: ["Happy", "Surprised", "Angry", "Scared", "Sad", "Excited", "Frustrated", "Tense", "Nostalgic"], multi: true },
         { id: "4", question: "What are the available platforms for you?", options: ["HBO Max", "Netflix", "Amazon Prime", "Disney+", "Paramount"], multi: true },
-        { id: "5", question: "What is the preferred release year for you?", options: ["After 2010", "After 1990", "After 1970", "Before 1970"] },
-        { id: "6", question: "You can choose the age restriction for our recommendation", options: ["Okay for all", "PG-13", "R", "Adults only"] },
-        { id: "7", question: "What is the preferred period of the show?", options: ["Between 1 and 1.5 hours", "Between 1.5 and 2 hours", "Between 2 and 3 hours", "Over 3 hours"] }
+        { id: "5", question: "What is the preferred release year for you?", options: ["After 2010", "After 1999", "After 1965", "Before 1965"] },
+        { id: "6", question: "Any age restriction?", options: ["+5","+13","+16","+18"] },
+        { id: "7", question: "What is the preferred period of the show?", options: ["less than 1 hour", "Between 1 and 1.5 hours", "Between 1.5 and 2 hours", "Over 2 hours"] }
       ]
     };
   },
@@ -110,41 +110,100 @@ export default {
   },
   methods: {
     nextQuestion() {
-      if (this.currentQuestion.options.length) {
-        if (this.isMultiSelect(this.currentQuestion)) {
-          this.responses[this.currentQuestionIndex] = this.selectedOptions;
+      if(this.selectedOption.length>0 || this.selectedOptions.length>0){
+        if (this.currentQuestion.options.length) {
+          if (this.isMultiSelect(this.currentQuestion)) {
+            this.responses[this.currentQuestionIndex] = this.selectedOptions;
+          } else {
+            this.responses[this.currentQuestionIndex] = this.selectedOption;
+          }
         } else {
-          this.responses[this.currentQuestionIndex] = this.selectedOption;
+          this.responses[this.currentQuestionIndex] = this.userInput;
         }
-      } else {
-        this.responses[this.currentQuestionIndex] = this.userInput;
-      }
-      if (!this.isLastQuestion) {
-        this.currentQuestionIndex++;
-        this.selectedOption = '';
-        this.selectedOptions = [];
-        this.userInput = '';
-      } else {
-        let concatenatedResponses = '';
-          for (let i = 0; i < this.responses.length; i++) {
-            const response = this.responses[i];
-            if (Array.isArray(response)) {
-              concatenatedResponses += response.join(' '); 
-              concatenatedResponses+=' ';
-
-            } else {
-              concatenatedResponses += response;
-              concatenatedResponses+=' ';
+        if (!this.isLastQuestion) {
+          this.currentQuestionIndex++;
+          this.selectedOption = '';
+          this.selectedOptions = [];
+          this.userInput = '';
+        } else {
+          let req={}
+          for(let i=0;i<this.responses.length;i++){
+            if(i===0){
+                if(this.responses[i]==="Series"){
+                  req['type']="Show"
+                }
+                else req['type']=this.responses[i];
+            }
+            else if(i===1){
+               let s="";
+               for(let j=0;j<this.responses[i].length;j++){
+                  s+=this.responses[i][j];
+                  s+=" ";
+               }
+               req['genres']=s;
+            }
+            else if(i===2){
+              let s="";
+               for(let j=0;j<this.responses[i].length;j++){
+                  if(this.responses[i][j]==="Happy"){
+                    s+="Happiness"
+                  }
+                  else if(this.responses[i][j]==="Surprised"){
+                    s+="Surprise"
+                  }
+                  else if(this.responses[i][j]==="Angry"){
+                    s+="Anger"
+                  }
+                  else if(this.responses[i][j]==="Scared"){
+                    s+="Fear"
+                  }
+                  else if(this.responses[i][j]==="Sad"){
+                    s+="Sadness"
+                  }
+                  else if(this.responses[i][j]==="Excited"){
+                    s+="Excitement"
+                  }
+                  else if(this.responses[i][j]==="Frustrated"){
+                    s+="Frustration"
+                  }
+                  else if(this.responses[i][j]==="Tense"){
+                    s+="Tension"
+                  }
+                  else if(this.responses[i][j]==="Nostalgic"){
+                    s+="Nostalgia"
+                  }
+                  s+=" ";
+               }
+               req['emotions']=s;
+            }
+            else if(i===3){
+              let s="";
+               for(let j=0;j<this.responses[i].length;j++){
+                  s+=this.responses[i][j];
+                  s+=" ";
+               }
+               req['platforms']=s;
+            }
+            else if(i===4){
+               req['release_year']=this.responses[i];
+            }
+            else if(i===5){
+              req['age_certification']=this.responses[i];
+            }
+            else if(i===6){
+              if(this.responses[i]==="less than 1 hour"){
+                req['length']="short"
+              }
+              else if(this.responses[i]==="Over 2 hours")
+              req['length']="long";
+            }
+            else {
+              req['length']="medium"
             }
           }
-          let s = '';
-          for (let i = 0; i < concatenatedResponses.length; i++) {
-            if (concatenatedResponses[i] === ',') s+=' ';
-            else s += concatenatedResponses[i];
+          this.$router.push({ name: 'Result', params: { req: req } });
           }
-          let noSpaces = s
-        this.$router.push({ name: 'Result', params: { noSpace: noSpaces } });
-        }
+      }
     },
     previousQuestion() {
       if (this.currentQuestionIndex > 0) {

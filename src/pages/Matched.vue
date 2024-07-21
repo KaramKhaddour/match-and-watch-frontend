@@ -24,36 +24,25 @@
   </template>
 
 
-  
-
-  <script>
-  import axios from 'axios';
-  import store from '@/store/store';
-  import { GET_USER_TOKEN_GETTER } from '@/store/storeconstants';
-  
-  export default {
-    name: 'App',
-    props: ['noSpace', 'sessionCode'],
-    data() {
-      return {
-        movies: [],
-      };
-    },
-    async mounted() {
-      let moviesFromBackend = [];
-      if (this.noSpace) {
-        try {
-          let url="http://0.0.0.0:8000/api/movies?query_string="
-          url+=this.noSpace
-          console.log(this.noSpace)
-          let response = await axios.post(url);
-        //  console.log(response)
-          //moviesFromBackend=response.data
-          //console.log(moviesFromBackend)
-        }
-        catch (err) {
-          console.log(err)
-        }
+export default {
+  name: 'App',
+  props: ['req', 'sessionCode'],
+  data() {
+    return {
+      movies: [],
+    };
+  },
+  async mounted() {
+    let moviesFromBackend = [];
+    if (this.req!==null) {
+      try {
+        let url="http://0.0.0.0:8000/api/movies?query_string="
+        url+=this.noSpace
+        //console.log(this.noSpace)
+        let response = await axios.post(url);
+         //console.log(response)
+        //moviesFromBackend=response.data
+        //console.log(moviesFromBackend)
       }
       else{
          try{

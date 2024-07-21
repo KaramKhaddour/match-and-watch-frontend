@@ -17,10 +17,9 @@ export default{
          });
         let response='';
         try{
-            response=await axios.post('http://localhost:8000/api/logout', postData,);
+            response=await axios.post('http://localhost:8001/api/logout', postData,);
         }catch(err){
-            let errorMessage=SignupValidations.getErrorMessagesFromCode(err.response.data.detail);
-            throw(errorMessage);
+           console.log(err)
         }
         if(response===''){
             throw new Error('Could not complete. Please try again!') 
@@ -33,8 +32,11 @@ export default{
         };
         let response='';
         try{
-            response=await axios.post('http://localhost:8000/api/login', postData,);
+            response=await axios.post('http://localhost:8001/api/login', postData,);
         }catch(err){
+            if(err.code==="ERR_NETWORK"){
+                throw("Network error please try again")
+            }
             let errorMessage=SignupValidations.getErrorMessagesFromCode(err.response.data.detail);
             throw(errorMessage);
         }
@@ -63,13 +65,16 @@ export default{
         };
         let response='';
         try{
-            response=await axios.post('http://localhost:8000/api/register', postData,);
+            response=await axios.post('http://localhost:8001/api/register', postData,);
         }catch(err){
+            if(err.code==="ERR_NETWORK"){
+                throw("Network error please try again")
+            }
             let errorMessage=SignupValidations.getErrorMessagesFromCode(err.response.data.detail);
             throw(errorMessage);
         }
         if(response===''){
-            throw new Error('Could not complete. Please try again!') 
+            throw ('Could not complete. Please try again!') 
         }
         else if (response.status===200){
             let tokenData={

@@ -104,7 +104,7 @@ const routes =  [
     },
     {
         path:'/finishPage',
-        name:'FinsihHoin',
+        name:'FinsihJoin',
         component:FinishJoin,
         meta:{
             auth:true
