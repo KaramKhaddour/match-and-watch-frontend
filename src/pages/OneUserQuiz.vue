@@ -148,55 +148,44 @@ export default {
                 else req['type']=this.responses[i];
             }
             else if(i===1){
-               let s="";
-               for(let j=0;j<this.responses[i].length;j++){
-                  s+=this.responses[i][j];
-                  s+=" ";
-               }
-               req['genres']=s;
+               req['genres']=this.responses[i];
             }
             else if(i===2){
               let s="";
                for(let j=0;j<this.responses[i].length;j++){
                   if(this.responses[i][j]==="Happy"){
-                    s+="Happiness"
+                    this.responses[i][j]="Happiness"
                   }
                   else if(this.responses[i][j]==="Surprised"){
-                    s+="Surprise"
+                    this.responses[i][j]="Surprise"
                   }
                   else if(this.responses[i][j]==="Angry"){
-                    s+="Anger"
+                    this.responses[i][j]="Anger"
                   }
                   else if(this.responses[i][j]==="Scared"){
-                    s+="Fear"
+                    this.responses[i][j]="Fear"
                   }
                   else if(this.responses[i][j]==="Sad"){
-                    s+="Sadness"
+                    this.responses[i][j]="Sadness"
                   }
                   else if(this.responses[i][j]==="Excited"){
-                    s+="Excitement"
+                    this.responses[i][j]="Excitement"
                   }
                   else if(this.responses[i][j]==="Frustrated"){
-                    s+="Frustration"
+                    this.responses[i][j]="Frustration"
                   }
                   else if(this.responses[i][j]==="Tense"){
-                    s+="Tension"
+                    this.responses[i][j]="Tension"
                   }
                   else if(this.responses[i][j]==="Nostalgic"){
-                    s+="Nostalgia"
+                    this.responses[i][j]="Nostalgia"
                   }
-                  s+=" ";
                }
-               req['emotions']=s;
+               req['emotions']=this.responses[i];
             }
-            else if(i===3){
-              let s="";
-               for(let j=0;j<this.responses[i].length;j++){
-                  s+=this.responses[i][j];
-                  s+=" ";
-               }
-               req['platforms']=s;
-            }
+            //else if(i===3){
+               //req['platforms']=this.responses[i];
+            //}
             else if(i===4){
                if(this.responses[i]==="After 2010"){
                 req['release_year']=2010;
@@ -227,6 +216,7 @@ export default {
               req['length']="medium"
             }
           }
+          console.log(JSON.stringify(req));
           this.$router.push({ name: 'Result', params: { req: JSON.stringify(req) } });
           }
       }
@@ -644,7 +634,8 @@ export default {
 }
 
 .next-btn:hover{
-    background-color: transparent;
+    background-color: transpa
+    nt;
     color: #FFFFFF;
     border: 2px #FFFFFF solid;
 }
@@ -825,4 +816,3 @@ export default {
   letter-spacing: 0.5
 }
 </style>
-
