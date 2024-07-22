@@ -27,8 +27,9 @@
     </div>
 
     <!-- Background and other elements -->
-    <div class="blur-circle"></div>
-    <div class="blur-circle"></div>
+    <!-- <div class="blur-circle"></div>
+    <div class="blur-circle"></div> -->
+    <div class="blur-circle-black"></div>
     <div class="films-container"></div>
   </div>
 </template>
@@ -122,7 +123,9 @@ export default {
 }
 
 .content-container{
-  z-index: 1;
+  height: calc(100vh - 150px);
+
+  z-index: 2;
   transition: all 0.3s ease-in-out;
 }
 
@@ -251,11 +254,11 @@ export default {
     z-index: 0;
 }
 
-.films-container{
+/* .films-container{
     display: inline-block;
     position: absolute;
     overflow:auto;
-    height: 729px;
+    height: 1200px;
     width: 1200px;
     transform: scale(0.9);
     opacity: 0.3;
@@ -264,6 +267,26 @@ export default {
     top: 10vh;
     background: url(../assets/images/films_container.png);
     z-index: 0;
+} */
+
+.films-container{
+    /* display: inline-block; */
+    position: absolute;
+    /* margin-top: 200px; */
+    overflow:auto;
+    height: 1200px;
+    width: 1200px;
+    transform: scale(0.9);
+    opacity: 0.3;
+    top: -45vh;
+    background-position-x: center;
+    background-position-y: center;
+    overflow: hidden;
+    /* top: 15vh; */
+    /* background: url(../assets/images/background.jpg); */
+    background: url(../assets/images/container-films.png);
+
+    z-index: 1;
 }
 
 .black-box{
@@ -282,20 +305,39 @@ export default {
   } */
   
   .display-container {
-    /* background-image: linear-gradient(#3c1e6b, black); */
-    background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%);
-    box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
-    box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
+      position: relative;
 
-    padding: 30px;
-    /* width: 36vw; */
-    height: 600px;
-    width: 700px;
-    /* max-width: 600px; */
-    border-radius: 30px;
-    z-index: 1;
-    /* margin-top: 20px; */
-  }
+      /* background-image: linear-gradient(#3c1e6b, black); */
+      background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%);
+      box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
+      box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
+  
+      padding: 30px;
+      /* width: 36vw; */
+      height: 85%;
+      width: auto;
+    min-width: 400px; /* Initial static width */
+    max-width: 100%; 
+      max-width: 900px;
+      /* max-width: 600px; */
+      border-radius: 30px;
+      z-index: 1;
+      /* margin-top: 20px; */
+      transition: all 0.3s ease-in-out;
+    }
+
+  .blur-circle-black {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  /* top: 20vh; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* background-image: linear-gradient(180deg,rgb(0, 0, 0, 0.5), rgb(122, 82, 187, 0.8) ); */
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: 1;
+}
   
 
    
@@ -413,7 +455,7 @@ export default {
     cursor: pointer;
     margin-bottom: 15px;
     padding: 10px 30px;
-    border: none;
+    /* border: none; */
     border-radius: 10px;
 
     font-style: normal;

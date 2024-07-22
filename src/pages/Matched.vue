@@ -34,6 +34,7 @@ export default {
   data() {
     return {
       movies: [],
+      isLoading: true,
     };
   },
   methods: {
@@ -46,7 +47,10 @@ export default {
   },
   async mounted() {
     let moviesFromBackend = [];
-    if (this.req!==null) {
+    const minLoadingTime = 3000; // Minimum loading time in milliseconds
+    const startTime = Date.now();
+
+    if (this.req !== null) {
       try {
         let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
         let url="http://0.0.0.0:8001/api/movies?query_string="
@@ -109,6 +113,7 @@ export default {
 </script>
 
   
+  
 
   <style scoped>
   .match-title {
@@ -116,7 +121,7 @@ export default {
     font-weight: 700;
     z-index: 1;
     color: white;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 30px;
   }
   
@@ -127,9 +132,11 @@ export default {
     flex-direction: column;
     height: calc(100vh - 100px);
     background-color: black;
+    /* transition: all 1s ease-in-out; */
   }
   
   .card-container {
+    height: 80%;
     display: flex;
     align-items: flex-start;
     z-index: 1;
@@ -309,5 +316,56 @@ export default {
     background: url('../assets/images/films_container.png');
     z-index: 0;
   }
+
+
+  
+  .blur-circle-black {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  /* top: 20vh; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* background-image: linear-gradient(180deg,rgb(0, 0, 0, 0.5), rgb(122, 82, 187, 0.8) ); */
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: 2;
+}
+
+  .blur-circle-rotate {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 30vh;
+  background: linear-gradient(180deg, rgba(1, 0, 2, 0.5) 0%, rgba(1, 0, 2, 0.5) 34%, rgba(95, 35, 184, 1) 100%);
+  border-radius: 50%;
+  filter: blur(50px);
+  animation: rotateCircle 5s linear infinite;
+  z-index: 2;
+}
+
+
+@keyframes rotateCircle {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 100px);
+    background-color: black;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+
   </style>
   
