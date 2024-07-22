@@ -43,7 +43,7 @@ export default {
     async mounted() {
         let moviesFromBackend = [];
         try {
-            let url = "http://0.0.0.0:8001/api/history?token=";
+            let url = "http://localhost:8001/api/history?token=";
             let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
             url += thistoken;
             let response = await axios.get(url);
@@ -85,7 +85,7 @@ export default {
                 }
             }
             try{
-              let url="http://0.0.0.0:8001/api/rate/movie?rate=";
+              let url="http://localhost:8001/api/rate/movie?rate=";
               url+=rating;
               url+="&movie_imdb_id="
               url+=movie.movie_imdb_id

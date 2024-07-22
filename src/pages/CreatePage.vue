@@ -88,13 +88,13 @@
         joinCode: '',
         responses: [],
         quizArray: [
-          { id: "1", question: "What kind of show do you want to see?", options: ["Movie", "Series", "Anime", "Cartoon"] },
-          { id: "2", question: "What show genre do you want to watch?", options: ['Music','Animation','Scifi','Horror','Fantasy','Action','Western','War','Crime','History','Reality','Family','Documentation','Romance','Comedy','European','Sport','Drama','Thriller'], multi: true },
+         { id: "1", question: "What kind of show do you want to see?", options: ["Movie", "Series"] },
+        { id: "2", question: "What genres do you prefer?", options: ['Music','Animation','Scifi','Horror','Fantasy','Action','Western','War','Crime','History','Reality','Family','Documentation','Romance','Comedy','European','Sport','Drama','Thriller'],multi: true},
           { id: "3", question: "How do you feel now?", options: ["Happy", "Surprised", "Angry", "Scared", "Sad", "Excited", "Frustrated", "Tense", "Nostalgic"], multi: true },
-          { id: "4", question: "What are the available platforms for you?", options: ["HBO Max", "Netflix", "Amazon Prime", "Disney+", "Paramount"], multi: true },
-          { id: "5", question: "What is the preferred release year for you?", options: ["After 2010", "After 1990", "After 1970", "Before 1970"] },
-          { id: "6", question: "You can choose the age restriction for our recommendation", options: ["Okay for all", "PG-13", "R", "Adults only"] },
-          { id: "7", question: "What is the preferred period of the show?", options: ["Between 1 and 1.5 hours", "Between 1.5 and 2 hours", "Between 2 and 3 hours", "Over 3 hours"] }
+        { id: "4", question: "What are the available platforms for you?", options: ["HBO Max", "Netflix", "Amazon Prime", "Disney+", "Paramount"], multi: true },
+        { id: "5", question: "What is the preferred release year for you?", options: ["After 2010", "After 1999", "After 1965", "Before 1965"] },
+        { id: "6", question: "Any age restriction?", options: ["+5","+13","+16","+18"] },
+        { id: "7", question: "What is the preferred period of the show?", options: ["less than 1 hour", "Between 1 and 1.5 hours", "Between 1.5 and 2 hours", "Over 2 hours"] }
         ]
       };
     },
@@ -194,14 +194,14 @@
                }
                req['emotions']=s;
             }
-            else if(i===3){
-              let s="";
-               for(let j=0;j<this.responses[i].length;j++){
-                  s+=this.responses[i][j];
-                  s+=" ";
-               }
-               req['platforms']=s;
-            }
+            //else if(i===3){
+              //let s="";
+               //for(let j=0;j<this.responses[i].length;j++){
+                 // s+=this.responses[i][j];
+                  //s+=" ";
+               //}
+               //req['platforms']=s;
+            //}
             else if(i===4){
                if(this.responses[i]==="After 2010"){
                 req['release_year']=2010;
@@ -233,14 +233,14 @@
             }
           }
           try{
-              let url="http://0.0.0.0:8001/api/submit-session-answer?session_code="
+              let url="http://localhost:8001/api/submit-session-answer?session_code="
               url+=this.sessionCode;
-              url+="&answers="
-              url+= JSON.stringify(req)
               url+="&token="
               let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-              url+=thistoken;
-              let response = axios.post(url);
+              url += thistoken;
+            let dictionary = JSON.parse(this.req);
+            console.log(dictionary);
+              let response = axios.post(url, dictionary);
           }
           catch(err){
               console.log(err)
@@ -279,7 +279,7 @@
     async mounted() {
       try{
         let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-        let url='http://0.0.0.0:8001/api/generate-session-code?token=';
+        let url='http://localhost:8001/api/generate-session-code?token=';
         url+=thistoken;
         let response= await axios.get(url)
         this.sessionCode=response.data.code
