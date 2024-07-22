@@ -135,8 +135,8 @@
             this.selectedOption = '';
             this.selectedOptions = [];
             this.userInput = '';
-          } else {
-            let req={}
+          }  else {
+          let req={}
           for(let i=0;i<this.responses.length;i++){
             if(i===0){
                 if(this.responses[i]==="Series"){
@@ -195,7 +195,20 @@
                req['platforms']=s;
             }
             else if(i===4){
-               req['release_year']=this.responses[i];
+               if(this.responses[i]==="After 2010"){
+                req['release_year']=2010;
+               }
+               else if(this.responses[i]==="After 1999"){
+                req['release_year']=1999;
+               }
+               else if(this.responses[i]==="After 1965"){
+                req['release_year']=1965;
+               }
+               else {
+                req['release_year']=1900
+                
+                ;
+               }
             }
             else if(i===5){
               req['age_certification']=this.responses[i];
@@ -212,10 +225,10 @@
             }
           }
           try{
-              let url="http://0.0.0.0:8000/submit/answer?session_code="
+              let url="http://0.0.0.0:8001/api/submit-session-answer?session_code="
               url+=this.sessionCode;
               url+="&answers="
-              url+=noSpaces;
+              url+= JSON.stringify(req)
               url+="&token="
               let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
               url+=thistoken;
@@ -258,9 +271,9 @@
     async mounted() {
       try{
         let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-        let url='http://0.0.0.0:8000/generate/code?token=';
+        let url='http://0.0.0.0:8001/api/generate-session-code?token=';
         url+=thistoken;
-        let response= await axios.post(url)
+        let response= await axios.get(url)
         this.sessionCode=response.data.code
       }
       catch(err){

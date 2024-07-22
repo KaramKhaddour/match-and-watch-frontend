@@ -17,7 +17,7 @@ export default{
          });
         let response='';
         try{
-            response=await axios.post('http://localhost:8001/api/logout', postData,);
+            response=await axios.post('http://0.0.0.0:8000/api/logout', postData,);
         }catch(err){
            console.log(err)
         }
@@ -32,7 +32,7 @@ export default{
         };
         let response='';
         try{
-            response=await axios.post('http://localhost:8001/api/login', postData,);
+            response=await axios.post('http://0.0.0.0:8000/api/login', postData,);
         }catch(err){
             if(err.code==="ERR_NETWORK"){
                 throw("Network error please try again")
@@ -51,7 +51,7 @@ export default{
                 refresh_token:response.data.refresh_token,
                 refresh_token_expires_in:response.data.refresh_token_expires_in,
             };
-            console.log(response.data.access_token)
+         //   console.log(response.data.access_token)
            localStorage.setItem('userData',JSON.stringify(tokenData))
            context.commit(SET_USER_TOKEN_DATA_MUTATION,tokenData)
         }
@@ -65,7 +65,7 @@ export default{
         };
         let response='';
         try{
-            response=await axios.post('http://localhost:8001/api/register', postData,);
+            response=await axios.post('http://0.0.0.0:8000/api/register/', postData,);
         }catch(err){
             if(err.code==="ERR_NETWORK"){
                 throw("Network error please try again")

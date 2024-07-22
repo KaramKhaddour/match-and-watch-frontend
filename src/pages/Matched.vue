@@ -1,28 +1,32 @@
 <template>
-    <div id="app" class="podium-container">
-      <h1 class="match-title Raleway">Matched</h1>
-      <div class="card-container Raleway">
-        <div v-for="(movie, index) in movies" :key="movie.id" :class="['card', index === 1 ? 'large' : 'small']">
-          <div class="image-container">
-            <img :src="movie.image" :alt="movie.title" />
-            <div class="overlay">
-              <a :href="`https://www.imdb.com/title/${movie.id}/`" target="_blank" class="watch-button Raleway">Watch</a>
-            </div>
-          </div>
-          <div class="ranking Inter">{{ index + 1 }}</div>
-          <div class="movie-details">
-            <h2 class="movie-title">{{ movie.title }}</h2>
-            <p class="movie-description">{{ movie.description }}</p>
-            <p class="movie-rating" v-if="movie.rating">Rating: {{ movie.rating }}</p>
+  <div id="app" class="podium-container">
+    <h1 class="match-title Raleway">Matched</h1>
+    <div class="card-container Raleway">
+      <div v-for="(movie, index) in movies" :key="movie.id" :class="['card', index === 1 ? 'large' : 'small']">
+        <div class="image-container">
+          <img :src="movie.image" :alt="movie.title" />
+          <div class="overlay">
+            <a :href="`https://www.imdb.com/title/${movie.imdb_id}/`" target="_blank" class="watch-button Raleway">Watch</a>
           </div>
         </div>
+        <div class="ranking Inter">{{ index + 1 }}</div>
+        <div class="movie-details">
+          <h2 class="movie-title">{{ movie.title }}</h2>
+          <p class="movie-description">{{ truncateText(movie.description, 150) }}</p>
+          <p class="movie-rating" v-if="movie.imdb_score">Rating: {{ movie.imdb_score }}</p>
+        </div>
       </div>
-      <div class="blur-circle"></div>
-      <div class="blur-circle"></div>
-      <div class="films-container"></div>
     </div>
-  </template>
+    <div class="blur-circle"></div>
+    <div class="blur-circle"></div>
+    <div class="films-container"></div>
+  </div>
+</template>
 
+  <script>
+import store from '@/store/store';
+import { GET_USER_TOKEN_GETTER } from '@/store/storeconstants';
+import axios from 'axios';
 
 export default {
   name: 'App',
@@ -32,18 +36,31 @@ export default {
       movies: [],
     };
   },
+  methods: {
+    truncateText(text, maxLength) {
+      if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+      }
+      return text;
+    }
+  },
   async mounted() {
     let moviesFromBackend = [];
     if (this.req!==null) {
       try {
-        let url="http://0.0.0.0:8000/api/movies?query_string="
-        url+=this.noSpace
-        //console.log(this.noSpace)
+        let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
+        let url="http://0.0.0.0:8001/api/movies?query_string="
+        url+=this.req;
+        url+="&token=";
+        url+=thistoken;
+        ///let dictionary = JSON.parse(this.req);/////
         let response = await axios.post(url);
-         //console.log(response)
-        //moviesFromBackend=response.data
-        //console.log(moviesFromBackend)
+        moviesFromBackend=response.data
       }
+      catch(err){
+        console.log(err)
+      }
+     }
       else{
          try{
           let url="http://0.0.0.0:8000/close?session_code="
@@ -58,28 +75,14 @@ export default {
            console.log(err)
          }
       }
-      moviesFromBackend = [
-        {
-          id: 'tt0111161',
-          title: 'The Shawshank Redemption',
-          description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
-          rating: '9.3'
-        },
-        {
-          id: 'tt0068646',
-          title: 'The Godfather',
-          description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.',
-          rating: '9.2'
-        },
-        {
-          id: 'tt0071562',
-          title: 'The Godfather: Part II',
-          description: 'The early life and career of Vito Corleone in 1920s New York is portrayed while his son, Michael, expands and tightens his grip on his crime syndicate.',
-          rating: '9.0'
-        }
-      ];
+      if(moviesFromBackend.length>3){
+        moviesFromBackend.pop()
+      }
+      if(moviesFromBackend.length>3){
+        moviesFromBackend.pop()
+      }
       let promises = moviesFromBackend.map(movie => {
-              let url = 'https://img.omdbapi.com/?apikey=ee3c8d4a&i=' + movie.id;
+              let url = 'https://img.omdbapi.com/?apikey=ee3c8d4a&i=' + movie.imdb_id;
               return fetch(url)
                   .then(response => {
                       if (!response.ok) {
@@ -93,7 +96,7 @@ export default {
                   })
                   .catch(error => {
                       console.error('There was a problem with the fetch operation:', error);
-                      movie.image = require('@/assets/images/placeholder.jpg'); 
+                      movie.image = require('@/assets/images/placeholder2.jpg'); 
                       return movie;
                   });
           });
@@ -103,7 +106,8 @@ export default {
           });
     }
   };
-  </script>
+</script>
+
   
 
   <style scoped>

@@ -119,25 +119,25 @@ const router=createRouter(
     }
 );
 
-router.beforeEach((to, from, next) => {
+// router.beforeEach((to, from, next) => {
     
-    // if (
-    //     'auth' in to.meta &&
-    //     to.meta.auth &&
-    //     !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
-    // ) {
-    //     next('/login_new');
-    // } else if (
-    //     'auth' in to.meta &&
-    //     !to.meta.auth &&
-    //     store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
-    // ) {
-    //     next('/');
-    // } else {
-    //     next();
-    // }
+//     if (
+//         'auth' in to.meta &&
+//         to.meta.auth &&
+//         !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+//     ) {
+//         next('/login_new');
+//     } else if (
+//         'auth' in to.meta &&
+//         !to.meta.auth &&
+//         store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+//     ) {
+//         next('/');
+//     } else {
+//         next();
+//     }
 
-    next();
-});
+//     next();
+// });
 
 export default router;

@@ -1,25 +1,40 @@
 <template>
-    <div class="matchesContainer">
-        <div v-for="movie in movies" :key="movie.id" class="film">
-            <div>
-                <img :src="movie.image" :alt="movie.title">
-                <p>{{ movie.title }}</p>
+    <div id="app" class="podium-container">
+      <h1 class="match-title Raleway"> Matches History</h1>
+      <div class="card-container Raleway">
+        <div v-for="(movie, index) in movies" :key="movie.id" :class="['card','small']">
+          <div class="image-container">
+            <img :src="movie.image" :alt="movie.title" />
+            <div class="overlay">
+              <a :href="`https://www.imdb.com/title/${movie.id}/`" target="_blank" class="watch-button Raleway">Watch</a>
             </div>
-            <div class="ratings-wrapper">
-                <div class="ratings">
-                    <span 
-                        v-for="rating in [5, 4, 3, 2, 1]" 
-                        :key="rating" 
-                        :data-rating="rating" 
-                        @click="setRating(movie, rating)"
-                        :class="{ active: rating <= movie.rating }">
-                        &#9733;
-                    </span>
+          </div>
+          <div class="ranking Inter">{{ index + 1 }}</div>
+          <div class="movie-details">
+            <h2 class="movie-title">{{ movie.title }}</h2>
+            <p class="movie-description" >{{ movie.description }}</p>
+            <p class="movie-rating Inter" v-if="movie.rating!=='0'" >Rating: {{ movie.rating }}</p>
+            <div class="notRated" v-if="movie.rating==='0'">
+                <p v-if="movie.rating==='0'" class="Inter">Rate me</p>
+                <div class="ratings-wrapper">
+                    <div class="ratings">
+                        <span 
+                            v-for="rating in [5, 4, 3, 2, 1]" 
+                            :key="rating" 
+                            :data-rating="rating" 
+                            @click="setRating(movie, rating)"
+                            :class="{ active: rating <= movie.rating }">
+                            &#9733;
+                        </span>
+                    </div>
                 </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</template>
+  </template>
+
 
 <script>
 export default {
@@ -30,14 +45,14 @@ export default {
     },
     mounted() {
         let moviesFromBackend = [
-            { id: 'tt0848228', title: "The Avengers", rating: '1' },
-            { id: 'tt0241527', title: "Harry Potter and the Sorcerer's Stone", rating: '2' },
-            { id: 'tt6264654', title: "Free Guy", rating: '0' },
-            { id: 'tt1649418', title: "The Gray Man", rating: '0' },
-            { id: 'tt5770786', title: "Glow", rating: '1' },
-            { id: 'tt5770786', title: "Glow", rating: '1' },
-            { id: 'tt5770786', title: "Glow", rating: '1' },
-            { id: 'tt1837492', title: "13 Reasons Why", rating: '4' },
+            { id: 'tt0848228', title: "The Avengers", rating: '0',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
+            { id: 'tt0848228', title: "The Avengers", rating: '0',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
+            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
+            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
+            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
+            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
+            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
+            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
         ];
 
         let promises = moviesFromBackend.map(movie => {
@@ -55,11 +70,10 @@ export default {
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
-                    movie.image = require('@/assets/images/placeholder.jpg'); 
+                    movie.image = require('@/assets/images/placeholder2.jpg'); 
                     return movie;
                 });
         });
-
         Promise.all(promises).then(updatedMovies => {
             this.movies = updatedMovies;
         });
@@ -78,30 +92,182 @@ export default {
 </script>
 
 <style scoped>
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
 
-.matchesContainer {
-    height: 150vh;
-    width: 100%;
-    padding-left: 60px;
-    padding-right: 60px;
-    margin: 0;
-    display: flex;
-    background-image: radial-gradient(
-        rgb(119, 27, 180),
-        rgb(59, 10, 92),
-        rgb(26, 10, 36),
-        black
-    );
+
+.match-title {
+    font-size: 36px;
+    font-weight: 700;
+    z-index: 1;
     color: white;
-    flex-wrap: wrap;
-}
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .podium-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-.ratings-wrapper {
+    width: 100%;
+    background-color: black;
+  }
+  
+  .card-container {
+
+    width: 70%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 30px;
+    column-gap: 10px;
+    z-index: 1;
+    
+  }
+  
+  .card {
+
+    width: 300px;
+    margin: 0 10px;
+    /* background: rgb(140, 69, 255, 0.1); */
+    background: linear-gradient(180deg, rgb(1, 0, 2, 1) 0%, rgb(1, 0, 2, 0.2) 50%, rgb(140, 69, 255, 0.1) 85%, rgb(140, 69, 255, 0.6) 100%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-content: center;
+    outline: 1px solid rgba(255, 255, 255, 0.25);
+    outline-offset: -1px;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 40%);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .card:hover{
+    box-shadow: inset 0px 0px 6px 1px rgb(255, 255, 255);
+    outline: 1px solid rgba(255, 255, 255, 0.8);
+  }
+
+  /* .optionDes{
+    width: 80%;
+    height: 50px;
+    margin: 10px;
+    align-content: center;
+    outline: 1px solid rgba(255, 255, 255, 0.25);
+    outline-offset: -1px;
+    border-radius: 30px;
+    background: 3D3D3D;
+    color: white;
+    text-align: center;
+    box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 40%);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .optionDes:hover{
+    box-shadow: inset 0px 0px 6px 1px rgb(255, 255, 255);
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+  } */
+
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+  
+  .card .ranking {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    /* background: rgb(140, 69, 255, 0.7); */
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 3px 12px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+    /* box-shadow: inset 0px 0px 6px 1px rgba(00, 0, 0, 40%); */
+    font-size: 16px;
+  }
+  
+  .card.large {
+    width: 280px;
+    transform: translateY(-20px);
+  }
+  
+  .card.small {
+    width: 230px;
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  
+  .image-container .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image-container:hover img {
+    transform: scale(1.1);
+    filter: blur(2px) brightness(0.7);
+  }
+  
+  .image-container:hover .overlay {
+    opacity: 1;
+  }
+  
+  .watch-button {
+    background: rgb(140, 69, 255);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .watch-button:hover {
+    background: rgb(140, 69, 255, 0.8);
+  }
+  
+  .movie-details {
+    padding: 10px;
+    color: white;
+  }
+  
+  .movie-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .movie-description {
+    font-size: 14px;
+
+    margin: 10px 0;
+  }
+  
+  .movie-rating {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  .ratings-wrapper {
     display: inline-block;
     padding: 0 10px;
 }
@@ -114,7 +280,7 @@ html, body {
 .ratings span {
     cursor: pointer;
     transition: color .2s, transform .2s;
-    font-size: 45px;
+    font-size: 20px;
 }
 
 .ratings span:hover,
@@ -127,23 +293,4 @@ html, body {
     transform: scale(1);
 }
 
-img {
-    width: 220px;
-    height: 270px;
-    border: solid rgb(51, 44, 3);
-    padding: 1px;
-}
-
-p {
-    font-size: 25px;
-    width: 220px;
-    text-align: center;
-    margin: 0;
-}
-
-.film {
-    padding: 5px;
-    height: 300px;
-    margin: 0;
-}
 </style>
