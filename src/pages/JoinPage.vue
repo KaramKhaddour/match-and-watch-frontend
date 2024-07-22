@@ -60,9 +60,14 @@
             <button v-if="currentQuestionIndex === 0" @click="submitSessionCode" class="button Raleway next-btn">
               Submit
             </button>
-            <button v-if="currentQuestionIndex > 0" @click="nextQuestion" class="button Raleway next-btn" :class="{ 'finish-button': isLastQuestion }">
-              {{ isLastQuestion ? 'Finish' : 'Next' }}
-            </button>
+            <button
+      @click="nextQuestion"
+      class="button Raleway next-btn"
+      :class="{ 'finish-button': isLastQuestion, 'disabled-btn': isDisabled }"
+      :disabled="isDisabled"
+    >
+      {{ isLastQuestion ? 'Finish' : 'Next' }}
+    </button>
           </div>
         </div>
       </div>
@@ -112,6 +117,9 @@ import axios from 'axios';
       isLastQuestion() {
         return this.currentQuestionIndex === this.quizArray.length - 1;
       },
+      isDisabled() {
+      return this.selectedOption.length === 0 && this.selectedOptions.length === 0;
+    },
       optionContainerClass() {
         const optionCount = this.currentQuestion.options.length;
         if (optionCount <= 2) {
@@ -254,18 +262,19 @@ import axios from 'axios';
   }
   
   .content-container{
+    height: calc(100vh - 100px);
     z-index: 1;
     transition: all 0.3s ease-in-out;
 
   }
   
   .quiz-title{
-    font-size: 45px;
-    z-index: 1;
-    color: white;
-    text-align: center;
-    margin: 20px;
-  }
+  font-size: 45px;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  margin: 10px;
+}
   
   
   .question-header{
@@ -280,6 +289,12 @@ import axios from 'axios';
     font-size: 20px;
     font-weight: 600;
   }
+
+  .disabled-btn {
+  background: rgba(140, 69, 255, 0.1) !important;
+  color: grey !important;
+  cursor: not-allowed !important;
+}
   
   .question {
     color: white;
@@ -408,21 +423,26 @@ import axios from 'axios';
       padding-top: 60px;
       font-size: 80px;
     } */
-    
     .display-container {
+      position: relative;
+
       /* background-image: linear-gradient(#3c1e6b, black); */
-      background: linear-gradient(180deg, #010002 0%, #361764 35%, #361764 50%, #361764 75%, #010002 100%);
+      background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%);
       box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
       box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
   
       padding: 30px;
       /* width: 36vw; */
-      height: 600px;
-      width: 700px;
+      height: 85%;
+      width: auto;
+    min-width: 400px; /* Initial static width */
+    max-width: 100%; 
+      max-width: 900px;
       /* max-width: 600px; */
       border-radius: 30px;
       z-index: 1;
       /* margin-top: 20px; */
+      transition: all 0.3s ease-in-out;
     }
     
   
@@ -544,7 +564,7 @@ import axios from 'axios';
       cursor: pointer;
       margin-bottom: 15px;
       padding: 10px 30px;
-      border: none;
+      /* border: none; */
       border-radius: 10px;
   
       font-style: normal;
@@ -649,7 +669,7 @@ import axios from 'axios';
     cursor: pointer;
     margin-bottom: 15px;
     padding: 10px 30px;
-    border: none;
+    /* border: none; */
     border-radius: 10px;
     font-style: normal;
     font-weight: 500;
@@ -745,7 +765,7 @@ import axios from 'axios';
     cursor: pointer;
     margin-bottom: 15px;
     padding: 10px 30px;
-    border: none;
+    /* border: none; */
     border-radius: 10px;
     font-style: normal;
     font-weight: 500;

@@ -88,7 +88,7 @@
     display: flex;
     justify-content: space-between;
     gap: 40px;
-    border: solid rgb(51, 44, 3);
+    border: solid rgb(255, 255, 255, 0.2);
     padding: 15px 40px;
     border-radius: 50px;
     border-width: thin;
@@ -142,7 +142,15 @@
     font-weight: 400 ; /* normal weight */
     font-style: normal;
     opacity: 60%;
+    transition: all 0.3s ease-in-out;
   }
+  
+  .navPart >  a:hover{
+    opacity: 100%;
+    text-decoration: underline;
+  }
+
+  
  
   /* .gg-play-button-o {
     box-sizing: border-box;

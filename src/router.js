@@ -14,6 +14,8 @@ import Waiting from './pages/WaitingPage.vue'
 import store from './store/store';
 import { IS_USER_AUTHENTICATE_GETTER } from './store/storeconstants';
 import OneUserQuiz from "./pages/OneUserQuiz.vue";
+import { loadingState } from './store/loading';
+
 const routes =  [
     {
         path:'/login_new',
@@ -120,7 +122,11 @@ const router=createRouter(
 );
 
 router.beforeEach((to, from, next) => {
-    
+        loadingState.setLoading(true);
+        setTimeout(() => next(), 1500); // Delay to show spinner (can adjust duration as needed)
+
+      
+
     // if (
     //     'auth' in to.meta &&
     //     to.meta.auth &&
@@ -138,6 +144,10 @@ router.beforeEach((to, from, next) => {
     // }
 
     next();
+});
+
+router.afterEach(() => {
+    setTimeout(() => loadingState.setLoading(false), 1500); // Ensure loading is shown for at least 500ms
 });
 
 export default router;

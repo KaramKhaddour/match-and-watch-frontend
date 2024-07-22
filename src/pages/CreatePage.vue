@@ -3,7 +3,7 @@
       <div :style="{ opacity: showForm ? '1' : '0', transform: showForm ? 'translateY(0)' : 'translateY(100px)' }" class="content-container">
         <h1 class="quiz-title Raleway">Match +</h1>
         <div class="display-container flex flex-column justify-content-center align-items-center">
-          <div class="sessionCode ">
+          <div class="sessionCode">
             <p>
                 Your Session Code: {{ sessionCode }}
             </p>
@@ -52,9 +52,14 @@
             <button v-if="currentQuestionIndex > 0" @click="previousQuestion" class="button Raleway previous-btn">
               Previous
             </button>
-            <button @click="nextQuestion" class="button Raleway next-btn" :class="{ 'finish-button': isLastQuestion }">
-              {{ isLastQuestion ? 'Finish' : 'Next' }}
-            </button>
+            <button
+      @click="nextQuestion"
+      class="button Raleway next-btn"
+      :class="{ 'finish-button': isLastQuestion, 'disabled-btn': isDisabled }"
+      :disabled="isDisabled"
+    >
+      {{ isLastQuestion ? 'Finish' : 'Next' }}
+    </button>
           </div>
         </div>
       </div>
@@ -100,6 +105,9 @@
       isLastQuestion() {
         return this.currentQuestionIndex === this.quizArray.length - 1;
       },
+      isDisabled() {
+      return this.selectedOption.length === 0 && this.selectedOptions.length === 0;
+    },
       optionContainerClass() {
         const optionCount = this.currentQuestion.options.length;
         if (optionCount <= 2) {
@@ -279,6 +287,8 @@
     }
   
     .quizContainer{
+      position: relative;
+      display: inline-block;
       width: 100%;
       height: calc(100vh - 100px);
       display: flex;
@@ -292,19 +302,25 @@
      ); */
      background: black;
   }
+
+  .disabled-btn {
+  background: rgba(140, 69, 255, 0.1) !important;
+  color: grey !important;
+  cursor: not-allowed !important;
+}
   
   .content-container{
     z-index: 1;
-    transition: all 0.3s ease-in-out;
+    /* transition: all 0.3s ease-in-out; */
   }
   
   .quiz-title{
-    font-size: 45px;
-    z-index: 1;
-    color: white;
-    text-align: center;
-    margin: 20px;
-  }
+  font-size: 45px;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  margin: 10px;
+}
   
   /* .quiz-title > h1 {
     box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
@@ -334,6 +350,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: all 0.3s ease-in-out;
   }
   
   .two-options {
@@ -381,10 +398,11 @@
   
   .many-options {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     row-gap: 15px;
     column-gap: 15px;
     margin-top: 20px;
+
   }
   
   .many-options > div {
@@ -452,6 +470,8 @@
     } */
     
     .display-container {
+      position: relative;
+
       /* background-image: linear-gradient(#3c1e6b, black); */
       background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%);
       box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
@@ -459,13 +479,18 @@
   
       padding: 30px;
       /* width: 36vw; */
-      height: 600px;
-      width: 700px;
+      height: 85%;
+      width: auto;
+    min-width: 400px; /* Initial static width */
+    max-width: 100%; 
+      max-width: 900px;
       /* max-width: 600px; */
       border-radius: 30px;
       z-index: 1;
       /* margin-top: 20px; */
+      transition: all 0.3s ease-in-out;
     }
+
     
   
      
@@ -481,7 +506,7 @@
       color: white;
       text-align: center;
       box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 40%);
-      transition: all 0.3s ease-in-out;
+      /* transition: all 0.3s ease-in-out; */
     }
   
     .optionWraper:hover{
@@ -509,7 +534,7 @@
   
       .selected-option{
       background: rgb(140, 69, 255, 0.4);
-      color: #8C45FF;
+      color: white;
       box-shadow: inset 0px 0px 6px 5px #8C45FF;
       outline: 1px solid #8C45FF;
       transition: all 0.3s ease-in-out;
@@ -586,7 +611,7 @@
       cursor: pointer;
       margin-bottom: 15px;
       padding: 10px 30px;
-      border: none;
+      /* border: none; */
       border-radius: 10px;
   
       font-style: normal;
@@ -639,7 +664,7 @@
   }
   .selected-option {
     background: rgb(140, 69, 255, 0.4);
-    color: #8C45FF;
+    color: white;
     box-shadow: inset 0px 0px 6px 5px #8C45FF;
     outline: 1px solid #8C45FF;
     transition: all 0.3s ease-in-out;
@@ -655,7 +680,7 @@
     max-width: 100%;
     resize: none;
     box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 40%);
-    transition: all 0.3s ease-in-out;
+    /* transition: all 0.3s ease-in-out; */
     outline: 1px solid rgba(255, 255, 255, 0.25);
     outline-offset: -1px;
     border-radius: 30px;
@@ -691,7 +716,6 @@
     cursor: pointer;
     margin-bottom: 15px;
     padding: 10px 30px;
-    border: none;
     border-radius: 10px;
     font-style: normal;
     font-weight: 500;
@@ -707,7 +731,7 @@
     font-weight: 500;
     font-size: 12px;
     text-decoration: none;
-    padding: 4
+    padding: 4;
   }
   .option-wrapper {
     display: flex;
@@ -738,7 +762,7 @@
   }
   .selected-option {
     background: rgba(140, 69, 255, 0.4);
-    color: #8C45FF;
+    color: white;
     box-shadow: inset 0px 0px 6px 5px #8C45FF;
     outline: 1px solid #8C45FF;
   }
@@ -789,7 +813,7 @@
     cursor: pointer;
     margin-bottom: 15px;
     padding: 10px 30px;
-    border: none;
+    /* border: none; */
     border-radius: 10px;
     font-style: normal;
     font-weight: 500;
@@ -800,7 +824,7 @@
   .sessionCode{
     position: absolute;
     color: white;
-    top: 20%;
+    top: 40px;
     left:8%;
     margin-bottom: 20px;
     font-size: 20px;

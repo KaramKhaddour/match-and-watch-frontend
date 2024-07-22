@@ -175,7 +175,7 @@
     cursor: poRaleway;
     margin-bottom: 15px;
     padding: 10px 30px;
-    border: none;
+    /* border: none; */
     border-radius: 60px;
  
     font-style: normal;

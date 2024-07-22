@@ -55,13 +55,20 @@
         </div>
         <div class="buttons">
           <button v-if="currentQuestionIndex > 0" @click="previousQuestion" class="button Raleway previous-btn">Previous</button>
-          <button @click="nextQuestion" class="button Raleway next-btn" :class="{ 'finish-button': isLastQuestion }">{{ isLastQuestion ? 'Finish' : 'Next' }}</button>
-        </div>
+          <button
+      @click="nextQuestion"
+      class="button Raleway next-btn"
+      :class="{ 'finish-button': isLastQuestion, 'disabled-btn': isDisabled }"
+      :disabled="isDisabled"
+    >
+      {{ isLastQuestion ? 'Finish' : 'Next' }}
+    </button>        </div>
       </div>
     </div>
-    <div class="blur-circle"></div>
-    <div class="blur-circle"></div>
+    <!-- <div class="blur-circle"></div>
+    <div class="blur-circle"></div> -->
     <div class="films-container"></div>
+    <div class="blur-circle-black"></div>
   </div>
 </template>
 
@@ -95,6 +102,9 @@ export default {
     },
     isLastQuestion() {
       return this.currentQuestionIndex === this.quizArray.length - 1;
+    },
+    isDisabled() {
+      return this.selectedOption.length === 0 && this.selectedOptions.length === 0;
     },
     optionContainerClass() {
       const optionCount = this.currentQuestion.options.length;
@@ -180,8 +190,21 @@ export default {
 }
 
 .content-container{
-  z-index: 1;
+  z-index: 2;
   transition: all 0.3s ease-in-out;
+}
+
+.blur-circle-black {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  /* top: 20vh; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* background-image: linear-gradient(180deg,rgb(0, 0, 0, 0.5), rgb(122, 82, 187, 0.8) ); */
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: 1;
 }
 
 .quiz-title{
@@ -189,7 +212,7 @@ export default {
   z-index: 1;
   color: white;
   text-align: center;
-  margin: 20px;
+  margin: 10px;
 }
 
 /* .quiz-title > h1 {
@@ -265,6 +288,12 @@ export default {
   margin: 0;
 }
 
+.disabled-btn {
+  background: rgba(140, 69, 255, 0.1) !important;
+  color: grey !important;
+  cursor: not-allowed !important;
+}
+
 .many-options {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -338,20 +367,26 @@ export default {
   } */
   
   .display-container {
-    /* background-image: linear-gradient(#3c1e6b, black); */
-    background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%);
-    box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
-    box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
+      position: relative;
 
-    padding: 30px;
-    /* width: 36vw; */
-    height: 600px;
-    width: 700px;
-    /* max-width: 600px; */
-    border-radius: 30px;
-    z-index: 1;
-    /* margin-top: 20px; */
-  }
+      /* background-image: linear-gradient(#3c1e6b, black); */
+      background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%);
+      box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
+      box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
+  
+      padding: 30px;
+      /* width: 36vw; */
+      height: 85%;
+      width: auto;
+    min-width: 400px; /* Initial static width */
+    max-width: 100%; 
+      max-width: 900px;
+      /* max-width: 600px; */
+      border-radius: 30px;
+      z-index: 1;
+      /* margin-top: 20px; */
+      transition: all 0.3s ease-in-out;
+    }
   
 
    
@@ -395,12 +430,25 @@ export default {
 
     .selected-option{
     background: rgb(140, 69, 255, 0.4);
-    color: #8C45FF;
+    /* color: #8C45FF; */
+    color: white;
     box-shadow: inset 0px 0px 6px 5px #8C45FF;
     outline: 1px solid #8C45FF;
     transition: all 0.3s ease-in-out;
     }
 
+    .blur-circle-black {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  /* top: 20vh; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* background-image: linear-gradient(180deg,rgb(0, 0, 0, 0.5), rgb(122, 82, 187, 0.8) ); */
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: 1;
+}
     .inputText{
         width: 500px;
         border: solid rgb(51, 44, 3) 1px;
@@ -472,7 +520,7 @@ export default {
     cursor: pointer;
     margin-bottom: 15px;
     padding: 10px 30px;
-    border: none;
+    /* border: none; */
     border-radius: 10px;
 
     font-style: normal;

@@ -1,27 +1,37 @@
 <template>
-    <div id="app" class="podium-container">
+    <transition name="fade">
+        <div v-if="isLoading" class="loading-spinner">
+          <div class="blur-circle-rotate"></div>
+          <div class="films-container"></div>
+        </div>
+    </transition>      
+    <transition name="fade">
+    <div v-if="!isLoading" id="app" class="podium-container" >
       <h1 class="match-title Raleway">Matched</h1>
-      <div class="card-container Raleway">
-        <div v-for="(movie, index) in movies" :key="movie.id" :class="['card', index === 1 ? 'large' : 'small']">
-          <div class="image-container">
-            <img :src="movie.image" :alt="movie.title" />
-            <div class="overlay">
-              <a :href="`https://www.imdb.com/title/${movie.id}/`" target="_blank" class="watch-button Raleway">Watch</a>
+        <div v-if="!isLoading" class="card-container Raleway">
+          <div v-for="(movie, index) in movies" :key="movie.id" :class="['card', index === 1 ? 'large' : 'small']">
+            <div class="image-container">
+              <img :src="movie.image" :alt="movie.title" />
+              <div class="overlay">
+                <a :href="`https://www.imdb.com/title/${movie.id}/`" target="_blank" class="watch-button Raleway">Watch</a>
+              </div>
+            </div>
+            <div class="ranking Inter">{{ index + 1 }}</div>
+            <div class="movie-details">
+              <h2 class="movie-title">{{ movie.title }}</h2>
+              <p class="movie-description">{{ movie.description }}</p>
+              <p class="movie-rating" v-if="movie.rating">Rating: {{ movie.rating }}</p>
             </div>
           </div>
-          <div class="ranking Inter">{{ index + 1 }}</div>
-          <div class="movie-details">
-            <h2 class="movie-title">{{ movie.title }}</h2>
-            <p class="movie-description">{{ movie.description }}</p>
-            <p class="movie-rating" v-if="movie.rating">Rating: {{ movie.rating }}</p>
-          </div>
         </div>
-      </div>
-      <div class="blur-circle"></div>
-      <div class="blur-circle"></div>
+      <!-- <div class="blur-circle"></div>
+      <div class="blur-circle"></div> -->
       <div class="films-container"></div>
     </div>
+    </transition>
   </template>
+  
+  
 
 <script>
 export default {
@@ -30,83 +40,95 @@ export default {
   data() {
     return {
       movies: [],
+      isLoading: true,
     };
   },
   async mounted() {
     let moviesFromBackend = [];
-    if (this.req!==null) {
+    const minLoadingTime = 3000; // Minimum loading time in milliseconds
+    const startTime = Date.now();
+
+    if (this.req !== null) {
       try {
-        let url="http://0.0.0.0:8000/api/movies?query_string="
-        url+=this.noSpace
-        //console.log(this.noSpace)
+        let url = "http://0.0.0.0:8000/api/movies?query_string=";
+        url += this.noSpace;
         let response = await axios.post(url);
-         //console.log(response)
-        //moviesFromBackend=response.data
-        //console.log(moviesFromBackend)
+        // Uncomment the following line when backend is available
+        // moviesFromBackend = response.data;
+      } catch (err) {
+        console.log(err);
       }
-      catch(err){
-        console.log(err)
+    } else {
+      try {
+        let url = "http://0.0.0.0:8000/close?session_code=";
+        let thistoken = store.getters['auth/GET_USER_TOKEN_GETTER'];
+        url += this.sessionCode;
+        url += "&token=";
+        url += thistoken;
+        let response = await axios.post(url);
+      } catch (err) {
+        console.log(err);
       }
-     }
-      else{
-         try{
-          let url="http://0.0.0.0:8000/close?session_code="
-          let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-          url+=this.sessionCode;
-          url+="&token=";
-          url+=thistoken;
-          console.log(url)
-          let response = await axios.post(url);
-         }
-         catch(err){
-           console.log(err)
-         }
-      }
-      moviesFromBackend = [
-        {
-          id: 'tt0111161',
-          title: 'The Shawshank Redemption',
-          description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
-          rating: '9.3'
-        },
-        {
-          id: 'tt0068646',
-          title: 'The Godfather',
-          description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.',
-          rating: '9.2'
-        },
-        {
-          id: 'tt0071562',
-          title: 'The Godfather: Part II',
-          description: 'The early life and career of Vito Corleone in 1920s New York is portrayed while his son, Michael, expands and tightens his grip on his crime syndicate.',
-          rating: '9.0'
-        }
-      ];
-      let promises = moviesFromBackend.map(movie => {
-              let url = 'https://img.omdbapi.com/?apikey=ee3c8d4a&i=' + movie.id;
-              return fetch(url)
-                  .then(response => {
-                      if (!response.ok) {
-                          throw new Error(`HTTP error! Status: ${response.status}`);
-                      }
-                      return response.url; 
-                  })
-                  .then(imageUrl => {
-                      movie.image = imageUrl; 
-                      return movie;
-                  })
-                  .catch(error => {
-                      console.error('There was a problem with the fetch operation:', error);
-                      movie.image = require('@/assets/images/placeholder.jpg'); 
-                      return movie;
-                  });
-          });
-  
-          Promise.all(promises).then(updatedMovies => {
-              this.movies = updatedMovies;
-          });
     }
-  };
+
+    // Dummy data for example purposes
+    moviesFromBackend = [
+      {
+        id: 'tt0111161',
+        title: 'The Shawshank Redemption',
+        description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
+        rating: '9.3'
+      },
+      {
+        id: 'tt0068646',
+        title: 'The Godfather',
+        description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.',
+        rating: '9.2'
+      },
+      {
+        id: 'tt0071562',
+        title: 'The Godfather: Part II',
+        description: 'The early life and career of Vito Corleone in 1920s New York is portrayed while his son, Michael, expands and tightens his grip on his crime syndicate.',
+        rating: '9.0'
+      }
+    ];
+
+    let promises = moviesFromBackend.map(movie => {
+      let url = 'https://img.omdbapi.com/?apikey=ee3c8d4a&i=' + movie.id;
+      return fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.url;
+        })
+        .then(imageUrl => {
+          movie.image = imageUrl;
+          return movie;
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+          movie.image = require('@/assets/images/placeholder.jpg');
+          return movie;
+        });
+    });
+
+    Promise.all(promises).then(updatedMovies => {
+      this.movies = updatedMovies;
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = minLoadingTime - elapsedTime;
+
+      if (remainingTime > 0) {
+        setTimeout(() => {
+          this.isLoading = false;
+        }, remainingTime);
+      } else {
+        this.isLoading = false;
+      }
+    });
+  }
+};
+
   </script>
   
   
@@ -117,7 +139,7 @@ export default {
     font-weight: 700;
     z-index: 1;
     color: white;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 30px;
   }
   
@@ -128,9 +150,11 @@ export default {
     flex-direction: column;
     height: calc(100vh - 100px);
     background-color: black;
+    /* transition: all 1s ease-in-out; */
   }
   
   .card-container {
+    height: 80%;
     display: flex;
     align-items: flex-start;
     z-index: 1;
@@ -310,5 +334,56 @@ export default {
     background: url('../assets/images/films_container.png');
     z-index: 0;
   }
+
+
+  
+  .blur-circle-black {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  /* top: 20vh; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* background-image: linear-gradient(180deg,rgb(0, 0, 0, 0.5), rgb(122, 82, 187, 0.8) ); */
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: 2;
+}
+
+  .blur-circle-rotate {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 30vh;
+  background: linear-gradient(180deg, rgba(1, 0, 2, 0.5) 0%, rgba(1, 0, 2, 0.5) 34%, rgba(95, 35, 184, 1) 100%);
+  border-radius: 50%;
+  filter: blur(50px);
+  animation: rotateCircle 5s linear infinite;
+  z-index: 2;
+}
+
+
+@keyframes rotateCircle {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 100px);
+    background-color: black;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+
   </style>
   

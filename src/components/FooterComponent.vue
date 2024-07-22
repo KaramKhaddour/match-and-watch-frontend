@@ -1,7 +1,9 @@
 <template>
-    <footer>
+    <footer>      
+    <div class="empty-box"></div>
+    <div class="footer Raleway">
       <div class="logo">
-        <img src="../assets/images/matchwatch.png" alt="logo"> 
+        <img src="../assets/images/matchwatch.svg" alt="logo"> 
       </div>
       <ul>
         <li class="first">Product</li>
@@ -31,6 +33,7 @@
         <li>Terms</li>
         <li>Security</li>
       </ul>
+      </div>  
     </footer>
 </template>
 <script>
@@ -38,6 +41,12 @@ export default{};
 </script>
 <style scoped>
 footer{
+  height: 30em;
+  z-index: 0;
+}
+
+.footer{
+
   left: 0;
   bottom: 0;
   width: 100%;
@@ -46,10 +55,17 @@ footer{
   color: white;
   display: flex;
   padding:3em;
+  z-index: 0;
+}
+
+.empty-box{
+  background-color: rgb(0, 0, 0);
+  width: 100%;
+  height: 25%;
 }
 .logo{
   display: inline-block;
-  width:50%;
+  width:100%;
   height:100%;
 }
 img{

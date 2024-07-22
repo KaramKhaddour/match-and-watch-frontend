@@ -1,20 +1,23 @@
 <template>
     <div class="homeContainer">
-        <div class="blur-circle"></div>
-        <div class="blur-circle"></div>
+        <!-- <div class="blur-circle"></div>
+        <div class="blur-circle"></div> -->
+        <div class="blur-circle-black"> </div>
+        <div class="blur-circle-rotate"> </div>
+
         <div class="films-container"></div>
        <div class="firstDivision">
-            <h1 class="Inter">Let's find the best shows for you</h1>
-            <h3 class="Inter">Click this Button, Answer our Questions, and Watch your Show</h3>
-            <h3>You can find movies and series from a big variety of platfrmos</h3>
-            <button  class="matchandwatchbutton" v-on:click="goToQuiz">Match & Watch</button>
+            <h1 class="title-1 Inter">Let's match the best shows for you to watch</h1>
+            <h3 class="title-2 Inter">Click this Button, Answer our Questions, Match, and Watch your Show</h3>
+            <h3 class="title-3 Inter">You can find movies and series from a big variety of platforms</h3>
+            <a  class="matchandwatchbutton" v-on:click="goToQuiz">Match & Watch</a>
        </div>
-       <div class="thirdDivision">
+       <div class="thirdDivision Raleway">
         <p>You can find movies from the following platforms</p>
         <div class="logosConainter">
            <img src="../assets/images/logos/disney.svg" alt="Disney" class="logo">
            <img src="../assets/images/logos/Amazon_Prime_Logo.svg" alt="Amozon Prime" class="logo">
-           <img src="../assets/images/logos/HBO_Max_Logo.svg" alt="HBO MAX" class="logo">
+           <img src="../assets/images/logos/HBO_Max_Logo_White.svg" alt="HBO MAX" class="logo">
            <img src="../assets/images/logos/Netflix_2015_logo.svg" alt="Netflix" class="logo">
            <img src="../assets/images/logos/Paramount_Pictures_Corporation_logo.svg" alt="Disney" class="logo">
         </div>
@@ -120,6 +123,7 @@ export default {
     width: 100%;
     height: 200vh;
     display: flex;
+    overflow-x: none;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
@@ -131,7 +135,8 @@ export default {
     display: flex;
     justify-content:flex-start;
     align-items: center;
-    flex-direction: column;
+    flex-direction: column;    
+    overflow-x: none;
     /* background: black; */
     margin-bottom: 500px;
     z-index: 3;
@@ -143,9 +148,62 @@ export default {
     justify-content:flex-start;
     align-items: center;
     flex-direction: column;
+
     /* background: black; */
     z-index: 3;
 }
+
+.thirdDivision > p {
+    font-weight: 400;
+}
+
+.blur-circle-black {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  /* top: 20vh; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* background-image: linear-gradient(180deg,rgb(0, 0, 0, 0.5), rgb(122, 82, 187, 0.8) ); */
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: 2;
+}
+
+.blur-circle-rotate {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  top: 20vh;
+  background: linear-gradient(180deg, rgb(1, 0, 2, 0.5) 0%, rgb(1, 0, 2, 0.5) 34%, rgba(95, 35, 184, 0.8) 100%);
+  border-radius: 50%;
+  filter: blur(50px);
+  animation: rotateCircle 5s linear infinite;
+  z-index: 2;
+}
+
+@keyframes rotateCircle {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.title-1 {
+    font-family: Raleway;
+    font-weight: 700;
+    width: 65%;
+    font-size: 82px;
+    line-height: 0.9;
+}
+
+.title-2 {
+    font-family: Raleway;
+    font-weight: 600;
+}
+.title-3 {
+    font-family: Raleway;
+    font-weight: 400;
+}
+
+
 h1{
     font-weight: 900;
     font-style: normal;
@@ -166,22 +224,30 @@ h3{
     margin-bottom: 0.5em;
 }
 .matchandwatchbutton{
+    font-family: Raleway;
+    font-weight: 700;
     text-align: center;
     margin: auto;
-    display: grid;
-    width: 210px;
-    height: 60px;
+    /* display: grid; */
+    /* width: 210px; */
+    width: 270px;
+
+    /* height: 60px; */
     text-decoration: none;
-    font-size: 20px;
-    padding-top:0.6em;
+    font-size: 25px;
+    padding: 15px 5px;
+    border-radius: 20px;
     cursor: pointer;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: 1px;
+    border: 2px transparent solid;
     color: #2b0268;
-    font-weight: 600;
+    color: black;
     background-size: 400%;
     margin: 0;
-    background-image: linear-gradient(90deg,#b185f8, #7a52bb,#b185f8);
+    background-image: linear-gradient(90deg,#b185f8, #5b2da5b1,#b185f8);
+    background-image: linear-gradient(90deg, rgb(164, 118, 238), rgba(140, 69, 255, 0.4), rgb(164, 118, 238));
+    transition: all 0.3s ease-in-out;
 }
 .matchandwatchbutton:before{
     content: '';
@@ -203,10 +269,19 @@ h3{
     opacity: 1;
     z-index: -1;
 }
+
+.matchandwatchbutton:hover{
+    background-image: none;
+    background-color: transparent;
+    color: #FFFFFF;
+    border: 2px #FFFFFF solid;
+}
+
 .matchandwatchbutton{
     z-index: 1;
     animation: glow 20s linear infinite;
 }
+
 @keyframes glow{
     0%{
         background-position: 0%;
@@ -249,7 +324,9 @@ img{
     width:220px;
     height: 120px;
     padding: 25px;
-    border: solid 0.5px #a0a0a0;
+    box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 25%);
+
+    border: solid 0.7px #a0a0a0;
 }
 p{
     color: white;
@@ -309,16 +386,20 @@ a{
 .films-container{
     /* display: inline-block; */
     position: absolute;
-    margin-top: 200px;
+    /* margin-top: 200px; */
     overflow:auto;
-    height: 660px;
+    height: 1200px;
     width: 1200px;
     transform: scale(1.1);
-    opacity: 1;
+    opacity: 0.5;
+    top: -16vh;
     background-position-x: center;
     background-position-y: center;
-    top: 15vh;
-    background: url(../assets/images/background.jpg);
+    overflow: hidden;
+    /* top: 15vh; */
+    /* background: url(../assets/images/background.jpg); */
+    background: url(../assets/images/container-films.png);
+
     z-index: 1;
 }
 
