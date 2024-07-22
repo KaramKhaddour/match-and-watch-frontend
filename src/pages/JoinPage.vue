@@ -142,7 +142,7 @@ import axios from 'axios';
       async submitSessionCode() {
         try{
           let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-          let url="http://0.0.0.0:8000/join/"
+          let url="http://0.0.0.0:8001/api/join-session/"
           url+=this.sessionCode;
           url+='?'
           url+="token="

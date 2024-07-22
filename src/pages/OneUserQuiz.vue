@@ -65,6 +65,10 @@
 </template>
 
 <script>
+import store from '@/store/store';
+import { GET_USER_TOKEN_GETTER } from '@/store/storeconstants';
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -194,7 +198,20 @@ export default {
                req['platforms']=s;
             }
             else if(i===4){
-               req['release_year']=this.responses[i];
+               if(this.responses[i]==="After 2010"){
+                req['release_year']=2010;
+               }
+               else if(this.responses[i]==="After 1999"){
+                req['release_year']=1999;
+               }
+               else if(this.responses[i]==="After 1965"){
+                req['release_year']=1965;
+               }
+               else {
+                req['release_year']=1900
+                
+                ;
+               }
             }
             else if(i===5){
               req['age_certification']=this.responses[i];
@@ -210,7 +227,7 @@ export default {
               req['length']="medium"
             }
           }
-          this.$router.push({ name: 'Result', params: { req: req } });
+          this.$router.push({ name: 'Result', params: { req: JSON.stringify(req) } });
           }
       }
     },

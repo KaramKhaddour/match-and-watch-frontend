@@ -6,10 +6,7 @@
         <div class="blur-circle"></div>
         <div class="blur-circle"></div>
         <div class="films-container"></div>
-
-
         </div>
-        <div class="black-box"></div>
 </template>
 
 <script>

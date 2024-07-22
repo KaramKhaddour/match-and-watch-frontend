@@ -21,19 +21,19 @@
           </a>
        </div>
        <div class="navPart">
-        <a href="/movies" class="nav-btn">
-              <span>
-                <img src="@/assets/images/navbar/plus.svg" alt="match-plus">
+        <a href="/join" class="nav-btn">
+             <span>
+                <img src="@/assets/images/navbar/play.svg" alt="match-plus">
               </span>
               <span class="nav-btn-txt">Join Session</span>
           </a>
       </div>
       <div class="navPart">
-        <a href="/series" class="nav-btn">
+        <a href="/create" class="nav-btn">
               <span>
-                <img src="@/assets/images/navbar/play.svg" alt="match-plus">
+                <img src="@/assets/images/navbar/plus.svg" alt="match-plus">
               </span>
-              <span class="nav-btn-txt">About Us</span>
+              <span class="nav-btn-txt">Create Session</span>
         </a>
       </div>
     </nav>
