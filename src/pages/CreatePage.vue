@@ -144,103 +144,93 @@
             this.selectedOptions = [];
             this.userInput = '';
           }  else {
-          let req={}
-          for(let i=0;i<this.responses.length;i++){
-            if(i===0){
-                if(this.responses[i]==="Series"){
-                  req['type']="Show"
+            let req = {}
+            for (let i = 0; i < this.responses.length; i++) {
+              if (i === 0) {
+                if (this.responses[i] === "Series") {
+                  req['type'] = "Show"
                 }
-                else req['type']=this.responses[i];
-            }
-            else if(i===1){
-               let s="";
-               for(let j=0;j<this.responses[i].length;j++){
-                  s+=this.responses[i][j];
-                  s+=" ";
-               }
-               req['genres']=s;
-            }
-            else if(i===2){
-              let s="";
-               for(let j=0;j<this.responses[i].length;j++){
-                  if(this.responses[i][j]==="Happy"){
-                    s+="Happiness"
-                  }
-                  else if(this.responses[i][j]==="Surprised"){
-                    s+="Surprise"
-                  }
-                  else if(this.responses[i][j]==="Angry"){
-                    s+="Anger"
-                  }
-                  else if(this.responses[i][j]==="Scared"){
-                    s+="Fear"
-                  }
-                  else if(this.responses[i][j]==="Sad"){
-                    s+="Sadness"
-                  }
-                  else if(this.responses[i][j]==="Excited"){
-                    s+="Excitement"
-                  }
-                  else if(this.responses[i][j]==="Frustrated"){
-                    s+="Frustration"
-                  }
-                  else if(this.responses[i][j]==="Tense"){
-                    s+="Tension"
-                  }
-                  else if(this.responses[i][j]==="Nostalgic"){
-                    s+="Nostalgia"
-                  }
-                  s+=" ";
-               }
-               req['emotions']=s;
-            }
-            //else if(i===3){
-              //let s="";
-               //for(let j=0;j<this.responses[i].length;j++){
-                 // s+=this.responses[i][j];
-                  //s+=" ";
-               //}
-               //req['platforms']=s;
-            //}
-            else if(i===4){
-               if(this.responses[i]==="After 2010"){
-                req['release_year']=2010;
-               }
-               else if(this.responses[i]==="After 1999"){
-                req['release_year']=1999;
-               }
-               else if(this.responses[i]==="After 1965"){
-                req['release_year']=1965;
-               }
-               else {
-                req['release_year']=1900
-                
-                ;
-               }
-            }
-            else if(i===5){
-              req['age_certification']=this.responses[i];
-            }
-            else if(i===6){
-              if(this.responses[i]==="less than 1 hour"){
-                req['length']="short"
+                else req['type'] = this.responses[i];
               }
-              else if(this.responses[i]==="Over 2 hours")
-              req['length']="long";
+              else if (i === 1) {
+                req['genres'] = this.responses[i];
+              }
+              else if (i === 2) {
+                let s = "";
+                for (let j = 0; j < this.responses[i].length; j++) {
+                  if (this.responses[i][j] === "Happy") {
+                    this.responses[i][j] = "Happiness"
+                  }
+                  else if (this.responses[i][j] === "Surprised") {
+                    this.responses[i][j] = "Surprise"
+                  }
+                  else if (this.responses[i][j] === "Angry") {
+                    this.responses[i][j] = "Anger"
+                  }
+                  else if (this.responses[i][j] === "Scared") {
+                    this.responses[i][j] = "Fear"
+                  }
+                  else if (this.responses[i][j] === "Sad") {
+                    this.responses[i][j] = "Sadness"
+                  }
+                  else if (this.responses[i][j] === "Excited") {
+                    this.responses[i][j] = "Excitement"
+                  }
+                  else if (this.responses[i][j] === "Frustrated") {
+                    this.responses[i][j] = "Frustration"
+                  }
+                  else if (this.responses[i][j] === "Tense") {
+                    this.responses[i][j] = "Tension"
+                  }
+                  else if (this.responses[i][j] === "Nostalgic") {
+                    this.responses[i][j] = "Nostalgia"
+                  }
+                }
+                req['emotions'] = this.responses[i];
+              }
+              //else if(i===3){
+              //req['platforms']=this.responses[i];
+              //}
+              else if (i === 4) {
+                if (this.responses[i] === "After 2010") {
+                  req['release_year'] = 2010;
+                }
+                else if (this.responses[i] === "After 1999") {
+                  req['release_year'] = 1999;
+                }
+                else if (this.responses[i] === "After 1965") {
+                  req['release_year'] = 1965;
+                }
+                else {
+                  req['release_year'] = 1900
+
+                    ;
+                }
+              }
+              else if (i === 5) {
+                req['age_certification'] = this.responses[i];
+              }
+              else if (i === 6) {
+                if (this.responses[i] === "less than 1 hour") {
+                  req['length'] = "short"
+                }
+                else if (this.responses[i] === "Over 2 hours")
+                  req['length'] = "long";
+              }
+              else {
+                req['length'] = "medium"
+              }
             }
-            else {
-              req['length']="medium"
-            }
-          }
           try{
               let url="http://localhost:8001/api/submit-session-answer?session_code="
               url+=this.sessionCode;
               url+="&token="
               let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
               url += thistoken;
-            let dictionary = JSON.parse(this.req);
-            console.log(dictionary);
-              let response = axios.post(url, dictionary);
+              console.log(req);
+              let response = axios.post(url, req);
+              
+              console.log(response)
           }
           catch(err){
               console.log(err)

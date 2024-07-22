@@ -51,7 +51,7 @@ export default {
     const startTime = Date.now();
     console.log('thtihti',this.req)
 
-    if (this.req !== null) {
+    if (this.req != null) {
       try {
         let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
         let url="http://localhost:8001/api/movies"
@@ -64,7 +64,7 @@ export default {
         moviesFromBackend = response.data;
         console.log('respone', response.data);
       }
-      catch(err){
+      catch (err) {
         console.log(err)
       }
      }
@@ -75,10 +75,11 @@ export default {
           url+=this.sessionCode;
           url+="&token=";
           url+=thistoken;
-          console.log(url)
-          let response = await axios.post(url);
+
+           let response = await axios.post(url); 
+          console.log('respone', response.data);
          }
-         catch(err){
+         catch (err) {
            console.log(err)
          }
       }
