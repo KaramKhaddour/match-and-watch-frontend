@@ -171,40 +171,111 @@ import axios from 'axios';
           this.selectedOption = '';
           this.selectedOptions = [];
           this.userInput = '';
-        } else {
-          let concatenatedResponses = '';
-          for (let i = 0; i < this.responses.length; i++) {
-            const response = this.responses[i];
-            if (Array.isArray(response)) {
-              concatenatedResponses += response.join(' '); 
-              concatenatedResponses+=' ';
-
-            } else {
-              concatenatedResponses += response;
-              concatenatedResponses+=' ';
+        }
+        else{
+          let req={}
+          for(let i=0;i<this.responses.length;i++){
+            if(i===0){
+                if(this.responses[i]==="Series"){
+                  req['type']="Show"
+                }
+                else req['type']=this.responses[i];
+            }
+            else if(i===1){
+               let s="";
+               for(let j=0;j<this.responses[i].length;j++){
+                  s+=this.responses[i][j];
+                  s+=" ";
+               }
+               req['genres']=s;
+            }
+            else if(i===2){
+              let s="";
+               for(let j=0;j<this.responses[i].length;j++){
+                  if(this.responses[i][j]==="Happy"){
+                    s+="Happiness"
+                  }
+                  else if(this.responses[i][j]==="Surprised"){
+                    s+="Surprise"
+                  }
+                  else if(this.responses[i][j]==="Angry"){
+                    s+="Anger"
+                  }
+                  else if(this.responses[i][j]==="Scared"){
+                    s+="Fear"
+                  }
+                  else if(this.responses[i][j]==="Sad"){
+                    s+="Sadness"
+                  }
+                  else if(this.responses[i][j]==="Excited"){
+                    s+="Excitement"
+                  }
+                  else if(this.responses[i][j]==="Frustrated"){
+                    s+="Frustration"
+                  }
+                  else if(this.responses[i][j]==="Tense"){
+                    s+="Tension"
+                  }
+                  else if(this.responses[i][j]==="Nostalgic"){
+                    s+="Nostalgia"
+                  }
+                  s+=" ";
+               }
+               req['emotions']=s;
+            }
+            else if(i===3){
+              let s="";
+               for(let j=0;j<this.responses[i].length;j++){
+                  s+=this.responses[i][j];
+                  s+=" ";
+               }
+               req['platforms']=s;
+            }
+            else if(i===4){
+               if(this.responses[i]==="After 2010"){
+                req['release_year']=2010;
+               }
+               else if(this.responses[i]==="After 1999"){
+                req['release_year']=1999;
+               }
+               else if(this.responses[i]==="After 1965"){
+                req['release_year']=1965;
+               }
+               else {
+                req['release_year']=1900
+                
+                ;
+               }
+            }
+            else if(i===5){
+              req['age_certification']=this.responses[i];
+            }
+            else if(i===6){
+              if(this.responses[i]==="less than 1 hour"){
+                req['length']="short"
+              }
+              else if(this.responses[i]==="Over 2 hours")
+              req['length']="long";
+            }
+            else {
+              req['length']="medium"
             }
           }
-          let s = '';
-          for (let i = 0; i < concatenatedResponses.length; i++) {
-            if (concatenatedResponses[i] === ',') s+=' ';
-            else s += concatenatedResponses[i];
-          }
-          let noSpaces = s
           try{
-              let url="http://0.0.0.0:8000/submit/answer?session_code="
+            let url="http://0.0.0.0:8001/api/submit-session-answer?session_code="
               url+=this.sessionCode;
               url+="&answers="
-              url+=noSpaces;
+              url+= JSON.stringify(req)
               url+="&token="
               let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
               url+=thistoken;
               let response = axios.post(url);
+              this.$router.push('/finishPage');
           }
           catch(err){
-              console.log(err)
+            console.log(err)
           }
-          this.$router.push('/finishPage');
-        }
+        } 
       },
       previousQuestion() {
         if (this.currentQuestionIndex > 0) {

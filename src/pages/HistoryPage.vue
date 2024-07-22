@@ -1,76 +1,75 @@
 <template>
-    <div id="app" class="podium-container">
-      <h1 class="match-title Raleway"> Matches History</h1>
+  <div id="app" class="podium-container">
+      <h1 class="match-title Raleway">Matches History</h1>
       <div class="card-container Raleway">
-        <div v-for="(movie, index) in movies" :key="movie.id" :class="['card','small']">
-          <div class="image-container">
-            <img :src="movie.image" :alt="movie.title" />
-            <div class="overlay">
-              <a :href="`https://www.imdb.com/title/${movie.id}/`" target="_blank" class="watch-button Raleway">Watch</a>
-            </div>
+          <div v-for="(movie, index) in movies" :key="movie.id" :class="['card', 'small']">
+              <div class="image-container">
+                  <img :src="movie.image" :alt="movie.title" />
+                  <div class="overlay">
+                      <a :href="`https://www.imdb.com/title/${movie.movie_imdb_id}/`" target="_blank" class="watch-button Raleway">Watch</a>
+                  </div>
+              </div>
+              <div class="ranking Inter">{{ index + 1 }}</div>
+              <div class="movie-details">
+                  <h2 class="movie-title">{{ movie.title }}</h2>
+                  <p class="movie-description">{{ truncateDescription(movie.description) }}</p>
+                  <p class="movie-rating Inter" v-if="movie.rating !== 0">Rating: {{ movie.rating }}</p>
+                  <div class="notRated" v-if="movie.rating === 0">
+                      <p class="Inter">Rate me</p>
+                      <div class="ratings-wrapper">
+                          <div class="ratings">
+                              <span v-for="rating in [5, 4, 3, 2, 1]" :key="rating" :data-rating="rating" @click="setRating(movie, rating)" :class="{ active: rating <= movie.rating }">
+                                  &#9733;
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
           </div>
-          <div class="ranking Inter">{{ index + 1 }}</div>
-          <div class="movie-details">
-            <h2 class="movie-title">{{ movie.title }}</h2>
-            <p class="movie-description" >{{ movie.description }}</p>
-            <p class="movie-rating Inter" v-if="movie.rating!=='0'" >Rating: {{ movie.rating }}</p>
-            <div class="notRated" v-if="movie.rating==='0'">
-                <p v-if="movie.rating==='0'" class="Inter">Rate me</p>
-                <div class="ratings-wrapper">
-                    <div class="ratings">
-                        <span 
-                            v-for="rating in [5, 4, 3, 2, 1]" 
-                            :key="rating" 
-                            :data-rating="rating" 
-                            @click="setRating(movie, rating)"
-                            :class="{ active: rating <= movie.rating }">
-                            &#9733;
-                        </span>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
-  </template>
-
+  </div>
+</template>
 
 <script>
+import store from '@/store/store';
+import { GET_USER_TOKEN_GETTER } from '@/store/storeconstants';
+import axios from 'axios';
 export default {
     data() {
         return {
             movies: [],
         };
     },
-    mounted() {
-        let moviesFromBackend = [
-            { id: 'tt0848228', title: "The Avengers", rating: '0',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
-            { id: 'tt0848228', title: "The Avengers", rating: '0',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
-            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
-            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
-            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
-            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
-            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
-            { id: 'tt0848228', title: "The Avengers", rating: '1',description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'},
-        ];
+    async mounted() {
+        let moviesFromBackend = [];
+        try {
+            let url = "http://0.0.0.0:8001/api/history?token=";
+            let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
+            url += thistoken;
+            let response = await axios.get(url);
+            moviesFromBackend = response.data;
+        } catch (err) {
+            console.log(err);
+        }
+        console.log(moviesFromBackend);
 
         let promises = moviesFromBackend.map(movie => {
-            let url = 'https://img.omdbapi.com/?apikey=ee3c8d4a&i=' + movie.id;
+            let url = 'https://img.omdbapi.com/?apikey=ee3c8d4a&i=' + movie.movie_imdb_id;
+            console.log(url);
             return fetch(url)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
-                    return response.url; 
+                    return response.url;
                 })
                 .then(imageUrl => {
-                    movie.image = imageUrl; 
+                    movie.image = imageUrl;
                     return movie;
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
-                    movie.image = require('@/assets/images/placeholder2.jpg'); 
+                    movie.image = require('@/assets/images/placeholder2.jpg');
                     return movie;
                 });
         });
@@ -79,16 +78,32 @@ export default {
         });
     },
     methods: {
-        setRating(movie, rating) {
+        async setRating(movie, rating) {
             for (let i = 0; i < this.movies.length; i++) {
                 if (this.movies[i] === movie) {
                     this.movies[i].rating = rating;
                 }
             }
-            //sendit to the backend
+            try{
+              let url="http://0.0.0.0:8001/api/rate/movie?rate=";
+              url+=rating;
+              url+="&movie_imdb_id="
+              url+=movie.movie_imdb_id
+              url+="&token="
+              let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
+              url += thistoken;
+              let response = await axios.post(url);
+            }
+            catch(err){
+               console.log(err)
+            }
+        },
+        truncateDescription(description) {
+            return description.length > 150 ? description.substring(0, 147) + '...' : description;
         }
     }
 }
+
 </script>
 
 <style scoped>

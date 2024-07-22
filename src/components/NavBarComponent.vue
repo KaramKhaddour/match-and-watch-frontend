@@ -39,7 +39,7 @@
     </nav>
  
     <div class="logedOut" v-if="isAuthenticated">
-      <RouterLink to="/" @click.prevent="onLogout()" class="register-btn button">Logout</RouterLink>
+      <RouterLink to="/" @click.prevent="onLogout()" class="register-btn button Raleway">Logout</RouterLink>
     </div>
     <div v-else class="logedOut">
       <RouterLink to="/login_new" class="register-btn button Raleway">Login</RouterLink>
