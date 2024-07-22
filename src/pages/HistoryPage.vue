@@ -34,6 +34,8 @@
 import store from '@/store/store';
 import { GET_USER_TOKEN_GETTER } from '@/store/storeconstants';
 import axios from 'axios';
+import { RECURL } from '@/const';
+
 export default {
     data() {
         return {
@@ -42,8 +44,52 @@ export default {
     },
     async mounted() {
         let moviesFromBackend = [];
-        try {
-            let url = "http://localhost:8001/api/history?token=";
+      moviesFromBackend = [
+      {
+        id: 1,
+        movie_imdb_id: 'tt0111161',
+        title: 'The Shawshank Redemption',
+        description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
+        rating: 5
+      },
+      {
+        id: 2,
+        movie_imdb_id: 'tt0068646',
+        title: 'The Godfather',
+        description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.',
+        rating: 4
+      },
+      {
+        id: 3,
+        movie_imdb_id: 'tt0071562',
+        title: 'The Godfather Part II',
+        description: 'The early life and career of Vito Corleone in 1920s New York is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.',
+        rating: 0
+      },
+      {
+        id: 4,
+        movie_imdb_id: 'tt0468569',
+        title: 'The Dark Knight',
+        description: 'When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.',
+        rating: 3
+      },
+      {
+        id: 5,
+        movie_imdb_id: 'tt0050083',
+        title: '12 Angry Men',
+        description: 'A jury holdout attempts to prevent a miscarriage of justice by forcing his colleagues to reconsider the evidence.',
+        rating: 0
+      },
+      {
+        id: 6,
+        movie_imdb_id: 'tt0108052',
+        title: 'Schindler\'s List',
+        description: 'In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.',
+        rating: 4
+      }
+    ];
+       /* try {
+            let url = `${RECURL}/api/history?token=`;
             let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
             url += thistoken;
             let response = await axios.get(url);
@@ -51,11 +97,11 @@ export default {
         } catch (err) {
             console.log(err);
         }
-        console.log(moviesFromBackend);
-
+        //console.log(moviesFromBackend);
+        */
         let promises = moviesFromBackend.map(movie => {
             let url = 'https://img.omdbapi.com/?apikey=ee3c8d4a&i=' + movie.movie_imdb_id;
-            console.log(url);
+           // console.log(url);
             return fetch(url)
                 .then(response => {
                     if (!response.ok) {
@@ -85,7 +131,7 @@ export default {
                 }
             }
             try{
-              let url="http://localhost:8001/api/rate/movie?rate=";
+              let url=`${RECURL}/api/rate/movie?rate=`;
               url+=rating;
               url+="&movie_imdb_id="
               url+=movie.movie_imdb_id
@@ -125,7 +171,7 @@ export default {
     flex-direction: column;
 
     width: 100%;
-    background-color: black;
+    background-image:linear-gradient(rgb(16, 1, 29),black)
   }
   
   .card-container {

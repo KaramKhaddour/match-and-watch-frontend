@@ -24,6 +24,7 @@
 </template>
 
   <script>
+import { RECURL } from '@/const';
 import store from '@/store/store';
 import { GET_USER_TOKEN_GETTER } from '@/store/storeconstants';
 import axios from 'axios';
@@ -49,12 +50,12 @@ export default {
     let moviesFromBackend = [];
     const minLoadingTime = 3000; // Minimum loading time in milliseconds
     const startTime = Date.now();
-    console.log('thtihti',this.req)
+    //console.log('thtihti',this.req)
 
     if (this.req != null) {
       try {
         let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-        let url="http://localhost:8001/api/movies"
+        let url=`${RECURL}/api/movie` 
         url+="?token=";
         url+=thistoken;
         
@@ -62,7 +63,7 @@ export default {
         console.log(dictionary)
         let response = await axios.post(url, dictionary);
         moviesFromBackend = response.data;
-        console.log('respone', response.data);
+       // console.log('respone', response.data);
       }
       catch (err) {
         console.log(err)
@@ -70,15 +71,14 @@ export default {
      }
       else{
          try{
-          let url="http://localhost:8001/api/close-session?session_code="
+          let url=`${RECURL}/api/close-session?session_code=`
           let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
           url+=this.sessionCode;
           url+="&token=";
           url+=thistoken;
 
-           let response = await axios.post(url); 
-          console.log('respone', response.data);
-         }
+           let response = await axios.post(url);          
+        }
          catch (err) {
            console.log(err)
          }

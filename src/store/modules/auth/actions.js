@@ -2,6 +2,7 @@ import SignupValidations from '@/services/SignupValidations';
 import {AUTO_LOGIN_ACTION, LOGIN_ACTION, LOGOUT_ACTION, SET_USER_TOKEN_DATA_MUTATION, SIGNUP_ACTION,GET_USER_REFRESH_TOKEN_GETTER} from '../../storeconstants'
 import axios from 'axios';
 import store from '../../store'
+import { USERURL, RECURL } from '../../../const';
 export default{
     async [LOGOUT_ACTION](context){
         let postData={
@@ -17,7 +18,7 @@ export default{
          });
         let response='';
         try{
-            response=await axios.post('http://localhost:8000/api/logout', postData,);
+            response = await axios.post(`${USERURL}/api/logout`, postData);
         }catch(err){
            console.log(err)
         }
@@ -32,7 +33,7 @@ export default{
         };
         let response='';
         try{
-            response=await axios.post('http://localhost:8000/api/login', postData,);
+            response = await axios.post(`${USERURL}/api/login`, postData);
         }catch(err){
             if(err.code==="ERR_NETWORK"){
                 throw("Network error please try again")
@@ -51,7 +52,7 @@ export default{
                 refresh_token:response.data.refresh_token,
                 refresh_token_expires_in:response.data.refresh_token_expires_in,
             };
-         //   console.log(response.data.access_token)
+         
            localStorage.setItem('userData',JSON.stringify(tokenData))
            context.commit(SET_USER_TOKEN_DATA_MUTATION,tokenData)
         }
@@ -65,7 +66,7 @@ export default{
         };
         let response='';
         try{
-            response=await axios.post('http://localhost:8000/api/register/', postData,);
+            response = await axios.post(`${USERURL}/api/register/`, postData);
         }catch(err){
             if(err.code==="ERR_NETWORK"){
                 throw("Network error please try again")
