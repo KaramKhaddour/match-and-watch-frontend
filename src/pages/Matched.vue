@@ -70,7 +70,7 @@ export default {
       catch (err) {
         console.log(err)
       }
-     }
+    }
       else{
          try{
           let url=`${RECURL}/api/close-session`
@@ -82,11 +82,14 @@ export default {
 
           let response = await axios.post(url);
           console.log(response)
+          moviesFromBackend = response.data;
+          console.log(moviesFromBackend)
         }
          catch (err) {
            console.log(err)
          }
       }
+      
       if(moviesFromBackend.length>3){
         moviesFromBackend.pop()
       }
@@ -94,6 +97,7 @@ export default {
         moviesFromBackend.pop()
       }
       let promises = moviesFromBackend.map(movie => {
+              console.log("hiiii")
               let url = 'https://img.omdbapi.com/?apikey=ee3c8d4a&i=' + movie.imdb_id;
               return fetch(url)
                   .then(response => {
@@ -104,6 +108,7 @@ export default {
                   })
                   .then(imageUrl => {
                       movie.image = imageUrl; 
+                      console.log("hh",imageUrl)
                       return movie;
                   })
                   .catch(error => {
@@ -114,7 +119,10 @@ export default {
           });
   
           Promise.all(promises).then(updatedMovies => {
+              console.log("byyye")
+              console.log("updatedMovies", updatedMovies)
               this.movies = updatedMovies;
+
           });
     }
   };
