@@ -82,7 +82,7 @@
 import store from '@/store/store';
 import { GET_USER_TOKEN_GETTER } from '@/store/storeconstants';
 import axios from 'axios';
-
+import { RECURL } from '@/const';
   export default {
     data() {
       return {
@@ -142,7 +142,7 @@ import axios from 'axios';
       async submitSessionCode() {
         try{
           let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-          let url="http://localhost:8001/api/join-session/"
+          let url='${RECURL}/api/join-session/'
           url+=this.sessionCode;
           url+='?'
           url+="token="
@@ -174,7 +174,7 @@ import axios from 'axios';
         }
         else{
           let req = {}
-          console.log(this.responses)
+          //console.log(this.responses)
           for (let i = 0; i < this.responses.length; i++) {
             if (i === 1) {
               if (this.responses[i] === "Series") {
@@ -252,7 +252,7 @@ import axios from 'axios';
             }
           }
           try{
-            let url="http://localhost:8001/api/submit-session-answer?session_code="
+              let url='${RECURL}/api/submit-session-answer?session_code='
               url+=this.sessionCode;
               url+="&token="
               let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];

@@ -73,6 +73,7 @@
   import store from '@/store/store';
   import { GET_USER_TOKEN_GETTER } from '@/store/storeconstants';
   import axios from 'axios';
+  import { USERURL, RECURL } from '../const'
 
   export default {
     data() {
@@ -222,14 +223,13 @@
               }
             }
           try{
-              let url="http://localhost:8001/api/submit-session-answer?session_code="
+              let url=`${RECURL}/api/submit-session-answer?session_code=`
               url+=this.sessionCode;
               url+="&token="
               let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
               url += thistoken;
-              console.log(req);
+              console.log(req)
               let response = axios.post(url, req);
-              
               console.log(response)
           }
           catch(err){
@@ -269,9 +269,11 @@
     async mounted() {
       try{
         let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-        let url='http://localhost:8001/api/generate-session-code?token=';
+        let url=`${RECURL}/api/generate-session-code?token=`;
         url+=thistoken;
+        console.log(url)
         let response= await axios.get(url)
+        
         this.sessionCode=response.data.code
       }
       catch(err){
