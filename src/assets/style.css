@@ -42,7 +42,7 @@ html, body{
 }
 
 
-::-webkit-scrollbar-button {
+/* ::-webkit-scrollbar-button {
     width: 55px;
     height: 55px;
   }
@@ -70,7 +70,31 @@ html, body{
   }
   ::-webkit-scrollbar-corner {
     background: transparent;
+  } */
+
+
+  ::-webkit-scrollbar{
+    width: 9px;
+    background: #131313;
+  } 
+
+ ::-webkit-scrollbar-track{
+
+    background: #131313;
   }
+
+  ::-webkit-scrollbar-track-piece{
+    background: #131313;
+
+
+  }
+
+* ::-webkit-scrollbar-thumb{
+   background: linear-gradient(transparent, #550593); 
+
+   border-radius: 15px;
+ }
+
 
 .center-div{
     display: flex;

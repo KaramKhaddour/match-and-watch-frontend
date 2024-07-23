@@ -39,4 +39,26 @@ export default {
 .firstContainer{
   background: black;
 }
+
+/* ::-webkit-scrollbar{
+    width: 9px;
+    background: #131313;
+  } 
+
+ ::-webkit-scrollbar-track{
+
+    background: #131313;
+  }
+
+  ::-webkit-scrollbar-track-piece{
+    background: #131313;
+
+
+  }
+
+::-webkit-scrollbar-thumb{
+   background: linear-gradient(transparent, #40BA21);
+
+   border-radius: 15px;
+ } */
 </style>
