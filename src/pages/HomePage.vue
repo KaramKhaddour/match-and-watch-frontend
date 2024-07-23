@@ -402,5 +402,51 @@ a{
 
     z-index: 1;
 }
+@media (max-width: 1310px) {
+    .films-container{
+        transform: scale(1);
+    }
+}
+@media (max-width: 1210px) {
+    .films-container{
+        transform: scale(0.9);
+    }
+}
+@media (max-width: 1110px) {
+    .films-container{
+        transform: scale(0.8);
+    }
+    .title-1 {
+        font-size: 2.9em;
+    }
+}
+@media (max-width: 1070px) {
+    .films-container{
+       display: none;
+    }
+    .title-1 {
+        font-size: 2.7em;
+    }
+}
+@media (max-width: 950px) {
+    .films-container{
+       display: none;
+    }
+}
+@media (max-width: 700px) {
+    .title-1 {
+        font-size: 2.4em;
+    }
+}
+@media (max-width: 600px) {
+    .title-1 {
+        font-size: 2.2em;
+    }
+}
+@media (max-width: 510px) {
+    .title-1 {
+        font-size: 2.2em;
+    }
+}
 
 </style>

@@ -77,6 +77,8 @@ export default{
             signup:SIGNUP_ACTION,
         }),
         async onSignUp(){
+          this.error=''
+          this.errors=[]
           let validations=new SignupValidations(this.email,this.password);
           this.errors=validations.checkValidations();
           if('email' in this.errors || 'password' in this.errors){

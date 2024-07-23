@@ -43,7 +43,7 @@
         <h3 class="login-separator"></h3>
         <div class="login-register center-div">
             <h5 class="login-create-account Raleway">Don't Have an Account?</h5>
-            <RouterLink to="/singup_new" class="register-btn button Raleway">Sign Up</RouterLink>
+            <RouterLink to="/signup_new" class="register-btn button Raleway">Sign Up</RouterLink>
         </div>
     </div>
 </template>
@@ -180,6 +180,8 @@ export default{
             login:LOGIN_ACTION,
         }),
         async onLogin(){
+           this.error=''
+          this.errors=[]
           let validations=new SignupValidations(this.email,this.password);
           this.errors=validations.checkValidations();
           if('email' in this.errors || 'password' in this.errors){
@@ -191,7 +193,7 @@ export default{
              }
           }).catch(error => {             
              console.log("Error caught:", error);
-             this.error = error;
+             this.error = error; 
           });
         },
     },
