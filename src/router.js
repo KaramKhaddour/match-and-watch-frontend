@@ -123,27 +123,27 @@ const router=createRouter(
 
 router.beforeEach((to, from, next) => {
         loadingState.setLoading(true);
-        setTimeout(() => next(), 1500); 
-    // if (
-    //     'auth' in to.meta &&
-    //     to.meta.auth &&
-    //     !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
-    // ) {
-    //     next('/login_new');
-    // } else if (
-    //     'auth' in to.meta &&
-    //     !to.meta.auth &&
-    //     store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
-    // ) {
-    //     next('/');
-    // } else {
-    //     next();
-    // }
+        setTimeout(() => next(), 500); 
+    if (
+        'auth' in to.meta &&
+        to.meta.auth &&
+        !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+    ) {
+        next('/login_new');
+    } else if (
+        'auth' in to.meta &&
+        !to.meta.auth &&
+        store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+    ) {
+        next('/');
+    } else {
+        next();
+    }
     // next();
 });
 
 router.afterEach(() => {
-    setTimeout(() => loadingState.setLoading(false), 1500); 
+    setTimeout(() => loadingState.setLoading(false), 500); 
 });
 
 export default router;

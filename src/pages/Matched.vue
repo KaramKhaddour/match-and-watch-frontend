@@ -56,16 +56,16 @@ export default {
     if (this.req != null) {
       try {
         let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-        let url=`${RECURL}/api/movie` 
+        let url=`${RECURL}/api/movies` 
         url+="?token=";
         url+=thistoken;
         console.log(thistoken)
         
         let dictionary = JSON.parse(request);
         console.log(dictionary.type)
-        let response = await axios.post(url);
+        let response = await axios.post(url, dictionary);
         moviesFromBackend = response.data;
-       // console.log('respone', response.data);
+       console.log('response', response.data);
       }
       catch (err) {
         console.log(err)
