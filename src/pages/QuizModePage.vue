@@ -29,7 +29,7 @@
     <!-- Background and other elements -->
     <!-- <div class="blur-circle"></div>
     <div class="blur-circle"></div> -->
-    <div class="blur-circle-black"></div>
+    <!-- <div class="blur-circle-black"></div> -->
     <div class="films-container"></div>
   </div>
 </template>
@@ -123,6 +123,9 @@ export default {
 }
 
 .content-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: calc(100vh - 150px);
 
   z-index: 2;
@@ -276,13 +279,12 @@ export default {
     overflow:auto;
     height: 1200px;
     width: 1200px;
-    transform: scale(0.9);
+    transform: scale(1);
     opacity: 0.3;
-    top: -45vh;
     background-position-x: center;
     background-position-y: center;
     overflow: hidden;
-    /* top: 15vh; */
+    top: -45vh;
     /* background: url(../assets/images/background.jpg); */
     background: url(../assets/images/container-films.png);
 
@@ -308,16 +310,17 @@ export default {
       position: relative;
 
       /* background-image: linear-gradient(#3c1e6b, black); */
-      background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%);
-      box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
+      /* background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%); */
+      background: linear-gradient(180deg, #010002d6 0%, #010002d8 25%, #461295de 100%);
+      
+            box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
       box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
   
       padding: 30px;
       /* width: 36vw; */
       height: 85%;
       width: auto;
-    min-width: 400px; /* Initial static width */
-    max-width: 100%; 
+    min-width: 500px; /* Initial static width */
       max-width: 900px;
       /* max-width: 600px; */
       border-radius: 30px;
@@ -330,13 +333,14 @@ export default {
   position: absolute;
   width: 800px;
   height: 800px;
+  top: -50vh;
   /* top: 20vh; */
   /* background-color: rgba(0, 0, 0, 0.5); */
   /* background-image: linear-gradient(180deg,rgb(0, 0, 0, 0.5), rgb(122, 82, 187, 0.8) ); */
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
   filter: blur(50px);
-  z-index: 1;
+  z-index: 0;
 }
   
 

@@ -63,20 +63,23 @@
 }
 
 .films-container{
-    display: inline-block;
+    /* display: inline-block; */
     position: absolute;
+    /* margin-top: 200px; */
     overflow:auto;
-    height: 729px;
+    height: 1200px;
     width: 1200px;
-    transform: scale(0.9);
+    transform: scale(1);
     opacity: 0.3;
     background-position-x: center;
     background-position-y: center;
-    top: 10vh;
-    background: url(../assets/images/films_container.png);
+    overflow: hidden;
+    top: -45vh;
+    /* background: url(../assets/images/background.jpg); */
+    background: url(../assets/images/container-films.png);
+
     z-index: 0;
 }
-
 .black-box{
     display: inline-block;
     position:relative;

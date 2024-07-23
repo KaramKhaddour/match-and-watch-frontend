@@ -43,7 +43,7 @@
         <h3 class="login-separator"></h3>
         <div class="login-register center-div">
             <h5 class="login-create-account Raleway">Don't Have an Account?</h5>
-            <RouterLink to="/singup_new" class="register-btn button Raleway">Sign Up</RouterLink>
+            <RouterLink to="/signup_new" class="register-btn button Raleway">Sign Up</RouterLink>
         </div>
     </div>
 </template>
@@ -259,7 +259,7 @@ export default{
     align-items: center;
 }
 .login-container{
-    width: 450px;
+    width: 500px;
     padding-bottom: 20px;
     background: rgb(30,30,63);
     /* background: linear-gradient(119deg, rgba(30,30,63,1) 0%, rgba(26,28,31,1) 34%, rgba(27,28,36,1) 61%, rgba(30,30,63,1) 100%); */
@@ -294,9 +294,9 @@ export default{
 
 .form-group{
     width: 100%;
-    font-size: 12px;
+    font-size: 18px;
     margin-left: 10px;
-    font-weight: 300;
+    font-weight: 500;
 }
 
 #login-form input[type=email],
@@ -306,10 +306,10 @@ export default{
     /* border: 1px #fff solid; */
     outline: 1px solid rgba(255, 255, 255, 0.25);
     outline-offset: -1px;
-    border-radius: 10px;
+    border-radius: 15px;
     width: 100%;
-    height: 35px;
-    margin: 10px 0;
+    height: 50px;
+    margin: 15px 0;
     padding: 5px 10px;
     color: #fff;
     box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 25%);

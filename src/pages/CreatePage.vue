@@ -3,9 +3,9 @@
       <div :style="{ opacity: showForm ? '1' : '0', transform: showForm ? 'translateY(0)' : 'translateY(100px)' }" class="content-container">
         <h1 class="quiz-title Raleway">Match +</h1>
         <div class="display-container flex flex-column justify-content-center align-items-center">
-          <div class="sessionCode">
+          <div class="sessionCode Inter">
             <p>
-                Your Session Code: {{ sessionCode }}
+                Session Code: <span>{{ sessionCode }}</span>
             </p>
           </div>
           <div class="flex flex-column justify-content-center question-header">
@@ -317,6 +317,8 @@
   
   .content-container{
     z-index: 1;
+    display: relative;
+    height: 100%;
     /* transition: all 0.3s ease-in-out; */
   }
   
@@ -446,19 +448,23 @@
   }
   
   .films-container{
-      display: inline-block;
-      position: absolute;
-      overflow:auto;
-      height: 729px;
-      width: 1200px;
-      transform: scale(0.9);
-      opacity: 0.3;
-      background-position-x: center;
-      background-position-y: center;
-      top: 10vh;
-      background: url(../assets/images/films_container.png);
-      z-index: 0;
-  }
+    /* display: inline-block; */
+    position: absolute;
+    /* margin-top: 200px; */
+    overflow:auto;
+    height: 1200px;
+    width: 1200px;
+    transform: scale(1);
+    opacity: 0.3;
+    background-position-x: center;
+    background-position-y: center;
+    overflow: hidden;
+    top: -45vh;
+    /* background: url(../assets/images/background.jpg); */
+    background: url(../assets/images/container-films.png);
+
+    z-index: 0;
+}
   
   .black-box{
       display: inline-block;
@@ -479,16 +485,15 @@
       position: relative;
 
       /* background-image: linear-gradient(#3c1e6b, black); */
-      background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%);
-      box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
+      /* background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%); */
+      background: linear-gradient(180deg, #010002d6 0%, #010002d8 25%, #461295de 100%);         box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
       box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
   
       padding: 30px;
       /* width: 36vw; */
       height: 85%;
       width: auto;
-    min-width: 400px; /* Initial static width */
-    max-width: 100%; 
+    min-width: 800px; /* Initial static width */
       max-width: 900px;
       /* max-width: 600px; */
       border-radius: 30px;
@@ -827,14 +832,24 @@
     line-height: 20px;
     letter-spacing: 0.5
   }
-  .sessionCode{
+
+
+  .sessionCode p{
     position: absolute;
     color: white;
     top: 40px;
     left:8%;
     margin-bottom: 20px;
     font-size: 20px;
-    font-family: Raleway;
+    font-weight: 400;
+    background-color: rgba(0, 0, 0, 0.409);
+    border-radius: 15px;
+  }
+
+  .sessionCode p > span{
+    font-weight: 800;
+    font-size: 25px;
+    color:#f89305
   }
   </style>
   

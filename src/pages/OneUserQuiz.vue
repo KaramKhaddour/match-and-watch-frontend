@@ -311,6 +311,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .question-number {
@@ -321,8 +322,9 @@ export default {
 
 .question {
   color: white;
-  font-size: 20px;
-  font-weight: 400;
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
 .questions-container{
@@ -423,18 +425,22 @@ export default {
 }
 
 .films-container{
-    display: inline-block;
+    /* display: inline-block; */
     position: absolute;
+    /* margin-top: 200px; */
     overflow:auto;
-    height: 729px;
+    height: 1200px;
     width: 1200px;
-    transform: scale(0.9);
+    transform: scale(1);
     opacity: 0.3;
     background-position-x: center;
     background-position-y: center;
-    top: 10vh;
-    background: url(../assets/images/films_container.png);
-    z-index: 0;
+    overflow: hidden;
+    top: -45vh;
+    /* background: url(../assets/images/background.jpg); */
+    background: url(../assets/images/container-films.png);
+
+    z-index: 1;
 }
 
 .black-box{
@@ -456,16 +462,16 @@ export default {
       position: relative;
 
       /* background-image: linear-gradient(#3c1e6b, black); */
-      background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%);
-      box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
+      /* background: linear-gradient(180deg, rgb(1, 0, 2, 0.7) 0%, rgb(54, 23, 100, 0.7) 35%, rgb(54, 23, 100, 0.7) 50%, rgb(54, 23, 100, 0.7) 75%, rgb(1, 0, 2, 0.7) 100%); */
+      background: linear-gradient(180deg, #010002d6 0%, #010002d8 25%, #461295de 100%);     
+       box-shadow: -6px 4px 10px rgba(0, 0, 0, 0.7);
       box-shadow: inset 0px 0px 6px 7px rgba(0, 0, 0, 0.45);
   
       padding: 30px;
       /* width: 36vw; */
       height: 85%;
       width: auto;
-    min-width: 400px; /* Initial static width */
-    max-width: 100%; 
+    min-width: 800px; /* Initial static width */
       max-width: 900px;
       /* max-width: 600px; */
       border-radius: 30px;

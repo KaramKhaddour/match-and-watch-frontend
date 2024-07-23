@@ -27,6 +27,10 @@
               </div>
           </div>
       </div>
+      <div  v-if="isLoading" class="loading-spinner faded">
+        <div class="spinner"></div>
+      </div>
+      <div class="films-container"></div>
   </div>
 </template>
 
@@ -40,6 +44,7 @@ export default {
     data() {
         return {
             movies: [],
+            isLoading: true
         };
     },
     async mounted() {
@@ -120,7 +125,9 @@ export default {
                 });
         });
         Promise.all(promises).then(updatedMovies => {
+            this.isLoading = false;
             this.movies = updatedMovies;
+
         });
     },
     methods: {
@@ -179,6 +186,7 @@ export default {
     width: 70%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: space-between;
     row-gap: 30px;
     column-gap: 10px;
     z-index: 1;
@@ -190,7 +198,7 @@ export default {
     width: 300px;
     margin: 0 10px;
     /* background: rgb(140, 69, 255, 0.1); */
-    background: linear-gradient(180deg, rgb(1, 0, 2, 1) 0%, rgb(1, 0, 2, 0.2) 50%, rgb(140, 69, 255, 0.1) 85%, rgb(140, 69, 255, 0.6) 100%);
+    background: linear-gradient(180deg, rgb(1, 0, 2, 1) 0%, rgb(1, 0, 2, 0.5) 50%, rgb(1, 0, 2, 0.7) 90%, rgb(140, 69, 255, 0.6) 100%);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     align-content: center;
     outline: 1px solid rgba(255, 255, 255, 0.25);
@@ -210,7 +218,37 @@ export default {
     box-shadow: inset 0px 0px 6px 1px rgb(255, 255, 255);
     outline: 1px solid rgba(255, 255, 255, 0.8);
   }
+  
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 100px);
+    background-color: black;
+}
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.spinner {
+  position: absolute;
+  top: 200px;
+  width: 600px;
+  height: 600px;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* background-image: linear-gradient(180deg,rgb(0, 0, 0, 0.5), rgb(122, 82, 187, 0.8) ); */
+  background: linear-gradient(180deg, rgb(1, 0, 2, 0.5) 0%, rgb(1, 0, 2, 0.5) 34%, rgba(95, 35, 184, 0.8) 100%);
+  border-radius: 50%;
+  filter: blur(50px);
+  animation: rotateCircle 5s linear infinite;
+  z-index: 1;
+}
+  
   /* .optionDes{
     width: 80%;
     height: 50px;
@@ -352,6 +390,25 @@ export default {
 .ratings span.active {
     color: orange;
     transform: scale(1);
+}
+
+.films-container{
+    /* display: inline-block; */
+    position: absolute;
+    /* margin-top: 200px; */
+    overflow:auto;
+    height: 1200px;
+    width: 1200px;
+    transform: scale(1);
+    opacity: 0.1;
+    background-position-x: center;
+    background-position-y: center;
+    overflow: hidden;
+    top: -45vh;
+    /* background: url(../assets/images/background.jpg); */
+    background: url(../assets/images/container-films.png);
+
+    z-index: 0;
 }
 
 </style>

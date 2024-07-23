@@ -76,7 +76,7 @@
     left:0;
     width: 100%;
     padding: 20px 200px;
-    background:rgb(0, 0, 0);
+    background: black;
     color:white;
     display: flex;
     justify-content: space-between;

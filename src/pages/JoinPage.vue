@@ -19,7 +19,7 @@
            </div>
           </div>          
           <div v-else-if="currentQuestion.options.length" :class="['questions-container', optionContainerClass]">
-            <div v-for="(option, index) in currentQuestion.options" :key="index" class="option-wrapper">
+            <div v-for="(option, index) in currentQuestion.options" :key="index" class="option-wrapper Inter">
               <input
                 v-if="isMultiSelect(currentQuestion)"
                 type="checkbox"
@@ -60,7 +60,7 @@
             <button v-if="currentQuestionIndex === 0" @click="submitSessionCode" class="button Raleway next-btn">
               Submit
             </button>
-            <button
+            <button v-if="currentQuestionIndex > 0"
       @click="nextQuestion"
       class="button Raleway next-btn"
       :class="{ 'finish-button': isLastQuestion, 'disabled-btn': isDisabled }"
@@ -324,7 +324,7 @@ import { RECURL } from '@/const';
   }
   
   .content-container{
-    height: calc(100vh - 100px);
+    height: 100%;
     z-index: 1;
     transition: all 0.3s ease-in-out;
 
@@ -457,19 +457,23 @@ import { RECURL } from '@/const';
   }
   
   .films-container{
-      display: inline-block;
-      position: absolute;
-      overflow:auto;
-      height: 729px;
-      width: 1200px;
-      transform: scale(0.9);
-      opacity: 0.3;
-      background-position-x: center;
-      background-position-y: center;
-      top: 10vh;
-      background: url(../assets/images/films_container.png);
-      z-index: 0;
-  }
+    /* display: inline-block; */
+    position: absolute;
+    /* margin-top: 200px; */
+    overflow:auto;
+    height: 1200px;
+    width: 1200px;
+    transform: scale(1);
+    opacity: 0.3;
+    background-position-x: center;
+    background-position-y: center;
+    overflow: hidden;
+    top: -45vh;
+    /* background: url(../assets/images/background.jpg); */
+    background: url(../assets/images/container-films.png);
+
+    z-index: 0;
+}
   
   .black-box{
       display: inline-block;
@@ -497,8 +501,7 @@ import { RECURL } from '@/const';
       /* width: 36vw; */
       height: 85%;
       width: auto;
-    min-width: 400px; /* Initial static width */
-    max-width: 100%; 
+    min-width: 800px; /* Initial static width */
       max-width: 900px;
       /* max-width: 600px; */
       border-radius: 30px;
@@ -506,7 +509,6 @@ import { RECURL } from '@/const';
       /* margin-top: 20px; */
       transition: all 0.3s ease-in-out;
     }
-    
   
      
     .optionWrapper{
@@ -776,7 +778,6 @@ import { RECURL } from '@/const';
   }
   .selected-option {
     background: rgba(140, 69, 255, 0.4);
-    color: #8C45FF;
     box-shadow: inset 0px 0px 6px 5px #8C45FF;
     outline: 1px solid #8C45FF;
   }

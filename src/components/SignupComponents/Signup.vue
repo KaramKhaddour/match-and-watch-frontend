@@ -193,10 +193,12 @@ export default{
 
 .form-group{
     width: 100%;
-    font-size: 12px;
+    font-size: 18px;
     margin-left: 10px;
-    font-weight: 300;
+    font-weight: 500;
 }
+
+
 
 
 #login-form input[type=name],
@@ -208,14 +210,15 @@ export default{
     /* border: 1px #fff solid; */
     outline: 1px solid rgba(255, 255, 255, 0.25);
     outline-offset: -1px;
-    border-radius: 10px;
+    border-radius: 20px;
     width: 100%;
-    height: 35px;
+    height: 38px;
     margin: 10px 0;
     padding: 5px 10px;
     color: #fff;
     box-shadow: inset 0px 0px 6px 1px rgba(255, 255, 255, 25%);
 }
+
 .submit-container{
     width: 100%;
     display: flex;

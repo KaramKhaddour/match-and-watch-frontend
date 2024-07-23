@@ -1,6 +1,6 @@
 <template>
     <footer>      
-    <!-- <div class="empty-box"></div> -->
+    <div class="empty-box"></div>
     <div class="footer Raleway">
       <div class="logo">
         <img src="../assets/images/matchwatch.svg" alt="logo"> 

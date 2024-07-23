@@ -156,19 +156,23 @@
     margin-bottom: 30px;
 }
 
-.films-container {
-    display: inline-block;
+.films-container{
+    /* display: inline-block; */
     position: absolute;
-    overflow: auto;
-    height: 729px;
+    /* margin-top: 200px; */
+    overflow:auto;
+    height: 1200px;
     width: 1200px;
     transform: scale(1);
     opacity: 0.3;
-    background-position: center center;
-    background: url(../assets/images/films_container.png) no-repeat center center;
-    background-size: cover; /* This ensures the background image always covers the entire container */
-    top: 100px;
-    z-index: 0;
+    background-position-x: center;
+    background-position-y: center;
+    overflow: hidden;
+    top: -25vh;
+    /* background: url(../assets/images/background.jpg); */
+    background: url(../assets/images/container-films.png);
+
+    z-index: 1;
 }
 
 

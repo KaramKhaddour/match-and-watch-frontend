@@ -121,7 +121,7 @@ export default {
 <style scoped>
 .homeContainer{
     width: 100%;
-    height: 200vh;
+    height: 150vh;
     display: flex;
     overflow-x: none;
     justify-content: flex-start;
@@ -138,12 +138,12 @@ export default {
     flex-direction: column;    
     overflow-x: none;
     /* background: black; */
-    margin-bottom: 500px;
+    margin-bottom: 100px;
     z-index: 3;
 }
 .thirdDivision{
     width: 100%;
-    height: calc(100vh - 100px);
+    height: calc(20vh);
     display: flex;
     justify-content:flex-start;
     align-items: center;
@@ -390,13 +390,12 @@ a{
     overflow:auto;
     height: 1200px;
     width: 1200px;
-    transform: scale(1.1);
+    transform: scale(1.2);
     opacity: 0.5;
-    top: -16vh;
     background-position-x: center;
     background-position-y: center;
     overflow: hidden;
-    /* top: 15vh; */
+    top: -30vh;
     /* background: url(../assets/images/background.jpg); */
     background: url(../assets/images/container-films.png);
 
