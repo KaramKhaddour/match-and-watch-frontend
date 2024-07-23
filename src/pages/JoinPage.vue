@@ -142,7 +142,7 @@ import { RECURL } from '@/const';
       async submitSessionCode() {
         try{
           let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-          let url='${RECURL}/api/join-session/'
+          let url=`${RECURL}/api/join-session/`
           url+=this.sessionCode;
           url+='?'
           url+="token="
@@ -252,7 +252,7 @@ import { RECURL } from '@/const';
             }
           }
           try{
-              let url='${RECURL}/api/submit-session-answer?session_code='
+              let url=`${RECURL}/api/submit-session-answer?session_code=`
               url+=this.sessionCode;
               url+="&token="
               let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];

@@ -123,26 +123,27 @@ const router=createRouter(
 
 router.beforeEach((to, from, next) => {
         loadingState.setLoading(true);
-        setTimeout(() => next(), 1500); // Delay to show spinner (can adjust duration as needed)
-    if (
-        'auth' in to.meta &&
-        to.meta.auth &&
-        !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
-    ) {
-        next('/login_new');
-    } else if (
-        'auth' in to.meta &&
-        !to.meta.auth &&
-        store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
-    ) {
-        next('/');
-    } else {
-        next();
-    }
+        setTimeout(() => next(), 1500); 
+    // if (
+    //     'auth' in to.meta &&
+    //     to.meta.auth &&
+    //     !store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+    // ) {
+    //     next('/login_new');
+    // } else if (
+    //     'auth' in to.meta &&
+    //     !to.meta.auth &&
+    //     store.getters[`auth/${IS_USER_AUTHENTICATE_GETTER}`]
+    // ) {
+    //     next('/');
+    // } else {
+    //     next();
+    // }
+    // next();
 });
 
 router.afterEach(() => {
-    setTimeout(() => loadingState.setLoading(false), 1500); // Ensure loading is shown for at least 500ms
+    setTimeout(() => loadingState.setLoading(false), 1500); 
 });
 
 export default router;

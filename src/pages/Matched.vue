@@ -50,6 +50,7 @@ export default {
     let moviesFromBackend = [];
     const minLoadingTime = 3000; // Minimum loading time in milliseconds
     const startTime = Date.now();
+    const request = this.req
     //console.log('thtihti',this.req)
 
     if (this.req != null) {
@@ -58,10 +59,11 @@ export default {
         let url=`${RECURL}/api/movie` 
         url+="?token=";
         url+=thistoken;
+        console.log(thistoken)
         
-        let dictionary = JSON.parse(this.req);
-        console.log(dictionary)
-        let response = await axios.post(url, dictionary);
+        let dictionary = JSON.parse(request);
+        console.log(dictionary.type)
+        let response = await axios.post(url);
         moviesFromBackend = response.data;
        // console.log('respone', response.data);
       }
@@ -71,13 +73,15 @@ export default {
      }
       else{
          try{
-          let url=`${RECURL}/api/close-session?session_code=`
+          let url=`${RECURL}/api/close-session`
           let thistoken = store.getters[`auth/${GET_USER_TOKEN_GETTER}`];
-          url+=this.sessionCode;
-          url+="&token=";
+          url+="?token=";
           url+=thistoken;
+          url+="&session_code=";
+          url+=this.sessionCode;
 
-           let response = await axios.post(url);          
+          let response = await axios.post(url);
+          console.log(response)
         }
          catch (err) {
            console.log(err)

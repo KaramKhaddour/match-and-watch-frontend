@@ -273,7 +273,8 @@
         url+=thistoken;
         console.log(url)
         let response= await axios.get(url)
-        
+        console.log(response.data.code)
+        console.log(response.data);
         this.sessionCode=response.data.code
       }
       catch(err){
