@@ -13,7 +13,7 @@
             <p class="question Raleway mb-3">{{ currentQuestion.question }}</p>
           </div>
           <div v-if="currentQuestion.options.length" :class="['questions-container', optionContainerClass]">
-            <div v-for="(option, index) in currentQuestion.options" :key="index" class="option-wrapper Raleway">
+            <div v-for="(option, index) in currentQuestion.options" :key="index" class="option-wrapper Inter">
               <input
                 v-if="isMultiSelect(currentQuestion)"
                 type="checkbox"
@@ -851,6 +851,97 @@
     font-size: 25px;
     color:#f89305
   }
+
+  @media only screen and (max-width: 1200px) {
+  .display-container {
+    min-width: 600px;
+    padding: 20px;
+  }
+
+  .question {
+    font-size: 25px;
+  }
+
+  .question-number {
+    font-size: 18px;
+  }
+
+  .inputText {
+    width: 400px;
+  }
+  .films-container{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .display-container {
+    min-width: 100%;
+    padding: 10px;
+    height: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  .quiz-title {
+    font-size: 35px;
+  }
+
+  .question {
+    font-size: 22px;
+  }
+
+  .question-number {
+    font-size: 16px;
+  }
+
+  .inputText {
+    width: 300px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .quiz-title {
+    font-size: 30px;
+  }
+
+  .question {
+    font-size: 18px;
+  }
+
+  .question-number {
+    font-size: 14px;
+  }
+
+  .inputText {
+    width: 250px;
+  }
+
+  .button {
+    width: 100%;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .display-container {
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+
   </style>
   
   

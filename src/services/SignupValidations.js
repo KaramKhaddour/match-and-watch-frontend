@@ -7,9 +7,9 @@ export default class SignupValidations{
     }
     checkValidations(){
         let errors=[];
-        if(!Validations.checkEmail(this.email)){
+      /*  if(!Validations.checkEmail(this.email)){
             errors['email']='Invalid email'
-        }
+        }*/
         if(!Validations.minLength(this.password,6)){
             errors['password']='password should at least be 6 charecters'
         }
